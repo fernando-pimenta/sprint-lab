@@ -285,6 +285,30 @@ Organizador offline de links inteligente para criadores, técnicos e afiliados. 
 
 ---
 
+### 14 - FP Snippet Keeper
+**📁 Pasta:** `projetos/14-fp-snippet-keeper/`
+
+Biblioteca offline para guardar e organizar snippets de código úteis. Gerencie seus códigos favoritos com busca avançada, tags coloridas por linguagem e cópia rápida para clipboard.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, Clipboard API, File API
+
+**Funcionalidades:**
+- CRUD completo de snippets (título, linguagem, categoria, código, notas)
+- 9 linguagens com tags coloridas (HTML, CSS, JS, PHP, SQL, Bash, Prompt IA, Texto, Outro)
+- 8 categorias (WordPress, PAP, Dev, Sistema, Marketing, Templates, Utilitários, Outros)
+- Modal de visualização com código formatado em monospace
+- Copiar código para clipboard com um clique (com fallback para navegadores antigos)
+- Filtros combinados (linguagem, categoria, busca por título)
+- Busca dentro do código (não apenas título)
+- Timestamps automáticos (criação e última edição)
+- Exportar/Importar biblioteca em JSON (substituir tudo)
+- Editor com fonte monospace e Tab support
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./projetos/14-fp-snippet-keeper/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
