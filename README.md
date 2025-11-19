@@ -50,6 +50,25 @@ Launcher moderno de jogos HTML5 para navegador. Organize sua biblioteca de jogos
 
 ---
 
+### 03 - Catálogo Pessoal Tech
+**📁 Pasta:** `projetos/03-catalogo-pessoal-tech/`
+
+Aplicativo web offline para gerenciar e organizar equipamentos, peças e acessórios de tecnologia. Controle completo do seu inventário tech.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, FileReader API
+
+**Funcionalidades:**
+- Cadastro de equipamentos com foto, categoria, status e localização
+- Filtros por categoria e status + busca por nome
+- Estatísticas em tempo real (total, em uso, reserva, defeituosos)
+- CRUD completo com modal intuitivo
+- Exportar/Importar backup em JSON
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./projetos/03-catalogo-pessoal-tech/README.md)
+
+---
+
 ## 🛠️ Como Usar
 
 Cada projeto possui sua própria documentação dentro de sua pasta. Navegue até o projeto desejado e leia o README.md específico para instruções de uso.
