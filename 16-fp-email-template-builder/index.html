@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📧 FP Email Template Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>📧 FP Email Template Builder</h1>
+            <p class="subtitle">Construtor Visual de Templates de Email Marketing</p>
+        </div>
+    </header>
+
+    <!-- List View -->
+    <div id="listView" class="view active">
+        <div class="container">
+            <div class="toolbar">
+                <button class="btn btn-primary" onclick="app.showCreateModal()">
+                    ➕ Novo Template
+                </button>
+                <button class="btn btn-secondary" onclick="app.showTemplatesLibrary()">
+                    📚 Biblioteca de Templates
+                </button>
+                <button class="btn btn-secondary" onclick="app.importJSON()">
+                    📥 Importar JSON
+                </button>
+                <button class="btn btn-secondary" onclick="app.exportAllJSON()">
+                    📤 Exportar Tudo (JSON)
+                </button>
+            </div>
+
+            <div class="filter-bar">
+                <select id="filterCategory" onchange="app.filterTemplates()">
+                    <option value="">Todas as Categorias</option>
+                    <option value="Newsletter">Newsletter</option>
+                    <option value="Promocional">Promocional</option>
+                    <option value="Boas-vindas">Boas-vindas</option>
+                    <option value="Nurture">Nurture</option>
+                    <option value="Transacional">Transacional</option>
+                    <option value="Outro">Outro</option>
+                </select>
+                <select id="filterStatus" onchange="app.filterTemplates()">
+                    <option value="">Todos os Status</option>
+                    <option value="Rascunho">Rascunho</option>
+                    <option value="Ativo">Ativo</option>
+                    <option value="Arquivado">Arquivado</option>
+                </select>
+                <input type="search" id="searchTemplates" placeholder="🔍 Buscar templates..." oninput="app.filterTemplates()">
+            </div>
+
+            <div id="templatesList" class="templates-grid">
+                <!-- Templates will be rendered here -->
+            </div>
+
+            <div id="emptyState" class="empty-state">
+                <p>📭 Nenhum template criado ainda</p>
+                <button class="btn btn-primary" onclick="app.showCreateModal()">Criar Primeiro Template</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Editor View -->
+    <div id="editorView" class="view">
+        <div class="editor-header">
+            <div class="editor-title">
+                <input type="text" id="editorTemplateName" placeholder="Nome do Template" readonly>
+                <span id="autoSaveIndicator" class="auto-save-indicator"></span>
+            </div>
+            <div class="editor-actions">
+                <button class="btn btn-success" onclick="app.saveTemplate()">
+                    💾 Salvar (Ctrl+S)
+                </button>
+                <button class="btn btn-secondary" onclick="app.copyHTML()">
+                    📋 Copiar HTML
+                </button>
+                <button class="btn btn-secondary" onclick="app.exportHTML()">
+                    📥 Exportar HTML
+                </button>
+                <button class="btn btn-secondary" onclick="app.testCompatibility()">
+                    🔍 Testar Compatibilidade
+                </button>
+                <button class="btn" onclick="app.closeEditor()">
+                    ← Voltar
+                </button>
+            </div>
+        </div>
+
+        <div class="editor-container">
+            <!-- Left Panel: Code Editor -->
+            <div class="editor-panel">
+                <div class="panel-header">
+                    <h3>Editor HTML/CSS</h3>
+                    <div class="editor-tabs">
+                        <button class="tab-btn active" data-tab="editor">Código</button>
+                        <button class="tab-btn" data-tab="blocks">Blocos</button>
+                    </div>
+                </div>
+
+                <div id="editorTab" class="tab-content active">
+                    <textarea id="codeEditor" class="code-editor" placeholder="Cole ou escreva seu HTML aqui..."></textarea>
+                </div>
+
+                <div id="blocksTab" class="tab-content">
+                    <div class="blocks-library">
+                        <h4>Biblioteca de Blocos</h4>
+                        <p class="blocks-help">Clique para inserir no editor</p>
+
+                        <div class="block-item" onclick="app.insertBlock('header')">
+                            <span class="block-icon">📋</span>
+                            <span class="block-name">Header</span>
+                        </div>
+                        <div class="block-item" onclick="app.insertBlock('hero')">
+                            <span class="block-icon">🎯</span>
+                            <span class="block-name">Hero Section</span>
+                        </div>
+                        <div class="block-item" onclick="app.insertBlock('text')">
+                            <span class="block-icon">📝</span>
+                            <span class="block-name">Texto Simples</span>
+                        </div>
+                        <div class="block-item" onclick="app.insertBlock('product')">
+                            <span class="block-icon">🛍️</span>
+                            <span class="block-name">Produto</span>
+                        </div>
+                        <div class="block-item" onclick="app.insertBlock('cta')">
+                            <span class="block-icon">🔘</span>
+                            <span class="block-name">CTA Button</span>
+                        </div>
+                        <div class="block-item" onclick="app.insertBlock('footer')">
+                            <span class="block-icon">⬇️</span>
+                            <span class="block-name">Footer</span>
+                        </div>
+                        <div class="block-item" onclick="app.insertBlock('divider')">
+                            <span class="block-icon">➖</span>
+                            <span class="block-name">Divider</span>
+                        </div>
+                        <div class="block-item" onclick="app.insertBlock('spacer')">
+                            <span class="block-icon">⬜</span>
+                            <span class="block-name">Espaçador</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="variables-panel">
+                    <h4>Variáveis Dinâmicas</h4>
+                    <div class="variables-list">
+                        <button class="variable-btn" onclick="app.insertVariable('{{nome}}')">{{'{'}}nome}}</button>
+                        <button class="variable-btn" onclick="app.insertVariable('{{email}}')">{{'{'}}email}}</button>
+                        <button class="variable-btn" onclick="app.insertVariable('{{produto}}')">{{'{'}}produto}}</button>
+                        <button class="variable-btn" onclick="app.insertVariable('{{preco}}')">{{'{'}}preco}}</button>
+                        <button class="variable-btn" onclick="app.insertVariable('{{link}}')">{{'{'}}link}}</button>
+                        <button class="variable-btn" onclick="app.insertVariable('{{data}}')">{{'{'}}data}}</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Preview -->
+            <div class="preview-panel">
+                <div class="panel-header">
+                    <h3>Preview</h3>
+                    <div class="preview-controls">
+                        <button class="preview-btn active" data-view="desktop" onclick="app.togglePreviewMode('desktop')">
+                            🖥️ Desktop
+                        </button>
+                        <button class="preview-btn" data-view="mobile" onclick="app.togglePreviewMode('mobile')">
+                            📱 Mobile
+                        </button>
+                    </div>
+                </div>
+                <div class="preview-container">
+                    <iframe id="previewFrame" class="preview-frame"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create/Edit Modal -->
+    <div id="templateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Novo Template</h2>
+                <button class="close-btn" onclick="app.closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="templateForm">
+                    <div class="form-group">
+                        <label for="templateName">Nome do Template *</label>
+                        <input type="text" id="templateName" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="templateSubject">Assunto do Email</label>
+                            <input type="text" id="templateSubject" maxlength="60">
+                            <small class="char-counter">
+                                <span id="subjectCounter">0</span>/60 caracteres
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="templateCategory">Categoria</label>
+                            <select id="templateCategory">
+                                <option value="Newsletter">Newsletter</option>
+                                <option value="Promocional">Promocional</option>
+                                <option value="Boas-vindas">Boas-vindas</option>
+                                <option value="Nurture">Nurture</option>
+                                <option value="Transacional">Transacional</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="templatePlatform">Plataforma</label>
+                            <select id="templatePlatform">
+                                <option value="Genérico">Genérico</option>
+                                <option value="Mailpoet">Mailpoet</option>
+                                <option value="GetResponse">GetResponse</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="templateStatus">Status</label>
+                            <select id="templateStatus">
+                                <option value="Rascunho">Rascunho</option>
+                                <option value="Ativo">Ativo</option>
+                                <option value="Arquivado">Arquivado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="templateNotes">Notas</label>
+                        <textarea id="templateNotes" rows="3"></textarea>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn" onclick="app.closeModal()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span id="submitBtnText">Criar Template</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Templates Library Modal -->
+    <div id="libraryModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>📚 Biblioteca de Templates Prontos</h2>
+                <button class="close-btn" onclick="app.closeLibraryModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="library-grid" id="libraryGrid">
+                    <!-- Template library items will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compatibility Test Modal -->
+    <div id="compatibilityModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔍 Teste de Compatibilidade</h2>
+                <button class="close-btn" onclick="app.closeCompatibilityModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="compatibilityResults"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Fernando Pimenta | Sprint Lab #16 | FP Email Template Builder</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 FP Keyword Research Organizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>🔍 FP Keyword Research Organizer</h1>
+            <p class="subtitle">Organizador Completo de Keywords para SEO</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Dashboard Statistics -->
+            <section class="dashboard">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statTotal">0</div>
+                        <div class="stat-label">Total Keywords</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statTopTen">0</div>
+                        <div class="stat-label">Top 10 (Ranqueando)</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statProgress">0</div>
+                        <div class="stat-label">Em Progresso</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statToWork">0</div>
+                        <div class="stat-label">A Trabalhar</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statVolume">0</div>
+                        <div class="stat-label">Volume Total/Mês</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statAvgDifficulty">-</div>
+                        <div class="stat-label">Dificuldade Média</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Best Opportunities Section -->
+            <section class="opportunities-section">
+                <h2>🎯 Melhores Oportunidades</h2>
+                <p class="opportunities-description">
+                    Keywords com alto volume + baixa dificuldade, intenção comercial/transacional, ou posições 11-30 (fáceis de subir)
+                </p>
+                <div id="opportunitiesList" class="opportunities-list">
+                    <p class="empty-opportunities">Nenhuma oportunidade identificada ainda. Adicione keywords para análise.</p>
+                </div>
+            </section>
+
+            <!-- Filters Bar -->
+            <section class="filters-section">
+                <h3>🔎 Filtros</h3>
+                <div class="filters-grid">
+                    <select id="filterSite" onchange="app.applyFilters()">
+                        <option value="">Todos os Sites</option>
+                        <option value="Blog do FP">Blog do FP</option>
+                        <option value="Brechó Tech">Brechó Tech</option>
+                        <option value="CetusNet">CetusNet</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+
+                    <select id="filterDifficulty" onchange="app.applyFilters()">
+                        <option value="">Todas as Dificuldades</option>
+                        <option value="Baixa">Baixa</option>
+                        <option value="Média">Média</option>
+                        <option value="Alta">Alta</option>
+                        <option value="Muito Alta">Muito Alta</option>
+                    </select>
+
+                    <select id="filterIntent" onchange="app.applyFilters()">
+                        <option value="">Todas as Intenções</option>
+                        <option value="Informacional">Informacional</option>
+                        <option value="Navegacional">Navegacional</option>
+                        <option value="Comercial">Comercial</option>
+                        <option value="Transacional">Transacional</option>
+                    </select>
+
+                    <select id="filterStatus" onchange="app.applyFilters()">
+                        <option value="">Todos os Status</option>
+                        <option value="A Trabalhar">A Trabalhar</option>
+                        <option value="Em Progresso">Em Progresso</option>
+                        <option value="Ranqueando">Ranqueando</option>
+                        <option value="Pausado">Pausado</option>
+                        <option value="Descartado">Descartado</option>
+                    </select>
+
+                    <select id="filterPosition" onchange="app.applyFilters()">
+                        <option value="">Todas as Posições</option>
+                        <option value="1-10">Top 10 (1-10)</option>
+                        <option value="11-30">Página 2-3 (11-30)</option>
+                        <option value="31-50">Posições 31-50</option>
+                        <option value="51+">Posições 51+</option>
+                        <option value="none">Não Ranqueando</option>
+                    </select>
+
+                    <input type="search" id="filterSearch" placeholder="🔍 Buscar keyword, URL, notas..." oninput="app.applyFilters()">
+
+                    <button class="btn btn-secondary" onclick="app.clearFilters()">
+                        🔄 Limpar Filtros
+                    </button>
+                </div>
+            </section>
+
+            <!-- Tabs -->
+            <section class="tabs-section">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="all" onclick="app.switchTab('all')">
+                        📋 Todas
+                    </button>
+                    <button class="tab-btn" data-tab="clusters" onclick="app.switchTab('clusters')">
+                        📊 Por Cluster
+                    </button>
+                    <button class="tab-btn" data-tab="opportunities" onclick="app.switchTab('opportunities')">
+                        🎯 Oportunidades
+                    </button>
+                </div>
+            </section>
+
+            <!-- Toolbar -->
+            <section class="toolbar">
+                <button class="btn btn-primary" onclick="app.showCreateModal()">
+                    ➕ Adicionar Keyword
+                </button>
+                <button class="btn btn-secondary" onclick="app.exportJSON()">
+                    📥 Exportar JSON
+                </button>
+                <button class="btn btn-secondary" onclick="app.exportCSV()">
+                    📊 Exportar CSV
+                </button>
+                <button class="btn btn-secondary" onclick="app.importJSON()">
+                    📤 Importar JSON
+                </button>
+            </section>
+
+            <!-- Tab Content: All Keywords -->
+            <div id="tabAll" class="tab-content active">
+                <div class="table-container">
+                    <table class="keywords-table">
+                        <thead>
+                            <tr>
+                                <th onclick="app.sortBy('keyword')">Palavra-chave ↕</th>
+                                <th onclick="app.sortBy('volume')">Volume ↕</th>
+                                <th onclick="app.sortBy('difficulty')">Dificuldade ↕</th>
+                                <th onclick="app.sortBy('intent')">Intenção ↕</th>
+                                <th onclick="app.sortBy('currentPosition')">Posição ↕</th>
+                                <th onclick="app.sortBy('status')">Status ↕</th>
+                                <th onclick="app.sortBy('site')">Site ↕</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="keywordsTableBody">
+                            <!-- Keywords will be rendered here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Mobile Cards -->
+                <div id="keywordsMobileCards" class="mobile-cards">
+                    <!-- Mobile cards will be rendered here -->
+                </div>
+
+                <div id="emptyState" class="empty-state">
+                    <p>📭 Nenhuma keyword cadastrada ainda</p>
+                    <button class="btn btn-primary" onclick="app.showCreateModal()">Adicionar Primeira Keyword</button>
+                </div>
+            </div>
+
+            <!-- Tab Content: Clusters -->
+            <div id="tabClusters" class="tab-content">
+                <div id="clustersContainer">
+                    <!-- Clusters will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Tab Content: Opportunities Only -->
+            <div id="tabOpportunities" class="tab-content">
+                <div id="opportunitiesOnlyContainer">
+                    <!-- Opportunities will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Create/Edit Keyword -->
+    <div id="keywordModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="modalTitle">Nova Keyword</h2>
+                <button class="close-btn" onclick="app.closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="keywordForm">
+                    <div class="form-row">
+                        <div class="form-group form-group-full">
+                            <label for="keyword">Palavra-chave *</label>
+                            <input type="text" id="keyword" required placeholder="ex: hospedagem wordpress barata">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="volume">Volume de Busca/Mês</label>
+                            <input type="number" id="volume" min="0" placeholder="ex: 1200">
+                        </div>
+                        <div class="form-group">
+                            <label for="difficulty">Dificuldade SEO</label>
+                            <select id="difficulty">
+                                <option value="Baixa">Baixa</option>
+                                <option value="Média">Média</option>
+                                <option value="Alta">Alta</option>
+                                <option value="Muito Alta">Muito Alta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="intent">Intenção de Busca</label>
+                            <select id="intent">
+                                <option value="Informacional">Informacional</option>
+                                <option value="Navegacional">Navegacional</option>
+                                <option value="Comercial">Comercial</option>
+                                <option value="Transacional">Transacional</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group form-group-full">
+                            <label for="targetUrl">URL Alvo</label>
+                            <input type="url" id="targetUrl" placeholder="https://exemplo.com/artigo">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="site">Site/Projeto</label>
+                            <select id="site">
+                                <option value="Blog do FP">Blog do FP</option>
+                                <option value="Brechó Tech">Brechó Tech</option>
+                                <option value="CetusNet">CetusNet</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="currentPosition">Posição Atual</label>
+                            <input type="number" id="currentPosition" min="1" max="100" placeholder="deixe vazio se não ranqueia">
+                        </div>
+                        <div class="form-group">
+                            <label for="targetPosition">Posição Desejada</label>
+                            <input type="number" id="targetPosition" min="1" max="10" placeholder="ex: 3">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status">
+                                <option value="A Trabalhar">A Trabalhar</option>
+                                <option value="Em Progresso">Em Progresso</option>
+                                <option value="Ranqueando">Ranqueando</option>
+                                <option value="Pausado">Pausado</option>
+                                <option value="Descartado">Descartado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastCheck">Última Verificação</label>
+                            <input type="date" id="lastCheck">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group form-group-full">
+                            <label for="competitors">Concorrentes Principais</label>
+                            <textarea id="competitors" rows="3" placeholder="URLs dos principais concorrentes (um por linha)"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group form-group-full">
+                            <label for="notes">Notas/Estratégia</label>
+                            <textarea id="notes" rows="4" placeholder="Ideias de conteúdo, estratégia de backlinks, etc."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn" onclick="app.closeModal()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span id="submitBtnText">Adicionar Keyword</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Traffic Calculator -->
+    <div id="trafficModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📈 Calculadora de Tráfego Potencial</h2>
+                <button class="close-btn" onclick="app.closeTrafficModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="trafficCalculatorContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Position History -->
+    <div id="historyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📊 Histórico de Posições</h2>
+                <button class="close-btn" onclick="app.closeHistoryModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="historyContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Fernando Pimenta | Sprint Lab #17 | FP Keyword Research Organizer</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
