@@ -1,0 +1,26 @@
+[
+  {
+    "id": "moon-patrol",
+    "nome": "Moon Patrol",
+    "descricao": "Clássico arcade de 1982. Dirija seu veículo lunar através de terrenos acidentados, pulando crateras e destruindo obstáculos enquanto enfrenta naves inimigas.",
+    "url": "https://arcade.example.com/games/moon-patrol/index.html",
+    "thumbnail": "https://via.placeholder.com/300x200/2563eb/ffffff?text=Moon+Patrol",
+    "categoria": "Arcade"
+  },
+  {
+    "id": "space-invaders",
+    "nome": "Space Invaders",
+    "descricao": "O icônico jogo de tiro espacial de 1978. Defenda a Terra contra ondas de invasores alienígenas em formação, usando seu canhão laser para destruí-los antes que cheguem ao solo.",
+    "url": "https://arcade.example.com/games/space-invaders/index.html",
+    "thumbnail": "https://via.placeholder.com/300x200/10b981/ffffff?text=Space+Invaders",
+    "categoria": "Arcade"
+  },
+  {
+    "id": "pac-man",
+    "nome": "Pac-Man",
+    "descricao": "Lenda dos arcades de 1980. Guie o Pac-Man pelo labirinto, comendo todas as bolinhas enquanto foge dos fantasmas coloridos. Coma as power pellets para virar o jogo!",
+    "url": "https://arcade.example.com/games/pac-man/index.html",
+    "thumbnail": "https://via.placeholder.com/300x200/eab308/ffffff?text=Pac-Man",
+    "categoria": "Arcade"
+  }
+]

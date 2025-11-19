@@ -32,6 +32,24 @@ Mini aplicativo web offline para gerenciar catálogo pessoal de jogos. Totalment
 
 ---
 
+### 02 - Mini Arcade Loader
+**📁 Pasta:** `projetos/02-mini-arcade-loader/`
+
+Launcher moderno de jogos HTML5 para navegador. Organize sua biblioteca de jogos web e jogue diretamente em um player integrado.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, iframe
+
+**Funcionalidades:**
+- Biblioteca de jogos em cards com thumbnails
+- Player integrado com iframe para jogar sem sair da página
+- CRUD completo (adicionar, editar, excluir jogos)
+- Exportar/Importar configuração em JSON
+- Tema escuro moderno e responsivo
+
+[📖 Ver documentação completa](./projetos/02-mini-arcade-loader/README.md)
+
+---
+
 ## 🛠️ Como Usar
 
 Cada projeto possui sua própria documentação dentro de sua pasta. Navegue até o projeto desejado e leia o README.md específico para instruções de uso.
