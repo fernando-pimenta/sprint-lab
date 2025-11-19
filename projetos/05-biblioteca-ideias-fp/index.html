@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca de Ideias - Blog do FP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Cabeçalho principal -->
+    <header class="main-header">
+        <div class="container">
+            <h1>💡 Biblioteca de Ideias e Rascunhos</h1>
+            <p class="subtitle">Organize suas ideias para o Blog do FP</p>
+        </div>
+    </header>
+
+    <!-- Barra de ferramentas e filtros -->
+    <section class="toolbar">
+        <div class="container">
+            <div class="toolbar-grid">
+                <!-- Filtros -->
+                <div class="filter-group">
+                    <label for="filterType">Tipo:</label>
+                    <select id="filterType">
+                        <option value="">Todos</option>
+                        <option value="Post de blog">Post de blog</option>
+                        <option value="Roteiro de vídeo">Roteiro de vídeo</option>
+                        <option value="Thread">Thread</option>
+                        <option value="E-book">E-book</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterStatus">Status:</label>
+                    <select id="filterStatus">
+                        <option value="">Todos</option>
+                        <option value="Rascunho">Rascunho</option>
+                        <option value="Em desenvolvimento">Em desenvolvimento</option>
+                        <option value="Publicado">Publicado</option>
+                        <option value="Engavetado">Engavetado</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterTag">Tag:</label>
+                    <select id="filterTag">
+                        <option value="">Todas</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Tecnologia">Tecnologia</option>
+                        <option value="Afiliados">Afiliados</option>
+                        <option value="IA">IA</option>
+                        <option value="Negócios">Negócios</option>
+                        <option value="Produtividade">Produtividade</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="filter-group search-group">
+                    <label for="searchInput">Buscar:</label>
+                    <input type="text" id="searchInput" placeholder="Título da ideia...">
+                </div>
+
+                <!-- Botões de ação -->
+                <div class="action-buttons">
+                    <button id="addIdeaBtn" class="btn btn-primary">➕ Nova Ideia</button>
+                    <button id="exportBtn" class="btn btn-secondary">📥 Exportar</button>
+                    <button id="importBtn" class="btn btn-secondary">📤 Importar</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Área principal -->
+    <main class="container">
+        <!-- Estatísticas -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <span class="stat-number" id="totalIdeas">0</span>
+                <span class="stat-label">Total de Ideias</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="draftIdeas">0</span>
+                <span class="stat-label">Rascunhos</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="developmentIdeas">0</span>
+                <span class="stat-label">Em Desenvolvimento</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="publishedIdeas">0</span>
+                <span class="stat-label">Publicados</span>
+            </div>
+        </section>
+
+        <!-- Modal de formulário -->
+        <div id="ideaFormModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="formTitle">Nova Ideia</h2>
+                    <button class="close-btn" id="closeModalBtn">&times;</button>
+                </div>
+                <form id="ideaForm">
+                    <input type="hidden" id="ideaId" value="">
+
+                    <div class="form-group">
+                        <label for="ideaTitle">Título da Ideia *</label>
+                        <input type="text" id="ideaTitle" required placeholder="Ex: Como usar IA para criar conteúdo">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ideaType">Tipo *</label>
+                            <select id="ideaType" required>
+                                <option value="">Selecione...</option>
+                                <option value="Post de blog">Post de blog</option>
+                                <option value="Roteiro de vídeo">Roteiro de vídeo</option>
+                                <option value="Thread">Thread</option>
+                                <option value="E-book">E-book</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ideaStatus">Status *</label>
+                            <select id="ideaStatus" required>
+                                <option value="">Selecione...</option>
+                                <option value="Rascunho">Rascunho</option>
+                                <option value="Em desenvolvimento">Em desenvolvimento</option>
+                                <option value="Publicado">Publicado</option>
+                                <option value="Engavetado">Engavetado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ideaTag">Tag Principal *</label>
+                        <select id="ideaTag" required>
+                            <option value="">Selecione...</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Afiliados">Afiliados</option>
+                            <option value="IA">IA</option>
+                            <option value="Negócios">Negócios</option>
+                            <option value="Produtividade">Produtividade</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ideaContent">Rascunho / Descrição</label>
+                        <textarea id="ideaContent" rows="10" placeholder="Desenvolva sua ideia aqui...&#10;&#10;Estrutura sugerida:&#10;- Introdução&#10;- Pontos principais&#10;- Conclusão&#10;- CTAs"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="saveBtn">💾 Salvar Ideia</button>
+                        <button type="button" class="btn btn-cancel" id="cancelBtn">❌ Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Listagem de ideias -->
+        <section class="ideas-section">
+            <h2>Minhas Ideias</h2>
+            <div id="ideasList" class="ideas-grid">
+                <!-- Os cards de ideias serão inseridos aqui dinamicamente -->
+            </div>
+            <div id="emptyState" class="empty-state">
+                <p>💡 Nenhuma ideia cadastrada ainda.</p>
+                <p>Clique em "Nova Ideia" para começar!</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>Biblioteca de Ideias - Blog do FP - Ecossistema FP &copy; 2025</p>
+            <p>Armazene e organize suas ideias de conteúdo</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -88,6 +88,26 @@ Ferramenta visual para criar cards de produto personalizados, estilo afiliado/Br
 
 ---
 
+### 05 - Biblioteca de Ideias
+**📁 Pasta:** `projetos/05-biblioteca-ideias-fp/`
+
+Ferramenta offline para organizar e gerenciar ideias de conteúdo, rascunhos e conceitos para o Blog do FP. Nunca mais perca uma boa ideia!
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage
+
+**Funcionalidades:**
+- Cadastro de ideias com tipo, status, tag e rascunho completo
+- Filtros por tipo (Post, Vídeo, Thread, E-book), status e tag
+- Indicadores visuais coloridos por status
+- Estatísticas em tempo real
+- Ordenação por data de atualização
+- Exportar/Importar backup em JSON
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./projetos/05-biblioteca-ideias-fp/README.md)
+
+---
+
 ## 🛠️ Como Usar
 
 Cada projeto possui sua própria documentação dentro de sua pasta. Navegue até o projeto desejado e leia o README.md específico para instruções de uso.
