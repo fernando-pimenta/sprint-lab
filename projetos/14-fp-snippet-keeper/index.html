@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FP Snippet Keeper – Biblioteca de Snippets</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>📝 FP Snippet Keeper</h1>
+            <p class="subtitle">Sua biblioteca pessoal de snippets e códigos úteis</p>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Actions Bar -->
+        <div class="actions-bar">
+            <button class="btn btn-primary" id="btnNewSnippet">➕ Novo Snippet</button>
+            <div class="actions-right">
+                <button class="btn btn-secondary" id="btnExport">📤 Exportar Biblioteca</button>
+                <button class="btn btn-secondary" id="btnImport">📥 Importar Biblioteca</button>
+                <input type="file" id="fileInput" accept=".json" style="display: none;">
+            </div>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="filters-section">
+            <h3>🔍 Filtros</h3>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="filterLanguage">Linguagem:</label>
+                    <select id="filterLanguage">
+                        <option value="">Todas</option>
+                        <option value="HTML">HTML</option>
+                        <option value="CSS">CSS</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="PHP">PHP</option>
+                        <option value="SQL">SQL</option>
+                        <option value="Bash">Bash</option>
+                        <option value="Prompt IA">Prompt IA</option>
+                        <option value="Texto">Texto</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterCategory">Categoria:</label>
+                    <select id="filterCategory">
+                        <option value="">Todas</option>
+                        <option value="WordPress">WordPress</option>
+                        <option value="PAP">PAP</option>
+                        <option value="Dev">Dev</option>
+                        <option value="Sistema">Sistema</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Templates">Templates</option>
+                        <option value="Utilitários">Utilitários</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="searchTitle">Buscar Título:</label>
+                    <input type="text" id="searchTitle" placeholder="Digite para buscar...">
+                </div>
+
+                <div class="filter-group">
+                    <label for="searchCode">Buscar no Código:</label>
+                    <input type="text" id="searchCode" placeholder="Ex: function, class, SELECT...">
+                </div>
+            </div>
+            <button class="btn btn-secondary btn-clear-filters" id="btnClearFilters">🔄 Limpar Filtros</button>
+        </div>
+
+        <!-- Snippets List -->
+        <div class="snippets-list-section">
+            <div class="list-header">
+                <h3>💾 Meus Snippets</h3>
+                <span class="count-badge" id="countBadge">0 snippets</span>
+            </div>
+            <div id="snippetsList" class="snippets-list">
+                <!-- Items serão inseridos aqui via JavaScript -->
+            </div>
+            <div id="emptyState" class="empty-state">
+                <p>📭 Nenhum snippet cadastrado ainda.</p>
+                <p>Clique em "Novo Snippet" para começar sua biblioteca!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Form (Novo/Editar) -->
+    <div id="modalForm" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">➕ Novo Snippet</h2>
+                <span class="close" id="closeModalForm">&times;</span>
+            </div>
+            <form id="snippetForm">
+                <input type="hidden" id="snippetId">
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="inputTitle">Título: <span class="required">*</span></label>
+                        <input type="text" id="inputTitle" required placeholder="Ex: Função para validar email, Query SQL de usuários...">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputLanguage">Linguagem: <span class="required">*</span></label>
+                        <select id="inputLanguage" required>
+                            <option value="">Selecione...</option>
+                            <option value="HTML">HTML</option>
+                            <option value="CSS">CSS</option>
+                            <option value="JavaScript">JavaScript</option>
+                            <option value="PHP">PHP</option>
+                            <option value="SQL">SQL</option>
+                            <option value="Bash">Bash</option>
+                            <option value="Prompt IA">Prompt IA</option>
+                            <option value="Texto">Texto</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputCategory">Categoria: <span class="required">*</span></label>
+                        <select id="inputCategory" required>
+                            <option value="">Selecione...</option>
+                            <option value="WordPress">WordPress</option>
+                            <option value="PAP">PAP</option>
+                            <option value="Dev">Dev</option>
+                            <option value="Sistema">Sistema</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Templates">Templates</option>
+                            <option value="Utilitários">Utilitários</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="inputCode">Código: <span class="required">*</span></label>
+                        <textarea id="inputCode" rows="12" required placeholder="Cole seu código aqui..."></textarea>
+                        <small class="form-hint">Use Tab para indentar. O código será exibido com formatação monospace.</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="inputNotes">Notas Complementares:</label>
+                        <textarea id="inputNotes" rows="4" placeholder="Anotações, descrição do snippet, quando usar, etc."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-info">
+                    <small>As datas de criação e última edição serão registradas automaticamente.</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="btnCancelForm">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">💾 Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal View (Visualizar Snippet) -->
+    <div id="modalView" class="modal">
+        <div class="modal-content modal-view-content">
+            <div class="modal-header">
+                <h2 id="viewTitle">Visualizar Snippet</h2>
+                <span class="close" id="closeModalView">&times;</span>
+            </div>
+            <div class="view-content">
+                <div class="view-info">
+                    <div class="view-info-item">
+                        <span class="view-label">Linguagem:</span>
+                        <span id="viewLanguage" class="lang-tag">-</span>
+                    </div>
+                    <div class="view-info-item">
+                        <span class="view-label">Categoria:</span>
+                        <span id="viewCategory">-</span>
+                    </div>
+                </div>
+
+                <div class="view-code-section">
+                    <div class="view-code-header">
+                        <span>Código:</span>
+                        <button class="btn btn-copy" id="btnCopyCode">📋 Copiar Código</button>
+                    </div>
+                    <pre><code id="viewCode"></code></pre>
+                </div>
+
+                <div id="viewNotesSection" class="view-notes-section" style="display: none;">
+                    <h4>📝 Notas:</h4>
+                    <p id="viewNotes"></p>
+                </div>
+
+                <div class="view-dates">
+                    <small id="viewDates"></small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FP Content Planner – Planejador Editorial</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>📅 FP Content Planner</h1>
+            <p class="subtitle">Planejador Editorial para Criadores de Conteúdo</p>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Actions Bar -->
+        <div class="actions-bar">
+            <button class="btn btn-primary" id="btnNewContent">➕ Novo Conteúdo</button>
+            <div class="actions-right">
+                <button class="btn btn-secondary" id="btnExport">📤 Exportar Planejamento</button>
+                <button class="btn btn-secondary" id="btnImport">📥 Importar Planejamento</button>
+                <input type="file" id="fileInput" accept=".json" style="display: none;">
+            </div>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="filters-section">
+            <h3>🔍 Filtros</h3>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="filterPlatform">Plataforma:</label>
+                    <select id="filterPlatform">
+                        <option value="">Todas</option>
+                        <option value="YouTube">YouTube</option>
+                        <option value="Instagram">Instagram</option>
+                        <option value="TikTok">TikTok</option>
+                        <option value="Blog">Blog</option>
+                        <option value="Facebook">Facebook</option>
+                        <option value="Shopee Live">Shopee Live</option>
+                        <option value="Outras">Outras</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterType">Tipo:</label>
+                    <select id="filterType">
+                        <option value="">Todos</option>
+                        <option value="Post">Post</option>
+                        <option value="Reels">Reels</option>
+                        <option value="Shorts">Shorts</option>
+                        <option value="Blog">Blog</option>
+                        <option value="Live">Live</option>
+                        <option value="Vídeo Longo">Vídeo Longo</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterStatus">Status:</label>
+                    <select id="filterStatus">
+                        <option value="">Todos</option>
+                        <option value="Rascunho">Rascunho</option>
+                        <option value="Em Produção">Em Produção</option>
+                        <option value="Gravado">Gravado</option>
+                        <option value="Editado">Editado</option>
+                        <option value="Aguardando Publicação">Aguardando Publicação</option>
+                        <option value="Publicado">Publicado</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="searchInput">Buscar Título:</label>
+                    <input type="text" id="searchInput" placeholder="Digite para buscar...">
+                </div>
+            </div>
+            <button class="btn btn-secondary btn-clear-filters" id="btnClearFilters">🔄 Limpar Filtros</button>
+        </div>
+
+        <!-- Content List -->
+        <div class="content-list-section">
+            <div class="list-header">
+                <h3>📋 Meus Conteúdos</h3>
+                <span class="count-badge" id="countBadge">0 conteúdos</span>
+            </div>
+            <div id="contentList" class="content-list">
+                <!-- Items serão inseridos aqui via JavaScript -->
+            </div>
+            <div id="emptyState" class="empty-state">
+                <p>📭 Nenhum conteúdo cadastrado ainda.</p>
+                <p>Clique em "Novo Conteúdo" para começar!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Form -->
+    <div id="modalForm" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">➕ Novo Conteúdo</h2>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <form id="contentForm">
+                <input type="hidden" id="contentId">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputTitle">Título: <span class="required">*</span></label>
+                        <input type="text" id="inputTitle" required placeholder="Ex: Como criar conteúdo no YouTube">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputType">Tipo: <span class="required">*</span></label>
+                        <select id="inputType" required>
+                            <option value="">Selecione...</option>
+                            <option value="Post">Post</option>
+                            <option value="Reels">Reels</option>
+                            <option value="Shorts">Shorts</option>
+                            <option value="Blog">Blog</option>
+                            <option value="Live">Live</option>
+                            <option value="Vídeo Longo">Vídeo Longo</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputStatus">Status: <span class="required">*</span></label>
+                        <select id="inputStatus" required>
+                            <option value="">Selecione...</option>
+                            <option value="Rascunho">Rascunho</option>
+                            <option value="Em Produção">Em Produção</option>
+                            <option value="Gravado">Gravado</option>
+                            <option value="Editado">Editado</option>
+                            <option value="Aguardando Publicação">Aguardando Publicação</option>
+                            <option value="Publicado">Publicado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputPlatform">Plataforma: <span class="required">*</span></label>
+                        <select id="inputPlatform" required>
+                            <option value="">Selecione...</option>
+                            <option value="YouTube">YouTube</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="TikTok">TikTok</option>
+                            <option value="Blog">Blog</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="Shopee Live">Shopee Live</option>
+                            <option value="Outras">Outras</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputDate">Data de Publicação:</label>
+                        <input type="date" id="inputDate">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputLink">Link:</label>
+                        <input type="url" id="inputLink" placeholder="https://...">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputHashtags">Hashtags:</label>
+                        <input type="text" id="inputHashtags" placeholder="#exemplo #conteúdo #criação">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputDescription">Descrição / Roteiro:</label>
+                        <textarea id="inputDescription" rows="6" placeholder="Descreva o conteúdo, roteiro, ideias principais..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="btnCancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">💾 Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
