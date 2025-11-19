@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 FP Analytics Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>📊 FP Analytics Dashboard</h1>
+            <p class="subtitle">Métricas dos 3 sites do Ecossistema FP</p>
+        </div>
+    </header>
+
+    <!-- Action Bar -->
+    <section class="action-bar container">
+        <button id="btnAddData" class="btn btn-primary">➕ Adicionar Dados</button>
+
+        <select id="filterPeriod" class="filter-select">
+            <option value="3">Últimos 3 meses</option>
+            <option value="6" selected>Últimos 6 meses</option>
+            <option value="12">Últimos 12 meses</option>
+            <option value="year">Ano inteiro</option>
+            <option value="custom">Período customizado</option>
+        </select>
+
+        <select id="filterSite" class="filter-select">
+            <option value="all">Todos os Sites</option>
+            <option value="blog">Blog do FP</option>
+            <option value="brecho">Brechó Tech</option>
+            <option value="cetus">CetusNet</option>
+        </select>
+
+        <button id="btnCompare" class="btn btn-secondary">📊 Comparar Períodos</button>
+        <button id="btnConfigWidgets" class="btn btn-secondary">⚙️ Widgets</button>
+        <button id="btnExport" class="btn btn-secondary">📥 Exportar</button>
+    </section>
+
+    <!-- Dashboard Grid -->
+    <main class="container">
+        <div id="dashboardGrid" class="dashboard-grid">
+
+            <!-- Widget 1: Resumo Geral -->
+            <div class="widget" id="widget-summary" data-widget="summary">
+                <div class="widget-header">
+                    <h3>📈 Resumo Geral - <span id="summaryMonth">Mês Atual</span></h3>
+                </div>
+                <div class="widget-body">
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <div class="summary-label">Tráfego Total</div>
+                            <div class="summary-value" id="summaryTraffic">0</div>
+                            <div class="summary-change" id="summaryTrafficChange">-</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Conversões</div>
+                            <div class="summary-value" id="summaryConversions">0</div>
+                            <div class="summary-change" id="summaryConversionsChange">-</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Receita Total</div>
+                            <div class="summary-value" id="summaryRevenue">R$ 0</div>
+                            <div class="summary-change" id="summaryRevenueChange">-</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Taxa Média Rejeição</div>
+                            <div class="summary-value" id="summaryBounce">0%</div>
+                            <div class="summary-change" id="summaryBounceChange">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Widget 2: Gráfico de Linha - Tráfego -->
+            <div class="widget widget-large" id="widget-traffic-chart" data-widget="traffic-chart">
+                <div class="widget-header">
+                    <h3>📈 Tráfego ao Longo do Tempo</h3>
+                </div>
+                <div class="widget-body">
+                    <canvas id="trafficChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Widget 3: Gráfico de Barras - Receita -->
+            <div class="widget" id="widget-revenue-chart" data-widget="revenue-chart">
+                <div class="widget-header">
+                    <h3>💰 Receita por Site</h3>
+                </div>
+                <div class="widget-body">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Widget 4: Gráfico Pizza - Distribuição -->
+            <div class="widget" id="widget-distribution-chart" data-widget="distribution-chart">
+                <div class="widget-header">
+                    <h3>📊 Distribuição de Tráfego</h3>
+                </div>
+                <div class="widget-body">
+                    <canvas id="distributionChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Widget 5: Taxa de Conversão -->
+            <div class="widget" id="widget-conversion" data-widget="conversion">
+                <div class="widget-header">
+                    <h3>🎯 Taxa de Conversão</h3>
+                </div>
+                <div class="widget-body">
+                    <div id="conversionContent" class="conversion-grid"></div>
+                </div>
+            </div>
+
+            <!-- Widget 6: ROI de Conteúdo -->
+            <div class="widget" id="widget-roi" data-widget="roi">
+                <div class="widget-header">
+                    <h3>📝 ROI de Conteúdo</h3>
+                </div>
+                <div class="widget-body">
+                    <div id="roiContent"></div>
+                </div>
+            </div>
+
+            <!-- Widget 7: Metas -->
+            <div class="widget" id="widget-goals" data-widget="goals">
+                <div class="widget-header">
+                    <h3>🎯 Metas do Mês</h3>
+                    <button class="btn-icon" id="btnSetGoals" title="Configurar Metas">⚙️</button>
+                </div>
+                <div class="widget-body">
+                    <div id="goalsContent"></div>
+                </div>
+            </div>
+
+            <!-- Widget 8: Tendências -->
+            <div class="widget" id="widget-trends" data-widget="trends">
+                <div class="widget-header">
+                    <h3>📊 Tendências e Insights</h3>
+                </div>
+                <div class="widget-body">
+                    <div id="trendsContent"></div>
+                </div>
+            </div>
+
+            <!-- Widget 9: Tabela Comparativa -->
+            <div class="widget widget-large" id="widget-table" data-widget="table">
+                <div class="widget-header">
+                    <h3>📋 Tabela Comparativa Mensal</h3>
+                </div>
+                <div class="widget-body">
+                    <div class="table-container">
+                        <table id="compareTable"></table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Widget 10: Heatmap -->
+            <div class="widget widget-large" id="widget-heatmap" data-widget="heatmap">
+                <div class="widget-header">
+                    <h3>🔥 Heatmap de Performance</h3>
+                    <select id="heatmapMetric" class="metric-select">
+                        <option value="revenue">Receita</option>
+                        <option value="traffic">Tráfego</option>
+                        <option value="conversions">Conversões</option>
+                    </select>
+                </div>
+                <div class="widget-body">
+                    <div id="heatmapContent"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal: Adicionar/Editar Dados -->
+    <div id="dataModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="dataModalTitle">Adicionar Dados Mensais</h2>
+                <button class="close-btn" id="btnCloseData">&times;</button>
+            </div>
+            <form id="dataForm">
+                <input type="hidden" id="recordId">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recordMonth">Mês/Ano *</label>
+                        <input type="month" id="recordMonth" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recordSite">Site *</label>
+                        <select id="recordSite" required>
+                            <option value="">Selecione...</option>
+                            <option value="blog">Blog do FP</option>
+                            <option value="brecho">Brechó Tech</option>
+                            <option value="cetus">CetusNet</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h3 class="form-section-title">📈 Métricas de Tráfego</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recordTraffic">Tráfego Orgânico</label>
+                        <input type="number" id="recordTraffic" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="recordPageviews">Pageviews</label>
+                        <input type="number" id="recordPageviews" min="0" value="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recordUsers">Usuários Únicos</label>
+                        <input type="number" id="recordUsers" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="recordBounce">Taxa de Rejeição (%)</label>
+                        <input type="number" id="recordBounce" min="0" max="100" step="0.1" value="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recordAvgTime">Tempo Médio na Página (min)</label>
+                        <input type="number" id="recordAvgTime" min="0" step="0.1" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="recordPosition">Posição Média Google</label>
+                        <input type="number" id="recordPosition" min="1" max="100" step="0.1" value="0">
+                    </div>
+                </div>
+
+                <h3 class="form-section-title">💰 Métricas de Conversão</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recordClicks">Cliques em Afiliados</label>
+                        <input type="number" id="recordClicks" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="recordConversions">Conversões de Afiliados</label>
+                        <input type="number" id="recordConversions" min="0" value="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recordRevenue">Receita Estimada (R$)</label>
+                        <input type="number" id="recordRevenue" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="recordNewsletter">Novos Inscritos Newsletter</label>
+                        <input type="number" id="recordNewsletter" min="0" value="0">
+                    </div>
+                </div>
+
+                <h3 class="form-section-title">📝 Métricas de Conteúdo</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recordPosts">Posts Publicados</label>
+                        <input type="number" id="recordPosts" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="recordBacklinks">Backlinks Novos</label>
+                        <input type="number" id="recordBacklinks" min="0" value="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full">
+                        <label for="recordNotes">Notas</label>
+                        <textarea id="recordNotes" rows="3" placeholder="Eventos, mudanças, observações..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Salvar Dados</button>
+                    <button type="button" id="btnDeleteRecord" class="btn btn-danger" style="display: none;">Excluir</button>
+                    <button type="button" class="btn btn-secondary" id="btnCancelData">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Configurar Widgets -->
+    <div id="widgetsModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>⚙️ Configurar Widgets</h2>
+                <button class="close-btn" id="btnCloseWidgets">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Selecione quais widgets deseja exibir no dashboard:</p>
+                <div class="widget-config-list" id="widgetConfigList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Comparar Períodos -->
+    <div id="compareModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📊 Comparar Períodos</h2>
+                <button class="close-btn" id="btnCloseCompare">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="comparePeriod1">Período 1</label>
+                        <input type="month" id="comparePeriod1">
+                    </div>
+                    <div class="form-group">
+                        <label for="comparePeriod2">Período 2</label>
+                        <input type="month" id="comparePeriod2">
+                    </div>
+                </div>
+                <button id="btnRunCompare" class="btn btn-primary full-width">Comparar</button>
+                <div id="compareResults" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Exportar -->
+    <div id="exportModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>📥 Exportar Dados</h2>
+                <button class="close-btn" id="btnCloseExport">&times;</button>
+            </div>
+            <div class="modal-body">
+                <button id="btnExportJSON" class="btn btn-primary full-width">Exportar JSON</button>
+                <button id="btnExportCSV" class="btn btn-primary full-width">Exportar CSV</button>
+                <button id="btnImportJSON" class="btn btn-secondary full-width">Importar JSON</button>
+                <input type="file" id="importFile" accept=".json" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Configurar Metas -->
+    <div id="goalsModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>🎯 Configurar Metas</h2>
+                <button class="close-btn" id="btnCloseGoals">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="goalTraffic">Meta de Tráfego Mensal</label>
+                    <input type="number" id="goalTraffic" min="0" placeholder="Ex: 10000">
+                </div>
+                <div class="form-group">
+                    <label for="goalRevenue">Meta de Receita Mensal (R$)</label>
+                    <input type="number" id="goalRevenue" min="0" step="0.01" placeholder="Ex: 1000.00">
+                </div>
+                <div class="form-group">
+                    <label for="goalConversions">Meta de Conversões</label>
+                    <input type="number" id="goalConversions" min="0" placeholder="Ex: 50">
+                </div>
+                <button id="btnSaveGoals" class="btn btn-primary full-width">Salvar Metas</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Fernando Pimenta | Sprint Lab #19</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
