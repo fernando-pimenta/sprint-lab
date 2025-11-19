@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔗 FP Affiliate Link Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <h1>🔗 FP Affiliate Link Manager</h1>
+            <p class="subtitle">Gerencie seus links de afiliados com tracking detalhado</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- DASHBOARD DE ESTATÍSTICAS -->
+        <section class="dashboard">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <div class="stat-value" id="statTotalLinks">0</div>
+                    <div class="stat-label">Total de Links</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-content">
+                    <div class="stat-value" id="statActiveLinks">0</div>
+                    <div class="stat-label">Links Ativos</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">👆</div>
+                <div class="stat-content">
+                    <div class="stat-value" id="statTotalClicks">0</div>
+                    <div class="stat-label">Total de Cliques</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-content">
+                    <div class="stat-value" id="statTotalConversions">0</div>
+                    <div class="stat-label">Total de Conversões</div>
+                </div>
+            </div>
+
+            <div class="stat-card stat-card-highlight">
+                <div class="stat-icon">💰</div>
+                <div class="stat-content">
+                    <div class="stat-value" id="statTotalRevenue">R$ 0,00</div>
+                    <div class="stat-label">Receita Total</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FILTROS -->
+        <section class="filters">
+            <div class="filter-group">
+                <label for="filterProgram">Programa:</label>
+                <select id="filterProgram">
+                    <option value="">Todos</option>
+                    <option value="Hostinger">Hostinger</option>
+                    <option value="GetResponse">GetResponse</option>
+                    <option value="Amazon Brasil">Amazon Brasil</option>
+                    <option value="Mercado Livre">Mercado Livre</option>
+                    <option value="Shopee">Shopee</option>
+                    <option value="UOL Host">UOL Host</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="filterStatus">Status:</label>
+                <select id="filterStatus">
+                    <option value="">Todos</option>
+                    <option value="Ativo">Ativo</option>
+                    <option value="Pausado">Pausado</option>
+                    <option value="Expirado">Expirado</option>
+                    <option value="Teste">Teste</option>
+                </select>
+            </div>
+
+            <div class="filter-group filter-search">
+                <label for="searchQuery">Buscar:</label>
+                <input type="text" id="searchQuery" placeholder="Produto, URL ou notas...">
+            </div>
+
+            <button class="btn btn-secondary" id="btnClearFilters">🔄 Limpar Filtros</button>
+        </section>
+
+        <!-- AÇÕES -->
+        <section class="actions">
+            <button class="btn btn-primary" id="btnAddLink">➕ Adicionar Link</button>
+            <button class="btn btn-secondary" id="btnExport">📥 Exportar JSON</button>
+            <button class="btn btn-secondary" id="btnImport">📤 Importar JSON</button>
+            <input type="file" id="fileInput" accept=".json" style="display: none;">
+        </section>
+
+        <!-- TABELA DE LINKS (Desktop) -->
+        <section class="links-table-wrapper" id="linksTableWrapper">
+            <table class="links-table" id="linksTable">
+                <thead>
+                    <tr>
+                        <th data-sort="program">Programa <span class="sort-icon"></span></th>
+                        <th data-sort="productName">Produto/Campanha <span class="sort-icon"></span></th>
+                        <th data-sort="status">Status <span class="sort-icon"></span></th>
+                        <th data-sort="clicks">Cliques <span class="sort-icon"></span></th>
+                        <th data-sort="conversions">Conversões <span class="sort-icon"></span></th>
+                        <th data-sort="commission">Comissão (R$) <span class="sort-icon"></span></th>
+                        <th data-sort="createdAt">Data Criação <span class="sort-icon"></span></th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="linksTableBody">
+                    <!-- Links serão inseridos aqui -->
+                </tbody>
+            </table>
+
+            <!-- EMPTY STATE -->
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon">🔗</div>
+                <h3>Nenhum link encontrado</h3>
+                <p>Adicione seu primeiro link de afiliado ou ajuste os filtros</p>
+            </div>
+        </section>
+
+        <!-- CARDS MOBILE -->
+        <section class="links-cards" id="linksCards">
+            <!-- Cards serão inseridos aqui via JS -->
+        </section>
+    </main>
+
+    <!-- MODAL FORMULÁRIO -->
+    <div id="modalForm" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">➕ Adicionar Link de Afiliado</h2>
+                <span class="close" id="closeModalForm">&times;</span>
+            </div>
+
+            <form id="linkForm">
+                <input type="hidden" id="linkId">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputProgram">Programa: <span class="required">*</span></label>
+                        <select id="inputProgram" required>
+                            <option value="">Selecione...</option>
+                            <option value="Hostinger">Hostinger</option>
+                            <option value="GetResponse">GetResponse</option>
+                            <option value="Amazon Brasil">Amazon Brasil</option>
+                            <option value="Mercado Livre">Mercado Livre</option>
+                            <option value="Shopee">Shopee</option>
+                            <option value="UOL Host">UOL Host</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputStatus">Status: <span class="required">*</span></label>
+                        <select id="inputStatus" required>
+                            <option value="">Selecione...</option>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Pausado">Pausado</option>
+                            <option value="Expirado">Expirado</option>
+                            <option value="Teste">Teste</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputProductName">Nome do Produto/Campanha: <span class="required">*</span></label>
+                    <input type="text" id="inputProductName" placeholder="Ex: Hospedagem WordPress Pro" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputOriginalUrl">URL Original: <span class="required">*</span></label>
+                        <input type="url" id="inputOriginalUrl" placeholder="https://exemplo.com/afiliado?ref=123" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputShortUrl">URL Encurtada:</label>
+                        <input type="text" id="inputShortUrl" placeholder="https://bit.ly/xxx (opcional)">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputUsedIn">Usado Em:</label>
+                    <input type="text" id="inputUsedIn" placeholder="Ex: Post do Blog, YouTube, Instagram Bio">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputClicks">Cliques Estimados:</label>
+                        <input type="number" id="inputClicks" min="0" value="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputConversions">Conversões:</label>
+                        <input type="number" id="inputConversions" min="0" value="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputCommission">Comissão Gerada (R$):</label>
+                        <input type="number" id="inputCommission" min="0" step="0.01" value="0" placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputNotes">Notas:</label>
+                    <textarea id="inputNotes" rows="4" placeholder="Observações, estratégias, datas importantes..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">💾 Salvar</button>
+                    <button type="button" class="btn btn-secondary" id="btnCancelForm">❌ Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2025 <strong>Fernando Pimenta</strong> | Sprint Lab #15 | Ecossistema FP</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

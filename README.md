@@ -309,6 +309,30 @@ Biblioteca offline para guardar e organizar snippets de código úteis. Gerencie
 
 ---
 
+### 15 - FP Affiliate Link Manager
+**📁 Pasta:** `projetos/15-fp-affiliate-link-manager/`
+
+Gerenciador completo de links de afiliados com tracking detalhado. Organize múltiplos programas, monitore cliques, conversões e comissões com dashboard profissional de estatísticas.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, Clipboard API, File API
+
+**Funcionalidades:**
+- CRUD completo de links de afiliados (11 campos por link)
+- 7 programas pré-definidos (Hostinger, GetResponse, Amazon Brasil, Mercado Livre, Shopee, UOL Host, Outro)
+- Dashboard com 5 estatísticas em tempo real (Total Links, Ativos, Cliques, Conversões, Receita)
+- 4 status com badges coloridos (Ativo=verde, Pausado=amarelo, Expirado=vermelho, Teste=azul)
+- Filtros combinados (programa, status, busca textual em produto/URL/notas)
+- Ordenação por colunas (clique nos cabeçalhos da tabela)
+- Copiar URL para clipboard (prioriza URL encurtada)
+- Exportar/Importar JSON (mesclagem inteligente, evita duplicatas)
+- Design responsivo (tabela desktop → cards mobile)
+- Paleta Ecossistema FP (índigo + laranja)
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./projetos/15-fp-affiliate-link-manager/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
