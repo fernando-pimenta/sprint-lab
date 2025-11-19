@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Ferramentas & Softwares FP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>🛠️ Catálogo de Ferramentas FP</h1>
+            <p class="subtitle">Organize todas as ferramentas e softwares do Ecossistema FP</p>
+        </div>
+        <div class="header-actions">
+            <button id="exportBtn" class="btn btn-secondary">📤 Exportar</button>
+            <button id="importBtn" class="btn btn-secondary">📥 Importar</button>
+            <input type="file" id="importFile" accept=".json" style="display: none;">
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Filtros e Busca -->
+        <section class="filters-section">
+            <div class="filters-header">
+                <h2>🔍 Filtros</h2>
+                <button id="clearFiltersBtn" class="btn btn-link">Limpar filtros</button>
+            </div>
+            <div class="filters-grid">
+                <!-- Busca por nome -->
+                <div class="filter-group">
+                    <label for="searchInput">Buscar por nome</label>
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Digite o nome da ferramenta..."
+                    >
+                </div>
+
+                <!-- Filtro por tipo -->
+                <div class="filter-group">
+                    <label for="filterType">Tipo</label>
+                    <select id="filterType">
+                        <option value="">Todos os tipos</option>
+                        <option value="Desktop">Desktop</option>
+                        <option value="Web">Web</option>
+                        <option value="Plugin">Plugin</option>
+                        <option value="Extensão">Extensão</option>
+                        <option value="CLI">CLI</option>
+                        <option value="Mobile">Mobile</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <!-- Filtro por categoria -->
+                <div class="filter-group">
+                    <label for="filterCategory">Categoria</label>
+                    <select id="filterCategory">
+                        <option value="">Todas as categorias</option>
+                        <option value="Edição">Edição</option>
+                        <option value="Produtividade">Produtividade</option>
+                        <option value="IA">IA</option>
+                        <option value="Dev">Dev</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Design">Design</option>
+                        <option value="Vídeo">Vídeo</option>
+                        <option value="Áudio">Áudio</option>
+                        <option value="Backup">Backup</option>
+                        <option value="Segurança">Segurança</option>
+                        <option value="Comunicação">Comunicação</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <!-- Botão Adicionar -->
+                <div class="filter-group">
+                    <label>&nbsp;</label>
+                    <button id="addToolBtn" class="btn btn-primary">➕ Adicionar Ferramenta</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Estatísticas -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <div class="stat-value" id="totalTools">0</div>
+                <div class="stat-label">Total de Ferramentas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalDesktop">0</div>
+                <div class="stat-label">Desktop</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalWeb">0</div>
+                <div class="stat-label">Web</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalPlugins">0</div>
+                <div class="stat-label">Plugins/Extensões</div>
+            </div>
+        </section>
+
+        <!-- Lista de Ferramentas -->
+        <section class="tools-section">
+            <div class="tools-header">
+                <h2>📋 Ferramentas</h2>
+                <span id="resultsCount" class="results-count">0 ferramentas</span>
+            </div>
+
+            <!-- Tabela de ferramentas -->
+            <div class="table-container">
+                <table id="toolsTable" class="tools-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                            <th>Categoria</th>
+                            <th>URL</th>
+                            <th>Notas</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="toolsTableBody">
+                        <!-- Ferramentas serão inseridas aqui via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Estado vazio -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div class="empty-state-icon">🔧</div>
+                <h3>Nenhuma ferramenta encontrada</h3>
+                <p>Adicione sua primeira ferramenta clicando no botão acima!</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Criar/Editar Ferramenta -->
+    <div id="toolModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">➕ Adicionar Ferramenta</h3>
+                <button id="closeModalBtn" class="close-btn">✕</button>
+            </div>
+
+            <form id="toolForm" class="tool-form">
+                <!-- Nome -->
+                <div class="form-group">
+                    <label for="toolName">Nome da Ferramenta *</label>
+                    <input
+                        type="text"
+                        id="toolName"
+                        placeholder="Ex: VS Code, Figma, ChatGPT..."
+                        required
+                    >
+                </div>
+
+                <div class="form-row">
+                    <!-- Tipo -->
+                    <div class="form-group">
+                        <label for="toolType">Tipo *</label>
+                        <select id="toolType" required>
+                            <option value="">Selecione...</option>
+                            <option value="Desktop">Desktop</option>
+                            <option value="Web">Web</option>
+                            <option value="Plugin">Plugin</option>
+                            <option value="Extensão">Extensão</option>
+                            <option value="CLI">CLI</option>
+                            <option value="Mobile">Mobile</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <!-- Categoria -->
+                    <div class="form-group">
+                        <label for="toolCategory">Categoria *</label>
+                        <select id="toolCategory" required>
+                            <option value="">Selecione...</option>
+                            <option value="Edição">Edição</option>
+                            <option value="Produtividade">Produtividade</option>
+                            <option value="IA">IA</option>
+                            <option value="Dev">Dev</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Design">Design</option>
+                            <option value="Vídeo">Vídeo</option>
+                            <option value="Áudio">Áudio</option>
+                            <option value="Backup">Backup</option>
+                            <option value="Segurança">Segurança</option>
+                            <option value="Comunicação">Comunicação</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- URL -->
+                <div class="form-group">
+                    <label for="toolUrl">URL Oficial</label>
+                    <input
+                        type="url"
+                        id="toolUrl"
+                        placeholder="https://exemplo.com"
+                    >
+                    <small class="hint">URL do site oficial ou página de download</small>
+                </div>
+
+                <!-- Notas -->
+                <div class="form-group">
+                    <label for="toolNotes">Notas / Uso Principal</label>
+                    <textarea
+                        id="toolNotes"
+                        rows="4"
+                        placeholder="Descreva o uso principal, licença, observações..."
+                    ></textarea>
+                </div>
+
+                <!-- Ações do Modal -->
+                <div class="modal-actions">
+                    <button type="button" id="cancelBtn" class="btn btn-secondary">❌ Cancelar</button>
+                    <button type="submit" class="btn btn-primary">💾 Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content modal-small">
+            <h3>⚠️ Confirmar Exclusão</h3>
+            <p>Tem certeza que deseja excluir esta ferramenta?</p>
+            <div class="modal-actions">
+                <button id="cancelDeleteBtn" class="btn btn-secondary">❌ Cancelar</button>
+                <button id="confirmDeleteBtn" class="btn btn-danger">🗑️ Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de Notificação -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

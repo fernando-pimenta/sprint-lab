@@ -149,6 +149,28 @@ Ferramenta offline para criar e gerenciar templates de prompts estruturados para
 
 ---
 
+### 08 - Catálogo de Ferramentas FP
+**📁 Pasta:** `projetos/08-catalogo-ferramentas-fp/`
+
+Organize e gerencie todas as ferramentas, softwares, plugins e serviços utilizados no Ecossistema FP. Mantenha um inventário completo com acesso rápido aos links oficiais.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage
+
+**Funcionalidades:**
+- CRUD completo de ferramentas e softwares
+- Filtros por tipo (Desktop, Web, Plugin, CLI, etc.)
+- Filtros por categoria (Dev, Design, IA, Produtividade, etc.)
+- Busca por nome em tempo real
+- Estatísticas (total, por tipo)
+- Links clicáveis para sites oficiais
+- Exportar/Importar catálogo em JSON
+- Interface em tabela organizada com badges coloridos
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./projetos/08-catalogo-ferramentas-fp/README.md)
+
+---
+
 ## 🛠️ Como Usar
 
 Cada projeto possui sua própria documentação dentro de sua pasta. Navegue até o projeto desejado e leia o README.md específico para instruções de uso.
