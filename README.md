@@ -69,6 +69,25 @@ Aplicativo web offline para gerenciar e organizar equipamentos, peças e acessó
 
 ---
 
+### 04 - Gerador de Cards de Produto
+**📁 Pasta:** `projetos/04-gerador-cards-brecho/`
+
+Ferramenta visual para criar cards de produto personalizados, estilo afiliado/Brechó Tech. Preview em tempo real, exportação de HTML/CSS e configurações.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, Clipboard API
+
+**Funcionalidades:**
+- Editor visual com preview em tempo real
+- Personalização completa (cores, textos, badges, botões)
+- Copiar HTML e CSS gerados
+- Exportar/Importar configuração em JSON
+- Interface split (editor + preview)
+- Totalmente gratuito e offline
+
+[📖 Ver documentação completa](./projetos/04-gerador-cards-brecho/README.md)
+
+---
+
 ## 🛠️ Como Usar
 
 Cada projeto possui sua própria documentação dentro de sua pasta. Navegue até o projeto desejado e leia o README.md específico para instruções de uso.

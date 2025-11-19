@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Cards de Produto - Brechó Tech</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Cabeçalho principal -->
+    <header class="main-header">
+        <div class="container">
+            <h1>🏪 Gerador de Cards de Produto</h1>
+            <p class="subtitle">Crie cards visuais para seu Brechó Tech</p>
+        </div>
+    </header>
+
+    <!-- Área principal -->
+    <main class="container">
+        <div class="editor-grid">
+            <!-- Painel de Edição (Esquerda) -->
+            <section class="editor-panel">
+                <h2>⚙️ Configurações do Card</h2>
+
+                <!-- Seção: Informações do Produto -->
+                <div class="form-section">
+                    <h3>📦 Informações do Produto</h3>
+
+                    <div class="form-group">
+                        <label for="productName">Nome do Produto *</label>
+                        <input type="text" id="productName" placeholder="Ex: iPhone 13 Pro Max 256GB">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productDescription">Descrição Curta</label>
+                        <textarea id="productDescription" rows="3" placeholder="Descrição breve do produto..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productPrice">Preço *</label>
+                        <input type="text" id="productPrice" placeholder="Ex: R$ 4.999,00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productBadge">Etiqueta/Selo</label>
+                        <select id="productBadge">
+                            <option value="">Nenhum</option>
+                            <option value="OFERTA">🔥 OFERTA</option>
+                            <option value="USADO">♻️ USADO</option>
+                            <option value="NOVO">✨ NOVO</option>
+                            <option value="DESTAQUE">⭐ DESTAQUE</option>
+                            <option value="PROMOCAO">💰 PROMOÇÃO</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Seção: Botão de Ação -->
+                <div class="form-section">
+                    <h3>🔘 Botão de Ação</h3>
+
+                    <div class="form-group">
+                        <label for="buttonText">Texto do Botão</label>
+                        <input type="text" id="buttonText" placeholder="Ex: Ver Oferta">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="buttonUrl">URL do Botão</label>
+                        <input type="url" id="buttonUrl" placeholder="https://exemplo.com/produto">
+                    </div>
+                </div>
+
+                <!-- Seção: Cores e Estilo -->
+                <div class="form-section">
+                    <h3>🎨 Cores e Estilo</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cardBgColor">Cor de Fundo do Card</label>
+                            <div class="color-input-group">
+                                <input type="color" id="cardBgColor" value="#ffffff">
+                                <input type="text" id="cardBgColorText" value="#ffffff" class="color-text">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="textColor">Cor do Texto</label>
+                            <div class="color-input-group">
+                                <input type="color" id="textColor" value="#1f2937">
+                                <input type="text" id="textColorText" value="#1f2937" class="color-text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="buttonBgColor">Cor do Botão</label>
+                            <div class="color-input-group">
+                                <input type="color" id="buttonBgColor" value="#f59e0b">
+                                <input type="text" id="buttonBgColorText" value="#f59e0b" class="color-text">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="buttonTextColor">Cor do Texto do Botão</label>
+                            <div class="color-input-group">
+                                <input type="color" id="buttonTextColor" value="#ffffff">
+                                <input type="text" id="buttonTextColorText" value="#ffffff" class="color-text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="action-buttons">
+                    <button id="copyHtmlBtn" class="btn btn-primary">📋 Copiar HTML</button>
+                    <button id="copyCssBtn" class="btn btn-primary">🎨 Copiar CSS</button>
+                    <button id="exportConfigBtn" class="btn btn-secondary">📥 Exportar Config</button>
+                    <button id="importConfigBtn" class="btn btn-secondary">📤 Importar Config</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                </div>
+            </section>
+
+            <!-- Painel de Preview (Direita) -->
+            <section class="preview-panel">
+                <h2>👁️ Preview do Card</h2>
+                <div class="preview-container">
+                    <!-- O card será renderizado aqui -->
+                    <div id="productCard" class="product-card">
+                        <div class="product-badge"></div>
+                        <div class="product-content">
+                            <h3 class="product-name">Nome do Produto</h3>
+                            <p class="product-description">Descrição do produto aparecerá aqui...</p>
+                            <div class="product-price">R$ 0,00</div>
+                            <a href="#" class="product-button">Ver Oferta</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instruções -->
+                <div class="instructions">
+                    <h4>💡 Dicas:</h4>
+                    <ul>
+                        <li>Preencha os campos à esquerda para ver o card em tempo real</li>
+                        <li>Copie o HTML e CSS para usar no seu site</li>
+                        <li>Exporte a configuração para reutilizar depois</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>Gerador de Cards de Produto - Brechó Tech - Ecossistema FP &copy; 2025</p>
+            <p>Ferramenta gratuita para criação de cards de produto</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
