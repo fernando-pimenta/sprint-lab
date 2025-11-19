@@ -171,6 +171,30 @@ Organize e gerencie todas as ferramentas, softwares, plugins e serviços utiliza
 
 ---
 
+### 09 - Asset Manager FP
+**📁 Pasta:** `projetos/09-asset-manager-fp/`
+
+Gerencie todos os seus assets visuais (logos, ícones, banners, screenshots) em um só lugar! Upload de imagens, organização com tags e backup completo com imagens em base64.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, FileReader API
+
+**Funcionalidades:**
+- Upload de imagens com drag-and-drop
+- Preview instantâneo de imagens
+- Conversão automática para Base64
+- CRUD completo de assets visuais
+- Grid responsivo com thumbnails
+- Filtros por tipo (Logo, Ícone, Banner, etc.)
+- Busca por nome e por tags
+- Exportar/Importar JSON com imagens incluídas
+- Validação de tamanho (máx 5MB por imagem)
+- Modal de detalhes com visualização ampliada
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./projetos/09-asset-manager-fp/README.md)
+
+---
+
 ## 🛠️ Como Usar
 
 Cada projeto possui sua própria documentação dentro de sua pasta. Navegue até o projeto desejado e leia o README.md específico para instruções de uso.

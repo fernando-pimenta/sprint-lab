@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Manager – Ecossistema FP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>🎨 Asset Manager FP</h1>
+            <p class="subtitle">Organize seus assets visuais: logos, ícones, banners e imagens</p>
+        </div>
+        <div class="header-actions">
+            <button id="exportBtn" class="btn btn-secondary">📤 Exportar</button>
+            <button id="importBtn" class="btn btn-secondary">📥 Importar</button>
+            <input type="file" id="importFile" accept=".json" style="display: none;">
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Formulário de Cadastro -->
+        <section class="form-section">
+            <div class="section-header">
+                <h2>➕ Adicionar Asset</h2>
+            </div>
+
+            <form id="assetForm" class="asset-form">
+                <div class="form-row">
+                    <!-- Nome -->
+                    <div class="form-group">
+                        <label for="assetName">Nome do Asset *</label>
+                        <input
+                            type="text"
+                            id="assetName"
+                            placeholder="Ex: Logo Principal, Ícone Home..."
+                            required
+                        >
+                    </div>
+
+                    <!-- Tipo -->
+                    <div class="form-group">
+                        <label for="assetType">Tipo *</label>
+                        <select id="assetType" required>
+                            <option value="">Selecione...</option>
+                            <option value="Logo">Logo</option>
+                            <option value="Ícone">Ícone</option>
+                            <option value="Banner">Banner</option>
+                            <option value="Screenshot">Screenshot</option>
+                            <option value="Ilustração">Ilustração</option>
+                            <option value="Foto">Foto</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tags -->
+                <div class="form-group">
+                    <label for="assetTags">Tags</label>
+                    <input
+                        type="text"
+                        id="assetTags"
+                        placeholder="Ex: branding, header, social-media (separadas por vírgula)"
+                    >
+                    <small class="hint">Tags separadas por vírgula para facilitar a busca</small>
+                </div>
+
+                <!-- Upload de Imagem -->
+                <div class="form-group">
+                    <label for="assetImage">Imagem *</label>
+                    <div class="upload-area" id="uploadArea">
+                        <input
+                            type="file"
+                            id="assetImage"
+                            accept="image/*"
+                            style="display: none;"
+                            required
+                        >
+                        <div id="uploadPlaceholder" class="upload-placeholder">
+                            <span class="upload-icon">📸</span>
+                            <p>Clique ou arraste uma imagem aqui</p>
+                            <small>PNG, JPG, SVG, GIF (máx 500KB recomendado)</small>
+                        </div>
+                        <div id="imagePreview" class="image-preview" style="display: none;">
+                            <img id="previewImg" alt="Preview">
+                            <button type="button" id="removeImageBtn" class="remove-image-btn">✕</button>
+                        </div>
+                    </div>
+                    <small class="hint">Recomendamos imagens otimizadas para evitar atingir o limite do localStorage</small>
+                </div>
+
+                <!-- Botão de Envio -->
+                <button type="submit" class="btn btn-primary">💾 Salvar Asset</button>
+            </form>
+        </section>
+
+        <!-- Filtros e Busca -->
+        <section class="filters-section">
+            <div class="section-header">
+                <h2>🔍 Filtros</h2>
+                <button id="clearFiltersBtn" class="btn btn-link">Limpar filtros</button>
+            </div>
+
+            <div class="filters-grid">
+                <!-- Busca por nome -->
+                <div class="filter-group">
+                    <label for="searchName">Buscar por nome</label>
+                    <input
+                        type="text"
+                        id="searchName"
+                        placeholder="Digite o nome do asset..."
+                    >
+                </div>
+
+                <!-- Filtro por tipo -->
+                <div class="filter-group">
+                    <label for="filterType">Tipo</label>
+                    <select id="filterType">
+                        <option value="">Todos os tipos</option>
+                        <option value="Logo">Logo</option>
+                        <option value="Ícone">Ícone</option>
+                        <option value="Banner">Banner</option>
+                        <option value="Screenshot">Screenshot</option>
+                        <option value="Ilustração">Ilustração</option>
+                        <option value="Foto">Foto</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <!-- Busca por tag -->
+                <div class="filter-group">
+                    <label for="searchTag">Buscar por tag</label>
+                    <input
+                        type="text"
+                        id="searchTag"
+                        placeholder="Digite uma tag..."
+                    >
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid de Assets -->
+        <section class="assets-section">
+            <div class="section-header">
+                <h2>📁 Meus Assets</h2>
+                <span id="assetsCount" class="results-count">0 assets</span>
+            </div>
+
+            <div id="assetsGrid" class="assets-grid">
+                <!-- Assets serão inseridos aqui via JS -->
+            </div>
+
+            <!-- Estado vazio -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div class="empty-state-icon">🖼️</div>
+                <h3>Nenhum asset encontrado</h3>
+                <p>Adicione seu primeiro asset usando o formulário acima!</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Visualização de Asset -->
+    <div id="assetModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="modalAssetName">Nome do Asset</h3>
+                <button id="closeModalBtn" class="close-btn">✕</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="asset-detail-image">
+                    <img id="modalAssetImage" alt="Asset">
+                </div>
+
+                <div class="asset-detail-info">
+                    <div class="detail-row">
+                        <strong>Tipo:</strong>
+                        <span id="modalAssetType" class="asset-type-badge"></span>
+                    </div>
+                    <div class="detail-row">
+                        <strong>Tags:</strong>
+                        <div id="modalAssetTags" class="asset-tags"></div>
+                    </div>
+                    <div class="detail-row">
+                        <strong>Criado em:</strong>
+                        <span id="modalAssetCreated"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="deleteAssetBtn" class="btn btn-danger">🗑️ Excluir Asset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content modal-small">
+            <h3>⚠️ Confirmar Exclusão</h3>
+            <p>Tem certeza que deseja excluir este asset?</p>
+            <div class="modal-actions">
+                <button id="cancelDeleteBtn" class="btn btn-secondary">❌ Cancelar</button>
+                <button id="confirmDeleteBtn" class="btn btn-danger">🗑️ Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de Notificação -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
