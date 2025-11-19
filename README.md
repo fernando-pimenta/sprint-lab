@@ -359,6 +359,32 @@ Construtor visual de templates de email marketing offline com preview em tempo r
 
 ---
 
+### 17 - FP Keyword Research Organizer
+**📁 Pasta:** `17-fp-keyword-research-organizer/`
+
+Organizador completo de keywords para SEO offline com análise de oportunidades, agrupamento por clusters e calculadora de tráfego potencial. Ferramenta profissional para pesquisa e gestão de palavras-chave.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, Clipboard API, File API
+
+**Funcionalidades:**
+- CRUD completo de keywords com 13 campos (palavra-chave, volume, dificuldade, intenção, URL, site, posição, status, etc.)
+- Dashboard com 6 estatísticas em tempo real (total, top 10, em progresso, a trabalhar, volume total, dificuldade média)
+- Análise automática de "Melhores Oportunidades" (alto volume + baixa dificuldade, intenção comercial, posições 11-30)
+- Filtros avançados combinados (site, dificuldade, intenção, status, posição, busca textual)
+- Agrupamento automático por clusters (algoritmo de similaridade 60%+)
+- Calculadora de tráfego potencial (CTR por posição × volume)
+- Histórico de posições (últimas 10 verificações com timeline)
+- Exportar JSON e CSV / Importar JSON (mesclar dados)
+- Ordenação por colunas (palavra-chave, volume, dificuldade, posição, etc.)
+- 3 visualizações: Todas | Por Cluster | Oportunidades
+- Badges coloridos (dificuldade: verde/amarelo/vermelho/roxo, status: azul/amarelo/verde/cinza)
+- Design responsivo (tabela desktop → cards mobile)
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./17-fp-keyword-research-organizer/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
