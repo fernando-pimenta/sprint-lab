@@ -333,6 +333,32 @@ Gerenciador completo de links de afiliados com tracking detalhado. Organize múl
 
 ---
 
+### 16 - FP Email Template Builder
+**📁 Pasta:** `16-fp-email-template-builder/`
+
+Construtor visual de templates de email marketing offline com preview em tempo real. Editor HTML/CSS completo, biblioteca de blocos, variáveis dinâmicas e validação de compatibilidade.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, Clipboard API, File API
+
+**Funcionalidades:**
+- CRUD completo de templates de email
+- Editor HTML/CSS com preview ao vivo
+- Biblioteca de 8 blocos pré-formatados (Header, Hero, Produto, CTA, Footer, etc.)
+- Variáveis dinâmicas ({{nome}}, {{email}}, {{produto}}, {{preco}}, {{link}}, {{data}})
+- 5 templates prontos (Newsletter, Promocional, Boas-vindas, Lançamento, Transacional)
+- Toggle visualização Desktop/Mobile
+- Auto-save a cada 30 segundos
+- Exportar HTML/JSON e Copiar para clipboard
+- Importar JSON (mesclar templates)
+- Teste de compatibilidade (valida uso de tables, inline styles, variáveis)
+- Campos: Nome, Assunto (60 chars), Categoria, Plataforma (Mailpoet/GetResponse/Genérico), Status, Notas
+- Interface split-screen (editor 40% + preview 60%)
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./16-fp-email-template-builder/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
