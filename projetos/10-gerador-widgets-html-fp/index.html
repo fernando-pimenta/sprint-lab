@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Widgets HTML – FP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>🧩 Gerador de Widgets HTML</h1>
+            <p class="subtitle">Crie blocos HTML prontos para usar nos seus sites do Ecossistema FP</p>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Sidebar: Formulário -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>⚙️ Configurar Widget</h2>
+            </div>
+
+            <!-- Seleção de Tipo -->
+            <div class="form-section">
+                <label for="widgetType">Tipo de Widget</label>
+                <select id="widgetType" class="widget-select">
+                    <option value="card">Card Simples</option>
+                    <option value="highlight">Box de Destaque</option>
+                    <option value="grid">Grid 3 Colunas</option>
+                    <option value="cta">CTA (Chamada para Ação)</option>
+                </select>
+                <small class="hint">Selecione o tipo de widget que deseja gerar</small>
+            </div>
+
+            <!-- Formulários Dinâmicos -->
+            <div id="widgetForm" class="widget-form">
+                <!-- Formulário será inserido aqui via JS -->
+            </div>
+        </aside>
+
+        <!-- Main Content: Preview + Código -->
+        <main class="main-content">
+            <!-- Preview -->
+            <section class="preview-section">
+                <div class="section-header">
+                    <h2>👁️ Preview ao Vivo</h2>
+                </div>
+                <div id="widgetPreview" class="widget-preview">
+                    <!-- Preview será inserido aqui via JS -->
+                </div>
+            </section>
+
+            <!-- Código HTML -->
+            <section class="code-section">
+                <div class="section-header">
+                    <h2>📝 Código HTML</h2>
+                    <button id="copyHtmlBtn" class="btn btn-primary">📋 Copiar HTML</button>
+                </div>
+                <textarea id="htmlCode" class="code-textarea" readonly></textarea>
+            </section>
+
+            <!-- CSS Base (Opcional) -->
+            <section class="code-section">
+                <div class="section-header">
+                    <h2>🎨 CSS Base Sugerido</h2>
+                    <button id="copyCssBtn" class="btn btn-secondary">📋 Copiar CSS</button>
+                </div>
+                <textarea id="cssCode" class="code-textarea" readonly></textarea>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast de Notificação -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

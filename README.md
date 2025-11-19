@@ -195,6 +195,29 @@ Gerencie todos os seus assets visuais (logos, ícones, banners, screenshots) em 
 
 ---
 
+### 10 - Gerador de Widgets HTML
+**📁 Pasta:** `projetos/10-gerador-widgets-html-fp/`
+
+Gere rapidamente blocos HTML prontos (widgets) para usar em sites do Ecossistema FP! Preview ao vivo, código HTML limpo e CSS base incluído.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, Clipboard API
+
+**Funcionalidades:**
+- 4 tipos de widgets (Card, Box de Destaque, Grid 3 Colunas, CTA)
+- Formulários dinâmicos por tipo de widget
+- Preview ao vivo que atualiza conforme você edita
+- Geração de código HTML limpo e semântico
+- CSS base sugerido para cada widget
+- Copiar HTML e CSS com um clique
+- Grid dinâmico (adicionar/remover items)
+- Interface split (editor + preview)
+- Classes prefixadas (fp-*) para evitar conflitos
+- Totalmente responsivo
+
+[📖 Ver documentação completa](./projetos/10-gerador-widgets-html-fp/README.md)
+
+---
+
 ## 🛠️ Como Usar
 
 Cada projeto possui sua própria documentação dentro de sua pasta. Navegue até o projeto desejado e leia o README.md específico para instruções de uso.
