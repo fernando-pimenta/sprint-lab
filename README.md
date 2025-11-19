@@ -239,6 +239,29 @@ Planejador editorial offline para criadores de conteúdo. Organize todos os seus
 
 ---
 
+### 12 - FP Learning Tracker
+**📁 Pasta:** `projetos/12-fp-learning-tracker/`
+
+Rastreador offline de aprendizado técnico contínuo. Acompanhe sua evolução em diferentes tecnologias e habilidades ao longo do tempo com sistema de níveis visuais e timestamps automáticos.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, File API
+
+**Funcionalidades:**
+- CRUD completo de habilidades (nome, categoria, status, nível, meta, notas)
+- Sistema de níveis de 1 a 5 estrelas (Iniciante → Expert)
+- 4 status de aprendizado (Aprendendo, Aprofundando, Dominado, Em pausa)
+- 6 categorias (Dev, Marketing, Conteúdo, IA, Infra, Geral)
+- Filtros combinados (categoria, status, nível mínimo)
+- Busca por nome em tempo real
+- Timestamp automático de última atualização
+- Exportar/Importar aprendizado em JSON
+- Interface responsiva com paleta azul escuro
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./projetos/12-fp-learning-tracker/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
