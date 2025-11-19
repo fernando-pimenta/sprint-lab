@@ -437,6 +437,35 @@ Dashboard offline de métricas dos 3 sites do Ecossistema FP (Blog do FP, Brech�
 
 ---
 
+### 20 - FP Product Comparator
+**📁 Pasta:** `20-fp-product-comparator/`
+
+Comparador lado a lado de até 4 produtos/ferramentas com análise automática de melhor preço, rating, features e custo-benefício. Ideal para decisões de compra e reviews comparativos.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, File API
+
+**Funcionalidades:**
+- CRUD completo de produtos com 15 campos (nome, categoria, preço, frequência, rating, prós, contras, features, público-alvo, recomendação, links)
+- Seleção de 2-4 produtos para comparação lado a lado
+- Tabela de comparação responsiva com grid visual
+- Análise automática: Mais Barato, Melhor Avaliado, Mais Completo, Melhor Custo-Benefício
+- Destaques visuais (melhor preço: verde, melhor rating: dourado, mais features: badge)
+- Fórmula de custo-benefício: (Rating × Features) / Preço Mensal
+- Filtros avançados (categoria, rating mínimo, preço máximo, recomendação, busca textual)
+- Templates de comparação salvos (salvar/carregar comparações favoritas)
+- Modo Rápido (Quick Compare) com barra lateral flutuante
+- Export em 4 formatos: HTML (página standalone), Markdown (tabela), JSON, CSV
+- Import JSON (mesclar ou substituir)
+- Ordenação por nome, preço (menor/maior), rating
+- Conversão automática de preços para valor mensal
+- Modo impressão (formata para captura de tela)
+- Grid responsivo (desktop: 4 cols, tablet: 3, mobile: cards empilhados)
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./20-fp-product-comparator/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
