@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FP Bookmark Organizer – Organizador de Links</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>🔖 FP Bookmark Organizer</h1>
+            <p class="subtitle">Organize seus links úteis com inteligência</p>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Actions Bar -->
+        <div class="actions-bar">
+            <button class="btn btn-primary" id="btnNewBookmark">➕ Novo Link</button>
+            <div class="actions-right">
+                <button class="btn btn-secondary" id="btnExport">📤 Exportar Links</button>
+                <button class="btn btn-secondary" id="btnImport">📥 Importar Links</button>
+                <input type="file" id="fileInput" accept=".json" style="display: none;">
+            </div>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="filters-section">
+            <h3>🔍 Filtros</h3>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="filterCategory">Categoria:</label>
+                    <select id="filterCategory">
+                        <option value="">Todas</option>
+                        <option value="Ferramentas">Ferramentas</option>
+                        <option value="IA">IA</option>
+                        <option value="WordPress">WordPress</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Estudos">Estudos</option>
+                        <option value="Docs">Docs</option>
+                        <option value="Recursos">Recursos</option>
+                        <option value="Inspiração">Inspiração</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterPriority">Prioridade:</label>
+                    <select id="filterPriority">
+                        <option value="">Todas</option>
+                        <option value="Alta">Alta</option>
+                        <option value="Média">Média</option>
+                        <option value="Baixa">Baixa</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="searchTitle">Buscar Título:</label>
+                    <input type="text" id="searchTitle" placeholder="Digite para buscar...">
+                </div>
+
+                <div class="filter-group">
+                    <label for="searchTag">Buscar Tag:</label>
+                    <input type="text" id="searchTag" placeholder="Ex: python, seo, design...">
+                </div>
+            </div>
+            <button class="btn btn-secondary btn-clear-filters" id="btnClearFilters">🔄 Limpar Filtros</button>
+        </div>
+
+        <!-- Bookmarks List -->
+        <div class="bookmarks-list-section">
+            <div class="list-header">
+                <h3>📚 Meus Links</h3>
+                <span class="count-badge" id="countBadge">0 links</span>
+            </div>
+            <div id="bookmarksList" class="bookmarks-list">
+                <!-- Items serão inseridos aqui via JavaScript -->
+            </div>
+            <div id="emptyState" class="empty-state">
+                <p>📭 Nenhum link cadastrado ainda.</p>
+                <p>Clique em "Novo Link" para começar a organizar seus bookmarks!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Form -->
+    <div id="modalForm" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">➕ Novo Link</h2>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <form id="bookmarkForm">
+                <input type="hidden" id="bookmarkId">
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="inputTitle">Título: <span class="required">*</span></label>
+                        <input type="text" id="inputTitle" required placeholder="Ex: ChatGPT, Documentação React, Tutorial SEO...">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="inputUrl">URL: <span class="required">*</span></label>
+                        <input type="url" id="inputUrl" required placeholder="https://...">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputCategory">Categoria: <span class="required">*</span></label>
+                        <select id="inputCategory" required>
+                            <option value="">Selecione...</option>
+                            <option value="Ferramentas">Ferramentas</option>
+                            <option value="IA">IA</option>
+                            <option value="WordPress">WordPress</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Estudos">Estudos</option>
+                            <option value="Docs">Docs</option>
+                            <option value="Recursos">Recursos</option>
+                            <option value="Inspiração">Inspiração</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPriority">Prioridade: <span class="required">*</span></label>
+                        <select id="inputPriority" required>
+                            <option value="">Selecione...</option>
+                            <option value="Alta">Alta</option>
+                            <option value="Média">Média</option>
+                            <option value="Baixa">Baixa</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="inputTags">Tags (separadas por vírgula):</label>
+                        <input type="text" id="inputTags" placeholder="Ex: python, ai, tutorial, grátis...">
+                        <small class="form-hint">Separe as tags por vírgula. Ex: javascript, react, frontend</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="inputDescription">Descrição:</label>
+                        <textarea id="inputDescription" rows="4" placeholder="Descrição opcional do link, anotações, por que é útil..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-info">
+                    <small>A data de inclusão será registrada automaticamente. O último acesso será atualizado ao clicar no link.</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="btnCancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">💾 Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

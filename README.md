@@ -262,6 +262,29 @@ Rastreador offline de aprendizado técnico contínuo. Acompanhe sua evolução e
 
 ---
 
+### 13 - FP Bookmark Organizer
+**📁 Pasta:** `projetos/13-fp-bookmark-organizer/`
+
+Organizador offline de links inteligente para criadores, técnicos e afiliados. Gerencie seus bookmarks com tags, categorias, prioridades e rastreamento automático de acessos.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, File API
+
+**Funcionalidades:**
+- CRUD completo de bookmarks (título, URL, categoria, prioridade, tags, descrição)
+- 8 categorias (Ferramentas, IA, WordPress, Marketing, Estudos, Docs, Recursos, Inspiração)
+- Sistema de tags como chips visuais
+- 3 níveis de prioridade com cores (Alta=vermelho, Média=amarelo, Baixa=verde)
+- Filtros combinados (categoria, prioridade, busca por título e tag)
+- Rastreamento de último acesso (atualizado automaticamente ao clicar no link)
+- Data de criação e último acesso registrados
+- Exportar/Importar bookmarks em JSON (mesclar ou substituir)
+- Interface responsiva com paleta neutra + azul escuro
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./projetos/13-fp-bookmark-organizer/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
