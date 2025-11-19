@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Editor de Tutoriais - Ecossistema FP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Cabeçalho principal -->
+    <header class="main-header">
+        <div class="container">
+            <h1>📝 Mini Editor de Tutoriais</h1>
+            <p class="subtitle">Crie tutoriais passo a passo com exportação em Markdown</p>
+        </div>
+    </header>
+
+    <!-- Área principal -->
+    <main class="container">
+        <div class="editor-layout">
+            <!-- Painel esquerdo: Lista de tutoriais -->
+            <aside class="tutorials-sidebar">
+                <div class="sidebar-header">
+                    <h2>Meus Tutoriais</h2>
+                    <button id="newTutorialBtn" class="btn btn-primary">➕ Novo</button>
+                </div>
+
+                <div id="tutorialsList" class="tutorials-list">
+                    <!-- Os tutoriais serão inseridos aqui -->
+                </div>
+
+                <div id="emptyState" class="empty-state-sidebar">
+                    <p>📚 Nenhum tutorial ainda</p>
+                    <p>Clique em "Novo" para começar</p>
+                </div>
+            </aside>
+
+            <!-- Painel direito: Editor -->
+            <section class="editor-panel">
+                <div id="editorPlaceholder" class="editor-placeholder">
+                    <div class="placeholder-content">
+                        <span class="placeholder-icon">📝</span>
+                        <h3>Selecione ou crie um tutorial</h3>
+                        <p>Use o painel à esquerda para começar</p>
+                    </div>
+                </div>
+
+                <div id="editorForm" class="editor-form" style="display: none;">
+                    <div class="editor-header">
+                        <h2 id="editorTitle">Novo Tutorial</h2>
+                        <button id="closeEditorBtn" class="btn btn-ghost">✕</button>
+                    </div>
+
+                    <form id="tutorialForm">
+                        <input type="hidden" id="tutorialId" value="">
+
+                        <div class="form-group">
+                            <label for="tutorialTitle">Título do Tutorial *</label>
+                            <input type="text" id="tutorialTitle" required placeholder="Ex: Como instalar o Node.js">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="tutorialCategory">Categoria *</label>
+                                <select id="tutorialCategory" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="Desenvolvimento">Desenvolvimento</option>
+                                    <option value="Design">Design</option>
+                                    <option value="DevOps">DevOps</option>
+                                    <option value="Banco de Dados">Banco de Dados</option>
+                                    <option value="Segurança">Segurança</option>
+                                    <option value="Ferramentas">Ferramentas</option>
+                                    <option value="Outro">Outro</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tutorialLevel">Nível *</label>
+                                <select id="tutorialLevel" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="Básico">Básico</option>
+                                    <option value="Intermediário">Intermediário</option>
+                                    <option value="Avançado">Avançado</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Passos do Tutorial *</label>
+                            <div id="stepsContainer" class="steps-container">
+                                <!-- Os passos serão inseridos aqui dinamicamente -->
+                            </div>
+                            <button type="button" id="addStepBtn" class="btn btn-secondary">
+                                ➕ Adicionar Passo
+                            </button>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tutorialNotes">Notas Finais</label>
+                            <textarea id="tutorialNotes" rows="4" placeholder="Observações, dicas, avisos, referências..."></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="saveTutorialBtn">💾 Salvar Tutorial</button>
+                            <button type="button" class="btn btn-cancel" id="cancelBtn">❌ Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>Mini Editor de Tutoriais - Ecossistema FP &copy; 2025</p>
+            <p>Crie e organize procedimentos técnicos com exportação em Markdown</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

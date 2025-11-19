@@ -108,6 +108,26 @@ Ferramenta offline para organizar e gerenciar ideias de conteúdo, rascunhos e c
 
 ---
 
+### 06 - Mini Editor de Tutoriais
+**📁 Pasta:** `projetos/06-mini-editor-tutoriais/`
+
+Editor offline para criar e gerenciar tutoriais passo a passo com exportação em Markdown. Organize procedimentos técnicos e how-tos de forma estruturada.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage
+
+**Funcionalidades:**
+- Criação de tutoriais com título, categoria e nível
+- Gerenciamento dinâmico de passos (adicionar/remover)
+- Renumeração automática dos passos
+- Exportação individual em Markdown (.md)
+- Níveis coloridos (Básico, Intermediário, Avançado)
+- Campo de notas finais opcionais
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./projetos/06-mini-editor-tutoriais/README.md)
+
+---
+
 ## 🛠️ Como Usar
 
 Cada projeto possui sua própria documentação dentro de sua pasta. Navegue até o projeto desejado e leia o README.md específico para instruções de uso.
