@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Estruturas de Prompt – Agentes IA</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>🤖 Gerador de Estruturas de Prompt</h1>
+            <p class="subtitle">Crie templates de prompts para agentes IA</p>
+        </div>
+        <div class="header-actions">
+            <button id="exportBtn" class="btn btn-secondary">📤 Exportar JSON</button>
+            <button id="importBtn" class="btn btn-secondary">📥 Importar JSON</button>
+            <input type="file" id="importFile" accept=".json" style="display: none;">
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Sidebar: Lista de Templates -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>📋 Meus Templates</h2>
+                <button id="newTemplateBtn" class="btn btn-primary">➕ Novo</button>
+            </div>
+            <div id="templatesList" class="templates-list">
+                <!-- Templates serão inseridos aqui via JS -->
+            </div>
+        </aside>
+
+        <!-- Main Content: Editor + Preview -->
+        <main class="main-content">
+            <!-- Editor de Template -->
+            <section class="editor-section">
+                <div class="section-header">
+                    <h2 id="editorTitle">✏️ Novo Template</h2>
+                    <div class="editor-actions">
+                        <button id="saveBtn" class="btn btn-primary">💾 Salvar Template</button>
+                        <button id="cancelBtn" class="btn btn-secondary" style="display: none;">❌ Cancelar</button>
+                    </div>
+                </div>
+
+                <form id="templateForm" class="template-form">
+                    <!-- Nome do Agente -->
+                    <div class="form-group">
+                        <label for="agentName">Nome do Agente *</label>
+                        <input
+                            type="text"
+                            id="agentName"
+                            placeholder="Ex: Assistente de Código, Revisor Técnico, Criador de Conteúdo..."
+                            required
+                        >
+                    </div>
+
+                    <!-- Objetivo do Agente -->
+                    <div class="form-group">
+                        <label for="objective">Objetivo do Agente *</label>
+                        <textarea
+                            id="objective"
+                            rows="3"
+                            placeholder="Descreva o objetivo principal deste agente..."
+                            required
+                        ></textarea>
+                        <small class="hint">Exemplo: "Você é um assistente especializado em revisar código JavaScript e sugerir melhorias."</small>
+                    </div>
+
+                    <!-- Tom de Voz -->
+                    <div class="form-group">
+                        <label for="tone">Tom de Voz *</label>
+                        <select id="tone" required>
+                            <option value="">Selecione um tom...</option>
+                            <option value="Profissional e técnico">Profissional e técnico</option>
+                            <option value="Amigável e acessível">Amigável e acessível</option>
+                            <option value="Formal e corporativo">Formal e corporativo</option>
+                            <option value="Casual e descontraído">Casual e descontraído</option>
+                            <option value="Educacional e didático">Educacional e didático</option>
+                            <option value="Criativo e inspirador">Criativo e inspirador</option>
+                            <option value="Direto e objetivo">Direto e objetivo</option>
+                            <option value="Empático e suportivo">Empático e suportivo</option>
+                        </select>
+                    </div>
+
+                    <!-- Contexto Fixo -->
+                    <div class="form-group">
+                        <label for="context">Contexto Fixo</label>
+                        <textarea
+                            id="context"
+                            rows="4"
+                            placeholder="Adicione contexto adicional que sempre será incluído neste prompt (regras, restrições, informações de background)..."
+                        ></textarea>
+                        <small class="hint">Opcional: Informações que sempre devem estar presentes no prompt.</small>
+                    </div>
+
+                    <!-- Campos Dinâmicos / Placeholders -->
+                    <div class="form-group">
+                        <label for="placeholders">Campos Dinâmicos (Placeholders)</label>
+                        <textarea
+                            id="placeholders"
+                            rows="4"
+                            placeholder="Liste os placeholders que serão substituídos, um por linha. Ex:&#10;[ENTRADA_DO_USUARIO]&#10;[CENARIO]&#10;[TECNOLOGIA]"
+                        ></textarea>
+                        <small class="hint">Use o formato [NOME_PLACEHOLDER]. Estes campos aparecerão no prompt final e podem ser substituídos posteriormente.</small>
+                    </div>
+
+                    <!-- Instruções Finais -->
+                    <div class="form-group">
+                        <label for="instructions">Instruções Finais</label>
+                        <textarea
+                            id="instructions"
+                            rows="3"
+                            placeholder="Instruções específicas sobre como o agente deve responder ou agir..."
+                        ></textarea>
+                        <small class="hint">Opcional: Diretrizes adicionais para o comportamento do agente.</small>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Preview do Prompt Final -->
+            <section class="preview-section">
+                <div class="section-header">
+                    <h2>👁️ Preview do Prompt Final</h2>
+                    <button id="copyBtn" class="btn btn-accent">📋 Copiar Prompt</button>
+                </div>
+                <div class="preview-container">
+                    <textarea
+                        id="promptPreview"
+                        readonly
+                        placeholder="O prompt final será gerado aqui conforme você preenche os campos acima..."
+                    ></textarea>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <h3>⚠️ Confirmar Exclusão</h3>
+            <p>Tem certeza que deseja excluir este template?</p>
+            <div class="modal-actions">
+                <button id="confirmDeleteBtn" class="btn btn-danger">🗑️ Excluir</button>
+                <button id="cancelDeleteBtn" class="btn btn-secondary">❌ Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de Notificação -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

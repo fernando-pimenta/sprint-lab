@@ -128,6 +128,27 @@ Editor offline para criar e gerenciar tutoriais passo a passo com exportação e
 
 ---
 
+### 07 - Gerador de Estruturas de Prompt
+**📁 Pasta:** `projetos/07-gerador-estruturas-prompt/`
+
+Ferramenta offline para criar e gerenciar templates de prompts estruturados para agentes de IA. Padronize suas interações com LLMs e mantenha uma biblioteca de prompts eficazes.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, Clipboard API
+
+**Funcionalidades:**
+- Criação de templates com campos estruturados (nome, objetivo, tom, contexto)
+- Preview em tempo real do prompt final gerado
+- Copiar prompt formatado para clipboard
+- Campos dinâmicos/placeholders personalizáveis
+- 8 opções de tom de voz pré-definidas
+- Exportar/Importar templates em JSON
+- Interface split com tema roxo/escuro moderno
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./projetos/07-gerador-estruturas-prompt/README.md)
+
+---
+
 ## 🛠️ Como Usar
 
 Cada projeto possui sua própria documentação dentro de sua pasta. Navegue até o projeto desejado e leia o README.md específico para instruções de uso.
