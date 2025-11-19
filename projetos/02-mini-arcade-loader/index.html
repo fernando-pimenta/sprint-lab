@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Arcade Loader - Ecossistema FP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Cabeçalho principal -->
+    <header class="main-header">
+        <div class="container">
+            <h1>🕹️ Mini Arcade Loader</h1>
+            <p class="subtitle">Seu launcher de jogos HTML5</p>
+        </div>
+    </header>
+
+    <!-- Barra de ferramentas -->
+    <section class="toolbar">
+        <div class="container">
+            <div class="toolbar-actions">
+                <button id="addGameBtn" class="btn btn-primary">➕ Adicionar Jogo</button>
+                <button id="exportBtn" class="btn btn-secondary">📥 Exportar Config</button>
+                <button id="importBtn" class="btn btn-secondary">📤 Importar Config</button>
+                <input type="file" id="importFile" accept=".json" style="display: none;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Área principal -->
+    <main class="container">
+        <!-- Modal de formulário para adicionar/editar jogo -->
+        <div id="gameFormModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="formTitle">Adicionar Novo Jogo</h2>
+                    <button class="close-btn" id="closeModalBtn">&times;</button>
+                </div>
+                <form id="gameForm">
+                    <input type="hidden" id="gameId" value="">
+
+                    <div class="form-group">
+                        <label for="gameName">Nome do Jogo *</label>
+                        <input type="text" id="gameName" required placeholder="Ex: Moon Patrol">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gameDescription">Descrição *</label>
+                        <textarea id="gameDescription" required placeholder="Descreva o jogo..." rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gameUrl">URL do Jogo *</label>
+                        <input type="url" id="gameUrl" required placeholder="https://exemplo.com/jogo/index.html">
+                        <small>URL do arquivo HTML do jogo (será carregado em iframe)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gameThumbnail">URL da Thumbnail *</label>
+                        <input type="url" id="gameThumbnail" required placeholder="https://exemplo.com/capa.png">
+                        <small>URL da imagem de capa do jogo</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gameCategory">Categoria *</label>
+                        <input type="text" id="gameCategory" required placeholder="Ex: Arcade, Puzzle, Ação">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="saveBtn">💾 Salvar Jogo</button>
+                        <button type="button" class="btn btn-cancel" id="cancelBtn">❌ Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Grid Principal: Lista de Jogos + Player -->
+        <div class="main-grid">
+            <!-- Coluna da Lista de Jogos -->
+            <section class="games-section">
+                <h2>Biblioteca de Jogos</h2>
+                <div id="gamesList" class="games-grid">
+                    <!-- Os cards de jogos serão inseridos aqui dinamicamente -->
+                </div>
+                <div id="emptyState" class="empty-state">
+                    <p>🎮 Nenhum jogo cadastrado ainda.</p>
+                    <p>Clique em "Adicionar Jogo" para começar!</p>
+                </div>
+            </section>
+
+            <!-- Coluna do Player -->
+            <section class="player-section">
+                <div id="playerContainer" class="player-container">
+                    <div class="player-placeholder">
+                        <div class="placeholder-content">
+                            <span class="placeholder-icon">🕹️</span>
+                            <h3>Selecione um jogo para jogar</h3>
+                            <p>Clique em qualquer card da biblioteca para iniciar</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detalhes do jogo selecionado -->
+                <div id="gameDetails" class="game-details" style="display: none;">
+                    <div class="details-header">
+                        <h3 id="detailsName">Nome do Jogo</h3>
+                        <button id="closePlayerBtn" class="btn btn-small">✕ Fechar</button>
+                    </div>
+                    <p id="detailsDescription" class="details-description">Descrição do jogo</p>
+                    <p class="details-category">
+                        <strong>Categoria:</strong> <span id="detailsCategory">-</span>
+                    </p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>Mini Arcade Loader - Ecossistema FP &copy; 2025</p>
+            <p>Launcher de jogos HTML5 - Todos os dados são armazenados localmente</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

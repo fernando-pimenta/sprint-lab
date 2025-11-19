@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Pessoal Tech - Ecossistema FP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Cabeçalho principal -->
+    <header class="main-header">
+        <div class="container">
+            <h1>💻 Catálogo Pessoal Tech</h1>
+            <p class="subtitle">Organize seus equipamentos e peças de tecnologia</p>
+        </div>
+    </header>
+
+    <!-- Barra de ferramentas e filtros -->
+    <section class="toolbar">
+        <div class="container">
+            <div class="toolbar-grid">
+                <!-- Filtros -->
+                <div class="filter-group">
+                    <label for="filterCategory">Categoria:</label>
+                    <select id="filterCategory">
+                        <option value="">Todas</option>
+                        <option value="Desktop">Desktop</option>
+                        <option value="Notebook">Notebook</option>
+                        <option value="Periférico">Periférico</option>
+                        <option value="Rede">Rede</option>
+                        <option value="Acessório">Acessório</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterStatus">Status:</label>
+                    <select id="filterStatus">
+                        <option value="">Todos</option>
+                        <option value="Em uso">Em uso</option>
+                        <option value="Reserva">Reserva</option>
+                        <option value="Defeituoso">Defeituoso</option>
+                        <option value="Vendido/Doado">Vendido/Doado</option>
+                    </select>
+                </div>
+
+                <div class="filter-group search-group">
+                    <label for="searchInput">Buscar:</label>
+                    <input type="text" id="searchInput" placeholder="Nome do equipamento...">
+                </div>
+
+                <!-- Botões de ação -->
+                <div class="action-buttons">
+                    <button id="addItemBtn" class="btn btn-primary">➕ Adicionar Item</button>
+                    <button id="exportBtn" class="btn btn-secondary">📥 Exportar</button>
+                    <button id="importBtn" class="btn btn-secondary">📤 Importar</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Área principal -->
+    <main class="container">
+        <!-- Estatísticas -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <span class="stat-number" id="totalItems">0</span>
+                <span class="stat-label">Total de Itens</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="inUseItems">0</span>
+                <span class="stat-label">Em Uso</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="reserveItems">0</span>
+                <span class="stat-label">Reserva</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="defectiveItems">0</span>
+                <span class="stat-label">Defeituosos</span>
+            </div>
+        </section>
+
+        <!-- Modal de formulário -->
+        <div id="itemFormModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="formTitle">Adicionar Novo Item</h2>
+                    <button class="close-btn" id="closeModalBtn">&times;</button>
+                </div>
+                <form id="itemForm">
+                    <input type="hidden" id="itemId" value="">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemName">Nome do Equipamento/Peça *</label>
+                            <input type="text" id="itemName" required placeholder="Ex: Dell XPS 15">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemCategory">Categoria *</label>
+                            <select id="itemCategory" required>
+                                <option value="">Selecione...</option>
+                                <option value="Desktop">Desktop</option>
+                                <option value="Notebook">Notebook</option>
+                                <option value="Periférico">Periférico</option>
+                                <option value="Rede">Rede</option>
+                                <option value="Acessório">Acessório</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="itemStatus">Status *</label>
+                            <select id="itemStatus" required>
+                                <option value="">Selecione...</option>
+                                <option value="Em uso">Em uso</option>
+                                <option value="Reserva">Reserva</option>
+                                <option value="Defeituoso">Defeituoso</option>
+                                <option value="Vendido/Doado">Vendido/Doado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemLocation">Local</label>
+                            <input type="text" id="itemLocation" placeholder="Ex: Escritório, Gaveta 3, Casa">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="itemImage">Imagem (opcional)</label>
+                            <input type="file" id="itemImage" accept="image/*">
+                            <small>A imagem será armazenada localmente</small>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemNotes">Observações</label>
+                            <textarea id="itemNotes" rows="3" placeholder="Especificações, condições, notas gerais..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="saveBtn">💾 Salvar Item</button>
+                        <button type="button" class="btn btn-cancel" id="cancelBtn">❌ Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Listagem de itens -->
+        <section class="items-section">
+            <h2>Meus Equipamentos e Peças</h2>
+            <div id="itemsList" class="items-grid">
+                <!-- Os cards de itens serão inseridos aqui dinamicamente -->
+            </div>
+            <div id="emptyState" class="empty-state">
+                <p>💻 Nenhum item cadastrado ainda.</p>
+                <p>Clique em "Adicionar Item" para começar!</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>Catálogo Pessoal Tech - Ecossistema FP &copy; 2025</p>
+            <p>Todos os dados são armazenados localmente no seu navegador</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
