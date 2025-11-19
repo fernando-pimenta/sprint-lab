@@ -218,6 +218,27 @@ Gere rapidamente blocos HTML prontos (widgets) para usar em sites do Ecossistema
 
 ---
 
+### 11 - FP Content Planner
+**📁 Pasta:** `projetos/11-fp-content-planner/`
+
+Planejador editorial offline para criadores de conteúdo. Organize todos os seus conteúdos em múltiplas plataformas, acompanhe o status de produção e nunca perca o controle do seu calendário editorial.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, File API
+
+**Funcionalidades:**
+- CRUD completo de conteúdos (título, tipo, status, plataforma, data, link, hashtags, descrição)
+- Filtros avançados combinados (plataforma, tipo, status)
+- Busca por título em tempo real
+- 6 status de produção (Rascunho → Publicado)
+- 6 plataformas pré-definidas (YouTube, Instagram, TikTok, Blog, Facebook, Shopee Live)
+- Exportar/Importar planejamento em JSON (mesclar ou substituir)
+- Interface responsiva com cards informativos
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./projetos/11-fp-content-planner/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
