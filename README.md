@@ -412,6 +412,31 @@ Calendário visual para planejamento de posts em múltiplas plataformas sociais.
 
 ---
 
+### 19 - FP Analytics Dashboard
+**📁 Pasta:** `19-fp-analytics-dashboard/`
+
+Dashboard offline de métricas dos 3 sites do Ecossistema FP (Blog do FP, Brechó Tech, CetusNet) com widgets configuráveis e gráficos interativos. Rastreie tráfego, conversões, receita e mais com visualizações avançadas.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, Chart.js (CDN), localStorage, File API
+
+**Funcionalidades:**
+- CRUD completo de registros mensais com 14 campos de métricas
+- 10 widgets configuráveis (mostrar/ocultar individual)
+- 3 gráficos Chart.js: linha (tráfego ao longo do tempo), barras (receita por site), pizza (distribuição)
+- Dashboard com resumo geral e comparação mês a mês (% crescimento/queda)
+- Filtros por site (Blog/Brechó/Cetus/Todos) e período (3/6/12 meses, ano inteiro)
+- Widgets: Taxa de Conversão, ROI de Conteúdo, Metas (com barra de progresso), Tendências, Tabela Comparativa, Heatmap 3×6
+- Comparação de períodos (selecionar 2 meses, mostrar diferenças absolutas e %)
+- Sistema de metas configurável (tráfego, receita, conversões)
+- Heatmap de performance com 6 níveis de cores
+- Exportar JSON e CSV / Importar JSON (mesclar ou substituir)
+- Grid responsivo (desktop: 3 colunas, tablet: 2, mobile: 1)
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./19-fp-analytics-dashboard/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
