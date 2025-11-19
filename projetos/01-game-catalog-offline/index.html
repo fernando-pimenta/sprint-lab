@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Catalog Offline - Ecossistema FP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Cabeçalho principal -->
+    <header class="main-header">
+        <div class="container">
+            <h1>🎮 Game Catalog Offline</h1>
+            <p class="subtitle">Seu catálogo pessoal de jogos</p>
+        </div>
+    </header>
+
+    <!-- Barra de ferramentas -->
+    <section class="toolbar">
+        <div class="container">
+            <div class="toolbar-grid">
+                <!-- Filtros -->
+                <div class="filter-group">
+                    <label for="filterPlatform">Plataforma:</label>
+                    <select id="filterPlatform">
+                        <option value="">Todas</option>
+                        <option value="Xbox Físico">Xbox Físico</option>
+                        <option value="Xbox Digital">Xbox Digital</option>
+                        <option value="Steam">Steam</option>
+                        <option value="GOG">GOG</option>
+                        <option value="Epic">Epic</option>
+                        <option value="Amazon Luna">Amazon Luna</option>
+                        <option value="Legacy Games">Legacy Games</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterType">Tipo:</label>
+                    <select id="filterType">
+                        <option value="">Todos</option>
+                        <option value="Físico">Físico</option>
+                        <option value="Digital">Digital</option>
+                    </select>
+                </div>
+
+                <div class="filter-group search-group">
+                    <label for="searchInput">Buscar:</label>
+                    <input type="text" id="searchInput" placeholder="Nome do jogo...">
+                </div>
+
+                <!-- Botões de importar/exportar -->
+                <div class="action-buttons">
+                    <button id="exportBtn" class="btn btn-secondary">📥 Exportar</button>
+                    <button id="importBtn" class="btn btn-secondary">📤 Importar</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Área principal -->
+    <main class="container">
+        <!-- Formulário de cadastro/edição -->
+        <section class="form-section">
+            <h2 id="formTitle">Adicionar Novo Jogo</h2>
+            <form id="gameForm">
+                <input type="hidden" id="gameId" value="">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gameTitle">Título do Jogo *</label>
+                        <input type="text" id="gameTitle" required placeholder="Ex: Halo Infinite">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gamePlatform">Plataforma *</label>
+                        <select id="gamePlatform" required>
+                            <option value="">Selecione...</option>
+                            <option value="Xbox Físico">Xbox Físico</option>
+                            <option value="Xbox Digital">Xbox Digital</option>
+                            <option value="Steam">Steam</option>
+                            <option value="GOG">GOG</option>
+                            <option value="Epic">Epic</option>
+                            <option value="Amazon Luna">Amazon Luna</option>
+                            <option value="Legacy Games">Legacy Games</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gameType">Tipo *</label>
+                        <select id="gameType" required>
+                            <option value="">Selecione...</option>
+                            <option value="Físico">Físico</option>
+                            <option value="Digital">Digital</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gameBarcode">Código de Barras</label>
+                        <input type="text" id="gameBarcode" placeholder="Opcional">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gameOrigin">Origem/Loja</label>
+                        <input type="text" id="gameOrigin" placeholder="Ex: Shopee, Steam Store...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gameCover">Imagem de Capa</label>
+                        <input type="file" id="gameCover" accept="image/*">
+                        <small>A imagem será armazenada localmente</small>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="saveBtn">💾 Salvar Jogo</button>
+                    <button type="button" class="btn btn-cancel" id="cancelBtn" style="display: none;">❌ Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Área de estatísticas -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <span class="stat-number" id="totalGames">0</span>
+                <span class="stat-label">Total de Jogos</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="physicalGames">0</span>
+                <span class="stat-label">Físicos</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="digitalGames">0</span>
+                <span class="stat-label">Digitais</span>
+            </div>
+        </section>
+
+        <!-- Listagem de jogos -->
+        <section class="games-section">
+            <h2>Minha Biblioteca</h2>
+            <div id="gamesList" class="games-grid">
+                <!-- Os cards de jogos serão inseridos aqui dinamicamente -->
+            </div>
+            <div id="emptyState" class="empty-state">
+                <p>📚 Nenhum jogo cadastrado ainda.</p>
+                <p>Adicione seu primeiro jogo usando o formulário acima!</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>Game Catalog Offline - Ecossistema FP &copy; 2025</p>
+            <p>Todos os dados são armazenados localmente no seu navegador</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
