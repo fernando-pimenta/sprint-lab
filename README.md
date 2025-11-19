@@ -385,6 +385,33 @@ Organizador completo de keywords para SEO offline com análise de oportunidades,
 
 ---
 
+### 18 - FP Social Media Scheduler
+**📁 Pasta:** `18-fp-social-media-scheduler/`
+
+Calendário visual para planejamento de posts em múltiplas plataformas sociais. Organize, agende e gerencie posts para Instagram, LinkedIn, Twitter, TikTok, YouTube, Facebook e Threads com visualizações avançadas, templates e recursos de produtividade.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, File API
+
+**Funcionalidades:**
+- CRUD completo de posts com 13 campos (título, plataforma, data, horário, tipo de conteúdo, texto, hashtags, mídia, link externo, status, prioridade, categoria, notas)
+- 4 visualizações: Calendário Mensal, Lista Semanal, Timeline, Por Plataforma
+- Dashboard com estatísticas em tempo real (total, por plataforma, por status, alta prioridade)
+- Filtros avançados combinados (plataformas, status, prioridade, categoria, busca textual)
+- Templates de posts (5 pré-configurados + criar novos)
+- Sugestão de horários recomendados por plataforma
+- Contador de caracteres por plataforma (Twitter: 280, Instagram: 2.200, LinkedIn: 3.000, etc.)
+- Gerador de hashtags por tema/keyword
+- Exportar JSON, CSV e ICS (calendário para Google Calendar/Outlook)
+- Importar JSON (mesclar ou substituir)
+- Navegação de calendário (mês anterior/próximo, hoje)
+- Badges coloridos por plataforma, status e prioridade
+- Design responsivo (desktop: calendário, mobile: lista)
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./18-fp-social-media-scheduler/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
