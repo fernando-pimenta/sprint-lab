@@ -218,6 +218,39 @@ Gere rapidamente blocos HTML prontos (widgets) para usar em sites do Ecossistema
 
 ---
 
+## 📦 FP BOX (Projeto Base)
+
+### FP BOX – Sistema Modular v0.1
+**📁 Pasta:** `projetos/fp-box/`
+
+**Framework modular** que serve como base para aplicações de produtividade e organização. Diferente dos 10 mini-projetos acima (que são aplicações standalone), o FP BOX é um **sistema skeleton extensível** projetado para integrar e hospedar múltiplos módulos.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, Fetch API
+
+**Características:**
+- 🧩 Arquitetura modular plugin-style
+- 🚀 SPA (Single Page Application) sem reload de página
+- 📦 Carregamento dinâmico de módulos via fetch()
+- 💾 100% offline, sem dependências externas
+- 📱 Design responsivo com sidebar colapsável
+- ⚡ Sistema de navegação e menu automático
+- 🔌 Fácil adição de novos módulos
+
+**Módulos Iniciais (v0.1):**
+- **Home** – Tela de boas-vindas e apresentação do sistema
+- **Placeholder** – Módulo de exemplo/demonstração
+
+**Roadmap Futuro:**
+- Integração com os 10 mini-projetos do Sprint Lab
+- Sistema de configurações e preferências
+- Modo escuro/claro
+- PWA (Progressive Web App)
+- Sincronização com Blog FP
+
+[📖 Ver documentação completa](./projetos/fp-box/README.md)
+
+---
+
 ## 🛠️ Como Usar
 
 Cada projeto possui sua própria documentação dentro de sua pasta. Navegue até o projeto desejado e leia o README.md específico para instruções de uso.

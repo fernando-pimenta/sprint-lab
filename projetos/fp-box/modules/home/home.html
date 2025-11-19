@@ -1,0 +1,208 @@
+<div class="home-module">
+    <div class="welcome-section">
+        <h1 class="welcome-title">Bem-vindo ao FP BOX! 🎉</h1>
+        <p class="welcome-subtitle">Sistema Modular de Produtividade – Versão 0.1 (Skeleton)</p>
+    </div>
+
+    <div class="info-card">
+        <h2>📦 O que é o FP BOX?</h2>
+        <p>
+            O <strong>FP BOX</strong> é um framework modular criado para servir como base para aplicações
+            de produtividade, organização e gestão de tarefas. Este é o <em>skeleton</em> (esqueleto) do sistema,
+            projetado com uma arquitetura extensível que permite adicionar novos módulos de forma simples e desacoplada.
+        </p>
+        <p>
+            Construído 100% com HTML, CSS e JavaScript vanilla, o FP BOX funciona completamente offline,
+            sem necessidade de frameworks externos, servidores ou dependências complexas.
+        </p>
+    </div>
+
+    <div class="info-card">
+        <h2>🚀 Características Principais</h2>
+        <ul class="features-list">
+            <li><strong>Arquitetura Modular:</strong> Sistema plugin-style onde cada módulo é independente</li>
+            <li><strong>SPA (Single Page Application):</strong> Navegação sem reload de página</li>
+            <li><strong>Carregamento Dinâmico:</strong> Módulos são carregados sob demanda via fetch()</li>
+            <li><strong>Offline-First:</strong> Funciona 100% offline, sem dependências externas</li>
+            <li><strong>Design Responsivo:</strong> Interface adaptável para desktop, tablet e mobile</li>
+            <li><strong>Extensível:</strong> Fácil adição de novos módulos seguindo a estrutura padrão</li>
+        </ul>
+    </div>
+
+    <div class="info-card">
+        <h2>🧩 Módulos Instalados</h2>
+        <p>Atualmente o FP BOX possui os seguintes módulos:</p>
+        <div id="modulesList" class="modules-grid">
+            <!-- Será preenchido via JavaScript -->
+        </div>
+    </div>
+
+    <div class="info-card">
+        <h2>🔮 Próximos Passos</h2>
+        <ul class="next-steps-list">
+            <li>Integração com os 10 mini-projetos do Sprint Lab</li>
+            <li>Sistema de configurações e preferências</li>
+            <li>Modo escuro/claro</li>
+            <li>Sistema de notificações</li>
+            <li>Exportação e importação de dados</li>
+            <li>PWA (Progressive Web App) para instalação</li>
+            <li>Sincronização com Blog FP (futuro)</li>
+        </ul>
+    </div>
+
+    <div class="version-footer">
+        <p>FP BOX v0.1 – Desenvolvido como parte do <strong>Sprint Lab – Ecossistema FP</strong></p>
+    </div>
+</div>
+
+<style>
+.home-module {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.welcome-section {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #f59e0b 0%, #fb923c 100%);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+}
+
+.welcome-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a0f;
+    margin-bottom: 0.5rem;
+}
+
+.welcome-subtitle {
+    font-size: 1.1rem;
+    color: rgba(26, 26, 15, 0.85);
+    font-weight: 600;
+}
+
+.info-card {
+    background-color: #1e293b;
+    border: 2px solid #334155;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.info-card h2 {
+    color: #fbbf24;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.info-card p {
+    color: #cbd5e1;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.info-card p:last-child {
+    margin-bottom: 0;
+}
+
+.features-list,
+.next-steps-list {
+    list-style: none;
+    padding: 0;
+}
+
+.features-list li,
+.next-steps-list li {
+    color: #cbd5e1;
+    padding: 0.75rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    line-height: 1.6;
+}
+
+.features-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.next-steps-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #f59e0b;
+    font-weight: bold;
+}
+
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.module-card {
+    background-color: #334155;
+    border: 2px solid #475569;
+    border-radius: 8px;
+    padding: 1.25rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.module-card:hover {
+    transform: translateY(-4px);
+    border-color: #f59e0b;
+    box-shadow: 0 6px 12px rgba(245, 158, 11, 0.3);
+}
+
+.module-card-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+.module-card-status {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-top: 0.5rem;
+}
+
+.version-footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 3rem;
+    border-top: 2px solid #334155;
+}
+
+.version-footer p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    .welcome-title {
+        font-size: 2rem;
+    }
+
+    .welcome-subtitle {
+        font-size: 1rem;
+    }
+
+    .info-card {
+        padding: 1.5rem;
+    }
+
+    .modules-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>

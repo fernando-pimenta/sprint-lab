@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FP BOX – Sistema Modular v0.1</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Sidebar Menu -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSI4IiBmaWxsPSIjRjU5RTBCIi8+CiAgPHBhdGggZD0iTTEyIDEySDI4VjE4SDEyVjEyWiIgZmlsbD0iIzFBMUEwRiIvPgogIDxwYXRoIGQ9Ik0xMiAyMkgyOFYyOEgxMlYyMloiIGZpbGw9IiMxQTFBMEYiLz4KPC9zdmc+Cg==" alt="FP BOX Logo" class="logo">
+            <h1 class="sidebar-title">FP BOX</h1>
+            <p class="sidebar-version">v0.1</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul class="menu-list" id="menuList">
+                <!-- Menu items serão inseridos via JavaScript -->
+            </ul>
+        </nav>
+
+        <button class="mobile-toggle" id="mobileToggle">☰</button>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <h2 class="page-title" id="pageTitle">Home</h2>
+            <button class="btn-about" id="btnAbout">ℹ️ Sobre</button>
+        </header>
+
+        <!-- Dynamic Content Area -->
+        <main class="content-area" id="contentArea">
+            <!-- O conteúdo dos módulos será carregado aqui dinamicamente -->
+            <div class="loading">Carregando...</div>
+        </main>
+    </div>
+
+    <!-- Modal About -->
+    <div class="modal" id="modalAbout">
+        <div class="modal-content">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <h2>Sobre o FP BOX</h2>
+            <p><strong>FP BOX v0.1</strong> é um sistema modular skeleton criado para servir como base para aplicações de produtividade e organização.</p>
+            <p>Este é um framework offline-first, completamente em HTML/CSS/JavaScript vanilla, projetado para ser extensível através de módulos independentes.</p>
+            <h3>Características:</h3>
+            <ul>
+                <li>Arquitetura modular plugin-style</li>
+                <li>Navegação sem reload de página (SPA)</li>
+                <li>Carregamento dinâmico de módulos</li>
+                <li>100% offline (sem dependências externas)</li>
+                <li>Design responsivo e moderno</li>
+            </ul>
+            <p class="modal-footer">Desenvolvido como parte do Sprint Lab – Ecossistema FP</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
