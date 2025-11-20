@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍅 FP Pomodoro Productivity Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>🍅 FP Pomodoro Productivity Tracker</h1>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="timer-section">
+            <div class="timer-display">
+                <div class="timer-phase" id="timerPhase">PRONTO</div>
+                <div class="timer-circle">
+                    <svg class="progress-ring" width="200" height="200">
+                        <circle class="progress-ring-circle" stroke="#4caf50" stroke-width="8" fill="transparent" r="90" cx="100" cy="100"/>
+                    </svg>
+                    <div class="timer-time" id="timerTime">25:00</div>
+                </div>
+                <div class="timer-info">
+                    <div id="taskName">Selecione uma tarefa</div>
+                    <div id="cycleInfo">Pomodoro 1/4</div>
+                </div>
+                <div class="timer-controls">
+                    <button class="btn btn-primary" id="startBtn">▶ Iniciar</button>
+                    <button class="btn btn-secondary" id="pauseBtn" disabled>⏸ Pausar</button>
+                    <button class="btn btn-secondary" id="stopBtn" disabled>⏹ Parar</button>
+                </div>
+            </div>
+        </div>
+
+        <section class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-value" id="todayPomodoros">0</div>
+                <div class="stat-label">Pomodoros Hoje</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="weekPomodoros">0</div>
+                <div class="stat-label">Esta Semana</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="focusHours">0h</div>
+                <div class="stat-label">Horas Focadas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="completionRate">0%</div>
+                <div class="stat-label">Taxa de Conclusão</div>
+            </div>
+        </section>
+
+        <section class="tasks-section">
+            <h2>Tarefas Ativas</h2>
+            <button class="btn btn-primary" id="newTaskBtn">+ Nova Tarefa</button>
+            <div class="tasks-list" id="tasksList"></div>
+        </section>
+    </main>
+
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Nova Tarefa</h2>
+            <form id="taskForm">
+                <input type="hidden" id="taskId">
+                <label>Nome *</label>
+                <input type="text" id="taskNameInput" required>
+                <label>Categoria</label>
+                <select id="taskCategory">
+                    <option>Trabalho</option>
+                    <option>Estudo</option>
+                    <option>Criação</option>
+                    <option>Administrativo</option>
+                    <option>Pessoal</option>
+                    <option>Outro</option>
+                </select>
+                <label>Prioridade</label>
+                <select id="taskPriority">
+                    <option>Baixa</option>
+                    <option>Média</option>
+                    <option>Alta</option>
+                    <option>Urgente</option>
+                </select>
+                <label>Pomodoros Estimados</label>
+                <input type="number" id="taskEstimated" min="1" value="1">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <audio id="alertSound" src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzO/beDEFJHfH8N2QQAo="></audio>
+    
+    <script src="app.js"></script>
+</body>
+</html>
