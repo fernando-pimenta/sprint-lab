@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚖️ FP Product Comparator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>⚖️ FP Product Comparator</h1>
+            <p class="subtitle">Compare até 4 produtos lado a lado com análise automática</p>
+        </div>
+    </header>
+
+    <!-- Action Bar -->
+    <section class="action-bar container">
+        <button id="btnAddProduct" class="btn btn-primary">➕ Adicionar Produto</button>
+        <button id="btnCompare" class="btn btn-accent" disabled>⚖️ Comparar (<span id="selectedCount">0</span>)</button>
+        <button id="btnViewList" class="btn btn-secondary active">📋 Lista</button>
+        <button id="btnTemplates" class="btn btn-secondary">📁 Templates</button>
+        <button id="btnExport" class="btn btn-secondary">📥 Exportar</button>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters container" id="filtersPanel" style="display: none;">
+        <div class="filters-grid">
+            <div class="filter-group">
+                <label>Categoria:</label>
+                <select id="filterCategory">
+                    <option value="">Todas</option>
+                    <option value="hospedagem">Hospedagem</option>
+                    <option value="email">Email Marketing</option>
+                    <option value="crm">CRM</option>
+                    <option value="notebook">Notebook</option>
+                    <option value="mouse">Mouse</option>
+                    <option value="teclado">Teclado</option>
+                    <option value="software">Software</option>
+                    <option value="saas">SaaS</option>
+                    <option value="outro">Outro</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Rating Mínimo:</label>
+                <select id="filterRating">
+                    <option value="">Todos</option>
+                    <option value="5">5 estrelas</option>
+                    <option value="4">4+ estrelas</option>
+                    <option value="3">3+ estrelas</option>
+                    <option value="2">2+ estrelas</option>
+                    <option value="1">1+ estrela</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Preço Máximo (R$):</label>
+                <input type="number" id="filterMaxPrice" placeholder="Ex: 500" min="0">
+            </div>
+            <div class="filter-group">
+                <label>Recomendação:</label>
+                <select id="filterRecommendation">
+                    <option value="">Todas</option>
+                    <option value="highly">Altamente Recomendado</option>
+                    <option value="recommended">Recomendado</option>
+                    <option value="conditional">Condicional</option>
+                    <option value="not">Não Recomendado</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Buscar:</label>
+                <input type="text" id="filterSearch" placeholder="Nome, descrição, features...">
+            </div>
+            <div class="filter-group">
+                <button id="btnClearFilters" class="btn btn-secondary full-width">Limpar Filtros</button>
+            </div>
+        </div>
+        <button id="btnToggleFilters" class="btn-toggle">Ocultar Filtros ▲</button>
+    </section>
+
+    <div class="filters-toggle-bar container">
+        <button id="btnShowFilters" class="btn btn-secondary">🔍 Mostrar Filtros</button>
+        <select id="sortBy" class="sort-select">
+            <option value="name">Ordenar por: Nome</option>
+            <option value="price-asc">Ordenar por: Preço (menor)</option>
+            <option value="price-desc">Ordenar por: Preço (maior)</option>
+            <option value="rating">Ordenar por: Rating</option>
+        </select>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Product List View -->
+        <div id="productListView" class="view-content active">
+            <div id="productGrid" class="product-grid"></div>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <p>📦 Nenhum produto cadastrado</p>
+                <button class="btn btn-primary" onclick="document.getElementById('btnAddProduct').click()">
+                    Adicionar Primeiro Produto
+                </button>
+            </div>
+        </div>
+
+        <!-- Comparison View -->
+        <div id="comparisonView" class="view-content">
+            <button id="btnBackToList" class="btn btn-secondary mb-20">◀ Voltar para Lista</button>
+
+            <div id="analysisCard" class="analysis-card"></div>
+
+            <div class="comparison-container">
+                <div id="comparisonTable"></div>
+            </div>
+
+            <div class="comparison-actions">
+                <button id="btnExportComparison" class="btn btn-primary">📥 Exportar Comparação</button>
+                <button id="btnSaveTemplate" class="btn btn-secondary">💾 Salvar como Template</button>
+                <button id="btnPrintMode" class="btn btn-secondary">🖨️ Modo Impressão</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Quick Compare Sidebar -->
+    <div id="quickCompareSidebar" class="quick-compare-sidebar">
+        <div class="sidebar-header">
+            <h3>Comparação Rápida</h3>
+            <button id="btnCloseSidebar" class="btn-icon">×</button>
+        </div>
+        <div id="quickCompareList" class="quick-compare-list"></div>
+        <div class="sidebar-actions">
+            <button id="btnQuickCompare" class="btn btn-primary full-width" disabled>Comparar</button>
+            <button id="btnClearQuick" class="btn btn-secondary full-width">Limpar</button>
+        </div>
+    </div>
+
+    <!-- Modal: Add/Edit Product -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="productModalTitle">Adicionar Produto</h2>
+                <button class="close-btn" id="btnCloseProduct">&times;</button>
+            </div>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+
+                <div class="form-row">
+                    <div class="form-group full">
+                        <label for="productName">Nome do Produto/Ferramenta *</label>
+                        <input type="text" id="productName" required placeholder="Ex: Hostinger Premium">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productCategory">Categoria *</label>
+                        <select id="productCategory" required>
+                            <option value="">Selecione...</option>
+                            <option value="hospedagem">Hospedagem</option>
+                            <option value="email">Email Marketing</option>
+                            <option value="crm">CRM</option>
+                            <option value="notebook">Notebook</option>
+                            <option value="mouse">Mouse</option>
+                            <option value="teclado">Teclado</option>
+                            <option value="software">Software</option>
+                            <option value="saas">SaaS</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productRating">Rating (1-5) *</label>
+                        <select id="productRating" required>
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productPrice">Preço (R$)</label>
+                        <input type="number" id="productPrice" min="0" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="productFrequency">Frequência de Pagamento</label>
+                        <select id="productFrequency">
+                            <option value="unico">Único</option>
+                            <option value="mensal">Mensal</option>
+                            <option value="anual">Anual</option>
+                            <option value="vitalicio">Vitalício</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productUrl">URL do Produto</label>
+                        <input type="url" id="productUrl" placeholder="https://exemplo.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="productImage">URL da Imagem/Logo</label>
+                        <input type="url" id="productImage" placeholder="https://exemplo.com/logo.png">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full">
+                        <label for="productDescription">Descrição Curta</label>
+                        <textarea id="productDescription" rows="3" placeholder="1-2 parágrafos sobre o produto..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productPros">Prós (um por linha)</label>
+                        <textarea id="productPros" rows="4" placeholder="Interface intuitiva&#10;Suporte 24/7&#10;Ótimo custo-benefício"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="productCons">Contras (um por linha)</label>
+                        <textarea id="productCons" rows="4" placeholder="Curva de aprendizado&#10;Sem versão gratuita"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full">
+                        <label for="productFeatures">Features/Características (uma por linha)</label>
+                        <textarea id="productFeatures" rows="4" placeholder="SSL grátis&#10;Domínio grátis por 1 ano&#10;Email profissional ilimitado&#10;99.9% uptime"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productTarget">Público-Alvo</label>
+                        <input type="text" id="productTarget" placeholder="Ex: Pequenas empresas, freelancers">
+                    </div>
+                    <div class="form-group">
+                        <label for="productRecommendation">Recomendação</label>
+                        <select id="productRecommendation">
+                            <option value="highly">Altamente Recomendado</option>
+                            <option value="recommended">Recomendado</option>
+                            <option value="conditional">Condicional</option>
+                            <option value="not">Não Recomendado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full">
+                        <label for="productAffiliate">Link de Afiliado (opcional)</label>
+                        <input type="url" id="productAffiliate" placeholder="https://exemplo.com/ref=xyz">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full">
+                        <label for="productNotes">Notas Adicionais</label>
+                        <textarea id="productNotes" rows="2" placeholder="Observações extras..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Salvar Produto</button>
+                    <button type="button" id="btnDuplicateProduct" class="btn btn-secondary" style="display: none;">Duplicar</button>
+                    <button type="button" id="btnDeleteProduct" class="btn btn-danger" style="display: none;">Excluir</button>
+                    <button type="button" class="btn btn-secondary" id="btnCancelProduct">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Templates -->
+    <div id="templatesModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>📁 Templates de Comparação</h2>
+                <button class="close-btn" id="btnCloseTemplates">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="templatesList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Export -->
+    <div id="exportModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>📥 Exportar</h2>
+                <button class="close-btn" id="btnCloseExport">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>Exportar Todos os Produtos</h3>
+                <button id="btnExportAllJSON" class="btn btn-primary full-width">JSON - Backup Completo</button>
+                <button id="btnExportAllCSV" class="btn btn-primary full-width">CSV - Para Excel</button>
+                <hr>
+                <h3>Importar Produtos</h3>
+                <button id="btnImport" class="btn btn-secondary full-width">Importar JSON</button>
+                <input type="file" id="importFile" accept=".json" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Export Comparison -->
+    <div id="exportComparisonModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>📥 Exportar Comparação</h2>
+                <button class="close-btn" id="btnCloseExportComp">&times;</button>
+            </div>
+            <div class="modal-body">
+                <button id="btnExportHTML" class="btn btn-primary full-width">HTML - Página Standalone</button>
+                <button id="btnExportMarkdown" class="btn btn-primary full-width">Markdown - Para Posts</button>
+                <button id="btnExportCompJSON" class="btn btn-primary full-width">JSON - Produtos Selecionados</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Fernando Pimenta | Sprint Lab #20</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
