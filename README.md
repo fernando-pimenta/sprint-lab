@@ -547,6 +547,34 @@ Rastreador de testes A/B com análise comparativa, cálculo automático de taxas
 
 ---
 
+### 25 - FP Pomodoro Productivity Tracker
+**📁 Pasta:** `25-fp-pomodoro-productivity-tracker/`
+
+Timer Pomodoro com gestão de tarefas, estatísticas de foco e relatórios de produtividade. Timer configurável com fases (foco 25min, pausa curta 5min, pausa longa 15min), CRUD de tarefas integrado, contador automático de pomodoros por tarefa, histórico de sessões, dashboard com gráficos Chart.js e metas diárias.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, Chart.js (CDN), localStorage, Audio API
+
+**Funcionalidades:**
+- Timer Pomodoro configurável (foco, pausa curta, pausa longa)
+- Controles (play, pause, stop, pular fase)
+- Barra de progresso circular visual
+- Som de alerta ao completar fase
+- CRUD de tarefas (nome, categoria, prioridade, pomodoros estimados/concluídos, status, notas)
+- Seleção de tarefa ativa antes de iniciar timer
+- Contador automático de pomodoros por tarefa
+- Ciclos configuráveis até pausa longa (padrão: 4)
+- Histórico completo de sessões (data, tarefa, tipo, duração)
+- Dashboard com 4 cards (pomodoros hoje, semana, horas focadas, taxa de conclusão)
+- Gráficos Chart.js (linha: pomodoros por dia, pizza: distribuição por categoria)
+- Metas diárias (pomodoros/dia, horas focadas) com barra de progresso
+- Configurações personalizáveis (durações, som, auto-start)
+- Export JSON (tarefas + histórico), Import JSON (mesclar)
+- Responsivo (desktop: timer + tarefas lado a lado, mobile: fullscreen)
+
+[📖 Ver documentação completa](./25-fp-pomodoro-productivity-tracker/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
