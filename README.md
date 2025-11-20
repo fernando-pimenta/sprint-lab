@@ -466,6 +466,31 @@ Comparador lado a lado de até 4 produtos/ferramentas com análise automática d
 
 ---
 
+### 22 - FP Micro CRM
+**📁 Pasta:** `22-fp-micro-crm/`
+
+CRM simplificado para freelancers com pipeline Kanban, projetos vinculados, histórico de interações, alertas de próximas ações e export/import JSON/CSV. Gerencie clientes do Lead ao fechamento com interface visual intuitiva.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, Drag & Drop API, File API
+
+**Funcionalidades:**
+- CRUD completo de clientes (12 campos configuráveis)
+- Dashboard com estatísticas em tempo real (leads, ativos, valor em negociação, taxa de conversão)
+- Kanban visual com drag & drop entre colunas (Lead → Negociação → Ativo → Concluído → Perdido)
+- Gestão de projetos vinculados por cliente (tipo, valor, status, datas)
+- Histórico de interações (email, ligação, reunião, WhatsApp, propostas)
+- Alertas e lembretes (ações vencidas, para hoje, para esta semana)
+- Filtros avançados (status, fonte, próximas ações, busca textual)
+- 3 visualizações: Kanban, Lista, Calendário
+- Export JSON/CSV e Import JSON (mesclar dados)
+- Painel lateral de detalhes com tabs (Info, Projetos, Histórico)
+- Validações completas (email, valor, datas)
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./22-fp-micro-crm/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1

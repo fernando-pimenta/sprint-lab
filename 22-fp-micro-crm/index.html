@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👥 FP Micro CRM</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">👥 FP Micro CRM</h1>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="newClientBtn">+ Novo Cliente</button>
+                <div class="notifications">
+                    <button class="notification-btn" id="notificationBtn">
+                        🔔
+                        <span class="badge" id="notificationBadge">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Alert Panel -->
+    <div class="alert-panel" id="alertPanel" style="display: none;">
+        <div class="container">
+            <h3>⚠️ Alertas e Lembretes</h3>
+            <div id="alertsList"></div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Dashboard Stats -->
+        <section class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-info">
+                    <h3 id="totalLeads">0</h3>
+                    <p>Total de Leads</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-info">
+                    <h3 id="activeClients">0</h3>
+                    <p>Clientes Ativos</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-info">
+                    <h3 id="totalNegotiation">R$ 0</h3>
+                    <p>Valor em Negociação</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <h3 id="conversionRate">0%</h3>
+                    <p>Taxa de Conversão</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="filters">
+            <div class="filter-group">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar cliente, empresa, email...">
+            </div>
+            <div class="filter-group">
+                <select id="filterStatus">
+                    <option value="">Todos os Status</option>
+                    <option value="Lead">Lead</option>
+                    <option value="Negociação">Negociação</option>
+                    <option value="Cliente Ativo">Cliente Ativo</option>
+                    <option value="Concluído">Concluído</option>
+                    <option value="Perdido">Perdido</option>
+                    <option value="Arquivado">Arquivado</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <select id="filterSource">
+                    <option value="">Todas as Fontes</option>
+                    <option value="Indicação">Indicação</option>
+                    <option value="LinkedIn">LinkedIn</option>
+                    <option value="Google">Google</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Contato Direto">Contato Direto</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <select id="filterAction">
+                    <option value="">Todas as Ações</option>
+                    <option value="today">Hoje</option>
+                    <option value="week">Esta Semana</option>
+                    <option value="month">Este Mês</option>
+                    <option value="none">Sem Data</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <button class="btn btn-secondary" id="exportBtn">📥 Export/Import</button>
+            </div>
+        </section>
+
+        <!-- Tabs -->
+        <section class="tabs">
+            <button class="tab-btn active" data-tab="kanban">📋 Kanban</button>
+            <button class="tab-btn" data-tab="list">📝 Lista</button>
+            <button class="tab-btn" data-tab="calendar">📅 Calendário</button>
+        </section>
+
+        <!-- Kanban View -->
+        <section class="tab-content active" id="kanban">
+            <div class="kanban-board">
+                <div class="kanban-column" data-status="Lead">
+                    <div class="column-header lead">
+                        <h3>Lead</h3>
+                        <span class="count" id="countLead">0</span>
+                    </div>
+                    <div class="column-body" id="columnLead"></div>
+                </div>
+                <div class="kanban-column" data-status="Negociação">
+                    <div class="column-header negotiation">
+                        <h3>Negociação</h3>
+                        <span class="count" id="countNegociacao">0</span>
+                    </div>
+                    <div class="column-body" id="columnNegociacao"></div>
+                </div>
+                <div class="kanban-column" data-status="Cliente Ativo">
+                    <div class="column-header active">
+                        <h3>Ativo</h3>
+                        <span class="count" id="countAtivo">0</span>
+                    </div>
+                    <div class="column-body" id="columnAtivo"></div>
+                </div>
+                <div class="kanban-column" data-status="Concluído">
+                    <div class="column-header completed">
+                        <h3>Concluído</h3>
+                        <span class="count" id="countConcluido">0</span>
+                    </div>
+                    <div class="column-body" id="columnConcluido"></div>
+                </div>
+                <div class="kanban-column" data-status="Perdido">
+                    <div class="column-header lost">
+                        <h3>Perdido</h3>
+                        <span class="count" id="countPerdido">0</span>
+                    </div>
+                    <div class="column-body" id="columnPerdido"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- List View -->
+        <section class="tab-content" id="list">
+            <div class="client-list" id="clientList"></div>
+        </section>
+
+        <!-- Calendar View -->
+        <section class="tab-content" id="calendar">
+            <div class="calendar-view" id="calendarView"></div>
+        </section>
+    </main>
+
+    <!-- Client Modal -->
+    <div class="modal" id="clientModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Novo Cliente</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="clientForm">
+                    <input type="hidden" id="clientId">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientName">Nome *</label>
+                            <input type="text" id="clientName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientCompany">Empresa</label>
+                            <input type="text" id="clientCompany">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientEmail">Email *</label>
+                            <input type="email" id="clientEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientPhone">Telefone</label>
+                            <input type="tel" id="clientPhone">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientWebsite">Site</label>
+                            <input type="url" id="clientWebsite">
+                        </div>
+                        <div class="form-group">
+                            <label for="clientSource">Fonte/Origem</label>
+                            <select id="clientSource">
+                                <option value="Indicação">Indicação</option>
+                                <option value="LinkedIn">LinkedIn</option>
+                                <option value="Google">Google</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Contato Direto">Contato Direto</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientStatus">Status</label>
+                            <select id="clientStatus">
+                                <option value="Lead">Lead</option>
+                                <option value="Negociação">Negociação</option>
+                                <option value="Cliente Ativo">Cliente Ativo</option>
+                                <option value="Concluído">Concluído</option>
+                                <option value="Perdido">Perdido</option>
+                                <option value="Arquivado">Arquivado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientValue">Valor Potencial (R$)</label>
+                            <input type="number" id="clientValue" min="0" step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientNextAction">Próxima Ação</label>
+                            <input type="text" id="clientNextAction" placeholder="Ex: Enviar proposta">
+                        </div>
+                        <div class="form-group">
+                            <label for="clientNextActionDate">Data Próxima Ação</label>
+                            <input type="date" id="clientNextActionDate">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="clientTags">Tags (separadas por vírgula)</label>
+                        <input type="text" id="clientTags" placeholder="urgente, grande-porte, recorrente">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="clientNotes">Notas</label>
+                        <textarea id="clientNotes" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Salvar Cliente</button>
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="deleteBtn" style="display: none;">Excluir</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Panel -->
+    <div class="detail-panel" id="detailPanel">
+        <div class="detail-content">
+            <div class="detail-header">
+                <h2 id="detailClientName"></h2>
+                <button class="close-btn" id="closeDetailPanel">&times;</button>
+            </div>
+            <div class="detail-body">
+                <div class="detail-tabs">
+                    <button class="detail-tab-btn active" data-detail-tab="info">Informações</button>
+                    <button class="detail-tab-btn" data-detail-tab="projects">Projetos</button>
+                    <button class="detail-tab-btn" data-detail-tab="history">Histórico</button>
+                </div>
+
+                <!-- Info Tab -->
+                <div class="detail-tab-content active" id="detailInfo"></div>
+
+                <!-- Projects Tab -->
+                <div class="detail-tab-content" id="detailProjects">
+                    <button class="btn btn-small btn-primary" id="addProjectBtn">+ Novo Projeto</button>
+                    <div id="projectsList"></div>
+                </div>
+
+                <!-- History Tab -->
+                <div class="detail-tab-content" id="detailHistory">
+                    <button class="btn btn-small btn-primary" id="addInteractionBtn">+ Nova Interação</button>
+                    <div id="interactionsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h2 id="projectModalTitle">Novo Projeto</h2>
+                <button class="close-btn" id="closeProjectModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="projectForm">
+                    <input type="hidden" id="projectId">
+                    <input type="hidden" id="projectClientId">
+
+                    <div class="form-group">
+                        <label for="projectName">Nome do Projeto *</label>
+                        <input type="text" id="projectName" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="projectType">Tipo</label>
+                            <select id="projectType">
+                                <option value="Site">Site</option>
+                                <option value="Rede">Rede</option>
+                                <option value="Consultoria">Consultoria</option>
+                                <option value="Manutenção">Manutenção</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectValue">Valor (R$)</label>
+                            <input type="number" id="projectValue" min="0" step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="projectStatus">Status</label>
+                            <select id="projectStatus">
+                                <option value="Orçamento">Orçamento</option>
+                                <option value="Em Andamento">Em Andamento</option>
+                                <option value="Concluído">Concluído</option>
+                                <option value="Cancelado">Cancelado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="projectStartDate">Data Início</label>
+                            <input type="date" id="projectStartDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="projectEndDate">Data Conclusão</label>
+                            <input type="date" id="projectEndDate">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectDescription">Descrição</label>
+                        <textarea id="projectDescription" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Salvar Projeto</button>
+                        <button type="button" class="btn btn-secondary" id="cancelProjectBtn">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interaction Modal -->
+    <div class="modal" id="interactionModal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h2>Nova Interação</h2>
+                <button class="close-btn" id="closeInteractionModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="interactionForm">
+                    <input type="hidden" id="interactionClientId">
+
+                    <div class="form-group">
+                        <label for="interactionType">Tipo de Interação</label>
+                        <select id="interactionType">
+                            <option value="Email">Email</option>
+                            <option value="Ligação">Ligação</option>
+                            <option value="Reunião">Reunião</option>
+                            <option value="WhatsApp">WhatsApp</option>
+                            <option value="Proposta Enviada">Proposta Enviada</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interactionSummary">Resumo</label>
+                        <textarea id="interactionSummary" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interactionNextSteps">Próximos Passos</label>
+                        <input type="text" id="interactionNextSteps">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Salvar Interação</button>
+                        <button type="button" class="btn btn-secondary" id="cancelInteractionBtn">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export/Import Modal -->
+    <div class="modal" id="exportModal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h2>Export/Import</h2>
+                <button class="close-btn" id="closeExportModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="export-section">
+                    <h3>Exportar Dados</h3>
+                    <button class="btn btn-primary" id="exportJsonBtn">📥 Exportar JSON</button>
+                    <button class="btn btn-primary" id="exportCsvBtn">📥 Exportar CSV</button>
+                </div>
+                <hr>
+                <div class="import-section">
+                    <h3>Importar Dados</h3>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                    <button class="btn btn-secondary" id="importJsonBtn">📤 Importar JSON</button>
+                    <p class="help-text">Importar irá mesclar os dados com os existentes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>FP Micro CRM | Sprint Lab #22 | Fernando Pimenta</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
