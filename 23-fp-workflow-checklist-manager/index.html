@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✅ FP Workflow Checklist Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">✅ FP Workflow Checklist Manager</h1>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="newTemplateBtn">+ Novo Template</button>
+                <button class="btn btn-secondary" id="exportBtn">📥 Export/Import</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Dashboard Stats -->
+        <section class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon">🔄</div>
+                <div class="stat-info">
+                    <h3 id="activeWorkflows">0</h3>
+                    <p>Workflows Ativos</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-info">
+                    <h3 id="completedThisMonth">0</h3>
+                    <p>Concluídos Este Mês</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-info">
+                    <h3 id="avgTime">-</h3>
+                    <p>Tempo Médio</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <h3 id="completionRate">0%</h3>
+                    <p>Taxa de Conclusão</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="filters">
+            <div class="filter-group">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar workflow, etapas, notas...">
+            </div>
+            <div class="filter-group">
+                <select id="filterCategory">
+                    <option value="">Todas as Categorias</option>
+                    <option value="Publicação">Publicação</option>
+                    <option value="Produção">Produção</option>
+                    <option value="Técnico">Técnico</option>
+                    <option value="Administrativo">Administrativo</option>
+                    <option value="Cliente">Cliente</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <select id="filterStatus">
+                    <option value="">Todos os Status</option>
+                    <option value="active">Em Andamento</option>
+                    <option value="paused">Pausado</option>
+                    <option value="completed">Concluído</option>
+                    <option value="cancelled">Cancelado</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Tabs -->
+        <section class="tabs">
+            <button class="tab-btn active" data-tab="templates">📋 Templates</button>
+            <button class="tab-btn" data-tab="active">🔄 Ativas <span class="badge" id="activeBadge">0</span></button>
+            <button class="tab-btn" data-tab="history">📜 Histórico</button>
+        </section>
+
+        <!-- Templates Tab -->
+        <section class="tab-content active" id="templates">
+            <div class="templates-grid" id="templatesGrid"></div>
+        </section>
+
+        <!-- Active Tab -->
+        <section class="tab-content" id="active">
+            <div class="active-workflows" id="activeWorkflowsList"></div>
+        </section>
+
+        <!-- History Tab -->
+        <section class="tab-content" id="history">
+            <div class="history-list" id="historyList"></div>
+        </section>
+    </main>
+
+    <!-- Template Modal -->
+    <div class="modal" id="templateModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="templateModalTitle">Novo Template</h2>
+                <button class="close-btn" id="closeTemplateModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="templateForm">
+                    <input type="hidden" id="templateId">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="templateName">Nome do Workflow *</label>
+                            <input type="text" id="templateName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="templateCategory">Categoria</label>
+                            <select id="templateCategory">
+                                <option value="Publicação">Publicação</option>
+                                <option value="Produção">Produção</option>
+                                <option value="Técnico">Técnico</option>
+                                <option value="Administrativo">Administrativo</option>
+                                <option value="Cliente">Cliente</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="templateDescription">Descrição</label>
+                        <textarea id="templateDescription" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Etapas</label>
+                        <div id="stepsContainer"></div>
+                        <button type="button" class="btn btn-secondary btn-small" id="addStepBtn">+ Adicionar Etapa</button>
+                    </div>
+
+                    <div class="template-summary">
+                        <div class="summary-item">
+                            <strong>Total de Etapas:</strong> <span id="totalSteps">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>Tempo Total Estimado:</strong> <span id="totalTime">0 min</span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Salvar Template</button>
+                        <button type="button" class="btn btn-secondary" id="cancelTemplateBtn">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="deleteTemplateBtn" style="display: none;">Excluir</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Execution Panel -->
+    <div class="execution-panel" id="executionPanel">
+        <div class="execution-content">
+            <div class="execution-header">
+                <h2 id="executionWorkflowName"></h2>
+                <button class="close-btn" id="closeExecutionPanel">&times;</button>
+            </div>
+            <div class="execution-body">
+                <!-- Progress Bar -->
+                <div class="progress-section">
+                    <div class="progress-info">
+                        <span id="executionProgress">0%</span>
+                        <span id="executionSteps">0/0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="executionProgressFill" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Time Info -->
+                <div class="time-info">
+                    <div class="time-item">
+                        <strong>Tempo Decorrido:</strong>
+                        <span id="executionElapsed">0h 0min</span>
+                    </div>
+                    <div class="time-item">
+                        <strong>Tempo Estimado:</strong>
+                        <span id="executionEstimated">0h 0min</span>
+                    </div>
+                    <div class="time-item">
+                        <strong>Status:</strong>
+                        <span id="executionStatus" class="status-badge">Em Andamento</span>
+                    </div>
+                </div>
+
+                <!-- Steps Checklist -->
+                <div class="steps-checklist" id="executionStepsList"></div>
+
+                <!-- Actions -->
+                <div class="execution-actions">
+                    <button class="btn btn-primary" id="pauseExecutionBtn">⏸️ Pausar</button>
+                    <button class="btn btn-success" id="completeExecutionBtn">✅ Concluir</button>
+                    <button class="btn btn-danger" id="cancelExecutionBtn">❌ Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export/Import Modal -->
+    <div class="modal" id="exportModal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h2>Export/Import</h2>
+                <button class="close-btn" id="closeExportModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="export-section">
+                    <h3>Exportar Dados</h3>
+                    <button class="btn btn-primary" id="exportJsonBtn">📥 Exportar JSON (Templates + Execuções)</button>
+                    <button class="btn btn-primary" id="exportCsvBtn">📥 Exportar CSV (Histórico)</button>
+                </div>
+                <hr>
+                <div class="import-section">
+                    <h3>Importar Dados</h3>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                    <button class="btn btn-secondary" id="importJsonBtn">📤 Importar JSON</button>
+                    <p class="help-text">Importar irá mesclar templates com os existentes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>FP Workflow Checklist Manager | Sprint Lab #23 | Fernando Pimenta</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

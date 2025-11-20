@@ -491,6 +491,62 @@ CRM simplificado para freelancers com pipeline Kanban, projetos vinculados, hist
 
 ---
 
+### 23 - FP Workflow Checklist Manager
+**📁 Pasta:** `23-fp-workflow-checklist-manager/`
+
+Gerenciador de checklists para processos recorrentes com templates, progresso visual e análise de produtividade. Crie templates de workflows com etapas, tempo estimado e notas. Execute checklists com progresso visual, timer por etapa, histórico de execuções e análise de produtividade. 5 templates pré-configurados inclusos.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, File API, setInterval
+
+**Funcionalidades:**
+- CRUD completo de templates (criar, editar, excluir, duplicar)
+- 5 templates pré-configurados (Publicar Artigo, Review de Produto, Lançamento de Plugin, Setup de Cliente, Backup Mensal)
+- Sistema de execução de workflows (instâncias) com status (Em Andamento, Pausado, Concluído, Cancelado)
+- Etapas configuráveis (texto, nota/dica, obrigatória, tempo estimado)
+- Marcar etapas como concluídas durante execução
+- Adicionar notas/observações por etapa
+- Timer automático (atualiza a cada segundo)
+- Cálculo de tempo real vs estimado
+- Pausar/retomar workflow (tempo pausado não é contado)
+- Dashboard de produtividade (workflows ativos, concluídos este mês, tempo médio, taxa de conclusão)
+- 3 visualizações: Templates (grid), Ativas (lista com progresso), Histórico (execuções concluídas)
+- Filtros avançados (categoria, status, busca textual)
+- Export JSON (templates + execuções), Export CSV (histórico), Import JSON (mesclar)
+- Painel lateral de execução com progresso visual e checklist interativo
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./23-fp-workflow-checklist-manager/README.md)
+
+---
+
+### 24 - FP A/B Testing Tracker
+**📁 Pasta:** `24-fp-ab-testing-tracker/`
+
+Rastreador de testes A/B com análise comparativa, cálculo automático de taxas de conversão, identificação de vencedor, insights gerados automaticamente e biblioteca de variações. Gerencie até 3 variantes por teste (A, B, C) com visualização em tabela e gráfico de barras Chart.js.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, Chart.js (CDN), localStorage, File API
+
+**Funcionalidades:**
+- CRUD completo de testes A/B (criar, editar, excluir, duplicar)
+- Até 3 variantes por teste (A controle, B teste, C opcional)
+- 13 campos configuráveis (nome, item testado, página, métrica, datas, status, hipótese, conclusões, vencedor, confidence level)
+- Resultados detalhados por variante (visualizações, conversões, taxa de conversão, receita, tempo médio)
+- Cálculos automáticos (taxa de conversão %, diferença % entre variantes, duração em dias)
+- Análise comparativa visual (tabela completa + gráfico de barras Chart.js)
+- Identificação automática de vencedor (destaque visual verde)
+- Dashboard de produtividade (total, em execução, taxa de sucesso, lift médio)
+- Insights automáticos gerados de testes concluídos (agrupados por item testado)
+- Biblioteca de variações vencedoras (salva automaticamente ao concluir teste)
+- 4 visualizações: Todos, Em Execução, Concluídos, Biblioteca
+- Filtros avançados (item testado, status, vencedor, busca textual)
+- Export JSON (testes + biblioteca), Export CSV (relatório), Import JSON (mesclar)
+- Validações (datas, valores mínimos, campos obrigatórios)
+- Totalmente offline (exceto Chart.js CDN na primeira carga)
+
+[📖 Ver documentação completa](./24-fp-ab-testing-tracker/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
