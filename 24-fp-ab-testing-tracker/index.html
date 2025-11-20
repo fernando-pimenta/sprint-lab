@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 FP A/B Testing Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">🧪 FP A/B Testing Tracker</h1>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="newTestBtn">+ Novo Teste</button>
+                <button class="btn btn-secondary" id="exportBtn">📥 Export/Import</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Dashboard Stats -->
+        <section class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <h3 id="totalTests">0</h3>
+                    <p>Total de Testes</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">▶️</div>
+                <div class="stat-info">
+                    <h3 id="runningTests">0</h3>
+                    <p>Em Execução</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-info">
+                    <h3 id="successRate">0%</h3>
+                    <p>Taxa de Sucesso</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-info">
+                    <h3 id="avgLift">0%</h3>
+                    <p>Lift Médio</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Insights -->
+        <section class="insights-section" id="insightsSection">
+            <h2>💡 Insights dos Testes</h2>
+            <div class="insights-list" id="insightsList">
+                <p style="color: #666;">Nenhum insight disponível ainda. Complete testes para gerar insights automáticos.</p>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="filters">
+            <div class="filter-group">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar teste, hipótese, conclusões...">
+            </div>
+            <div class="filter-group">
+                <select id="filterItem">
+                    <option value="">Todos os Itens</option>
+                    <option value="Título">Título</option>
+                    <option value="CTA">CTA</option>
+                    <option value="Layout">Layout</option>
+                    <option value="Imagem">Imagem</option>
+                    <option value="Cor">Cor</option>
+                    <option value="Preço">Preço</option>
+                    <option value="Copy">Copy</option>
+                    <option value="Email Subject">Email Subject</option>
+                    <option value="Thumbnail">Thumbnail</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <select id="filterStatus">
+                    <option value="">Todos os Status</option>
+                    <option value="Planejado">Planejado</option>
+                    <option value="Em Execução">Em Execução</option>
+                    <option value="Concluído">Concluído</option>
+                    <option value="Pausado">Pausado</option>
+                    <option value="Cancelado">Cancelado</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <select id="filterWinner">
+                    <option value="">Todos os Vencedores</option>
+                    <option value="A">Variante A</option>
+                    <option value="B">Variante B</option>
+                    <option value="C">Variante C</option>
+                    <option value="Empate">Empate</option>
+                    <option value="Inconclusivo">Inconclusivo</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Tabs -->
+        <section class="tabs">
+            <button class="tab-btn active" data-tab="all">📊 Todos</button>
+            <button class="tab-btn" data-tab="running">▶️ Em Execução <span class="badge" id="runningBadge">0</span></button>
+            <button class="tab-btn" data-tab="completed">✅ Concluídos</button>
+            <button class="tab-btn" data-tab="library">📚 Biblioteca</button>
+        </section>
+
+        <!-- All Tests Tab -->
+        <section class="tab-content active" id="all">
+            <div class="tests-grid" id="testsGrid"></div>
+        </section>
+
+        <!-- Running Tests Tab -->
+        <section class="tab-content" id="running">
+            <div class="tests-grid" id="runningGrid"></div>
+        </section>
+
+        <!-- Completed Tests Tab -->
+        <section class="tab-content" id="completed">
+            <div class="tests-grid" id="completedGrid"></div>
+        </section>
+
+        <!-- Library Tab -->
+        <section class="tab-content" id="library">
+            <div class="library-content" id="libraryContent"></div>
+        </section>
+    </main>
+
+    <!-- Test Modal -->
+    <div class="modal" id="testModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="testModalTitle">Novo Teste A/B</h2>
+                <button class="close-btn" id="closeTestModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="testForm">
+                    <input type="hidden" id="testId">
+
+                    <div class="form-section">
+                        <h3>Informações Básicas</h3>
+
+                        <div class="form-group">
+                            <label for="testName">Nome do Teste *</label>
+                            <input type="text" id="testName" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="testItem">Item Testado</label>
+                                <select id="testItem">
+                                    <option value="Título">Título</option>
+                                    <option value="CTA">CTA</option>
+                                    <option value="Layout">Layout</option>
+                                    <option value="Imagem">Imagem</option>
+                                    <option value="Cor">Cor</option>
+                                    <option value="Preço">Preço</option>
+                                    <option value="Copy">Copy</option>
+                                    <option value="Email Subject">Email Subject</option>
+                                    <option value="Thumbnail">Thumbnail</option>
+                                    <option value="Outro">Outro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="testPage">Página/Local</label>
+                                <input type="text" id="testPage" placeholder="URL ou descrição">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="testMetric">Métrica Principal</label>
+                                <select id="testMetric">
+                                    <option value="Cliques">Cliques</option>
+                                    <option value="Conversões">Conversões</option>
+                                    <option value="CTR %">CTR %</option>
+                                    <option value="Tempo na Página">Tempo na Página</option>
+                                    <option value="Taxa de Abertura">Taxa de Abertura</option>
+                                    <option value="Taxa de Rejeição">Taxa de Rejeição</option>
+                                    <option value="Receita">Receita</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="testStatus">Status</label>
+                                <select id="testStatus">
+                                    <option value="Planejado">Planejado</option>
+                                    <option value="Em Execução">Em Execução</option>
+                                    <option value="Concluído">Concluído</option>
+                                    <option value="Pausado">Pausado</option>
+                                    <option value="Cancelado">Cancelado</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="testStartDate">Data Início</label>
+                                <input type="date" id="testStartDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="testEndDate">Data Fim</label>
+                                <input type="date" id="testEndDate">
+                            </div>
+                            <div class="form-group">
+                                <label>Duração</label>
+                                <input type="text" id="testDuration" readonly placeholder="Auto">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="testHypothesis">Hipótese</label>
+                            <textarea id="testHypothesis" rows="3" placeholder="O que você espera que aconteça?"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Variantes</h3>
+
+                        <div class="variant-group">
+                            <h4>Variante A (Controle) *</h4>
+                            <textarea id="variantA" rows="2" required placeholder="Descrição da variante A"></textarea>
+                        </div>
+
+                        <div class="variant-group">
+                            <h4>Variante B (Teste) *</h4>
+                            <textarea id="variantB" rows="2" required placeholder="Descrição da variante B"></textarea>
+                        </div>
+
+                        <div class="variant-group">
+                            <h4>Variante C (Opcional)</h4>
+                            <textarea id="variantC" rows="2" placeholder="Descrição da variante C"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Resultados</h3>
+
+                        <!-- Variant A Results -->
+                        <div class="results-group">
+                            <h4>Variante A</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="viewsA">Visualizações</label>
+                                    <input type="number" id="viewsA" min="0" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="conversionsA">Conversões</label>
+                                    <input type="number" id="conversionsA" min="0" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Taxa Conv. %</label>
+                                    <input type="text" id="convRateA" readonly value="0%">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="revenueA">Receita (R$)</label>
+                                    <input type="number" id="revenueA" min="0" step="0.01" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="timeA">Tempo Médio (min)</label>
+                                    <input type="number" id="timeA" min="0" step="0.1" value="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Variant B Results -->
+                        <div class="results-group">
+                            <h4>Variante B</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="viewsB">Visualizações</label>
+                                    <input type="number" id="viewsB" min="0" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="conversionsB">Conversões</label>
+                                    <input type="number" id="conversionsB" min="0" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Taxa Conv. %</label>
+                                    <input type="text" id="convRateB" readonly value="0%">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="revenueB">Receita (R$)</label>
+                                    <input type="number" id="revenueB" min="0" step="0.01" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="timeB">Tempo Médio (min)</label>
+                                    <input type="number" id="timeB" min="0" step="0.1" value="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Variant C Results -->
+                        <div class="results-group">
+                            <h4>Variante C</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="viewsC">Visualizações</label>
+                                    <input type="number" id="viewsC" min="0" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="conversionsC">Conversões</label>
+                                    <input type="number" id="conversionsC" min="0" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Taxa Conv. %</label>
+                                    <input type="text" id="convRateC" readonly value="0%">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="revenueC">Receita (R$)</label>
+                                    <input type="number" id="revenueC" min="0" step="0.01" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="timeC">Tempo Médio (min)</label>
+                                    <input type="number" id="timeC" min="0" step="0.1" value="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Análise Final</h3>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="testWinner">Vencedor</label>
+                                <select id="testWinner">
+                                    <option value="">-</option>
+                                    <option value="A">Variante A</option>
+                                    <option value="B">Variante B</option>
+                                    <option value="C">Variante C</option>
+                                    <option value="Empate">Empate</option>
+                                    <option value="Inconclusivo">Inconclusivo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="testConfidence">Confidence Level</label>
+                                <select id="testConfidence">
+                                    <option value="Baixo">Baixo</option>
+                                    <option value="90%">90%</option>
+                                    <option value="95%">95%</option>
+                                    <option value="99%">99%</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="testConclusions">Conclusões</label>
+                            <textarea id="testConclusions" rows="4" placeholder="Resultado final e aprendizados"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Salvar Teste</button>
+                        <button type="button" class="btn btn-secondary" id="cancelTestBtn">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="deleteTestBtn" style="display: none;">Excluir</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analysis Modal -->
+    <div class="modal" id="analysisModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="analysisTestName">Análise Comparativa</h2>
+                <button class="close-btn" id="closeAnalysisModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="analysisContent">
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table" id="comparisonTable"></table>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export/Import Modal -->
+    <div class="modal" id="exportModal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h2>Export/Import</h2>
+                <button class="close-btn" id="closeExportModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="export-section">
+                    <h3>Exportar Dados</h3>
+                    <button class="btn btn-primary" id="exportJsonBtn">📥 Exportar JSON</button>
+                    <button class="btn btn-primary" id="exportCsvBtn">📥 Exportar CSV</button>
+                </div>
+                <hr>
+                <div class="import-section">
+                    <h3>Importar Dados</h3>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                    <button class="btn btn-secondary" id="importJsonBtn">📤 Importar JSON</button>
+                    <p class="help-text">Importar irá mesclar os dados com os existentes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>FP A/B Testing Tracker | Sprint Lab #24 | Fernando Pimenta</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

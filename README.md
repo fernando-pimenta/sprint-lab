@@ -519,6 +519,34 @@ Gerenciador de checklists para processos recorrentes com templates, progresso vi
 
 ---
 
+### 24 - FP A/B Testing Tracker
+**📁 Pasta:** `24-fp-ab-testing-tracker/`
+
+Rastreador de testes A/B com análise comparativa, cálculo automático de taxas de conversão, identificação de vencedor, insights gerados automaticamente e biblioteca de variações. Gerencie até 3 variantes por teste (A, B, C) com visualização em tabela e gráfico de barras Chart.js.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, Chart.js (CDN), localStorage, File API
+
+**Funcionalidades:**
+- CRUD completo de testes A/B (criar, editar, excluir, duplicar)
+- Até 3 variantes por teste (A controle, B teste, C opcional)
+- 13 campos configuráveis (nome, item testado, página, métrica, datas, status, hipótese, conclusões, vencedor, confidence level)
+- Resultados detalhados por variante (visualizações, conversões, taxa de conversão, receita, tempo médio)
+- Cálculos automáticos (taxa de conversão %, diferença % entre variantes, duração em dias)
+- Análise comparativa visual (tabela completa + gráfico de barras Chart.js)
+- Identificação automática de vencedor (destaque visual verde)
+- Dashboard de produtividade (total, em execução, taxa de sucesso, lift médio)
+- Insights automáticos gerados de testes concluídos (agrupados por item testado)
+- Biblioteca de variações vencedoras (salva automaticamente ao concluir teste)
+- 4 visualizações: Todos, Em Execução, Concluídos, Biblioteca
+- Filtros avançados (item testado, status, vencedor, busca textual)
+- Export JSON (testes + biblioteca), Export CSV (relatório), Import JSON (mesclar)
+- Validações (datas, valores mínimos, campos obrigatórios)
+- Totalmente offline (exceto Chart.js CDN na primeira carga)
+
+[📖 Ver documentação completa](./24-fp-ab-testing-tracker/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
