@@ -491,6 +491,34 @@ CRM simplificado para freelancers com pipeline Kanban, projetos vinculados, hist
 
 ---
 
+### 23 - FP Workflow Checklist Manager
+**📁 Pasta:** `23-fp-workflow-checklist-manager/`
+
+Gerenciador de checklists para processos recorrentes com templates, progresso visual e análise de produtividade. Crie templates de workflows com etapas, tempo estimado e notas. Execute checklists com progresso visual, timer por etapa, histórico de execuções e análise de produtividade. 5 templates pré-configurados inclusos.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, File API, setInterval
+
+**Funcionalidades:**
+- CRUD completo de templates (criar, editar, excluir, duplicar)
+- 5 templates pré-configurados (Publicar Artigo, Review de Produto, Lançamento de Plugin, Setup de Cliente, Backup Mensal)
+- Sistema de execução de workflows (instâncias) com status (Em Andamento, Pausado, Concluído, Cancelado)
+- Etapas configuráveis (texto, nota/dica, obrigatória, tempo estimado)
+- Marcar etapas como concluídas durante execução
+- Adicionar notas/observações por etapa
+- Timer automático (atualiza a cada segundo)
+- Cálculo de tempo real vs estimado
+- Pausar/retomar workflow (tempo pausado não é contado)
+- Dashboard de produtividade (workflows ativos, concluídos este mês, tempo médio, taxa de conclusão)
+- 3 visualizações: Templates (grid), Ativas (lista com progresso), Histórico (execuções concluídas)
+- Filtros avançados (categoria, status, busca textual)
+- Export JSON (templates + execuções), Export CSV (histórico), Import JSON (mesclar)
+- Painel lateral de execução com progresso visual e checklist interativo
+- Totalmente offline e privado
+
+[📖 Ver documentação completa](./23-fp-workflow-checklist-manager/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
