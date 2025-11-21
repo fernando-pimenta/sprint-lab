@@ -602,6 +602,36 @@ Gerador de contratos e documentos legais com 6 templates profissionais, editor c
 
 ---
 
+### 27 - FP Universal Unit Converter
+**📁 Pasta:** `27-fp-universal-unit-converter/`
+
+Conversor universal com 20+ categorias incluindo moedas (taxas atualizáveis), medidas, temperatura, armazenamento, velocidade e mais. Conversão em tempo real, modo "ver todas", histórico, favoritos e calculadora integrada. Export/import JSON.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage
+
+**Funcionalidades:**
+- 20+ categorias de conversão (Moeda, Comprimento, Massa, Temperatura, Área, Volume, Tempo, Velocidade, Armazenamento de Dados, Energia, Pressão, Potência, Ângulo, Combustível, Frequência, Densidade, Torque, Iluminação, Radiação, Viscosidade)
+- Conversão em tempo real ao digitar
+- Calculadora integrada (aceita expressões: 10 + 5 * 2)
+- Sistema de taxas de câmbio editáveis manualmente (11 moedas)
+- Data de última atualização das taxas + alerta se > 7 dias
+- Modo "Ver Todas" (converte para todas as unidades da categoria)
+- Histórico automático de conversões com filtros
+- Sistema de favoritos (5 padrão + personalizáveis)
+- Acesso rápido na sidebar
+- 3 temas visuais (Light, Dark, High Contrast)
+- Botões: Inverter, Limpar, Favoritar, Copiar resultado
+- Export JSON (histórico + favoritos + taxas) e CSV (histórico)
+- Import JSON (mesclar dados)
+- Precisão de até 6 casas decimais
+- Notação científica para números muito grandes/pequenos
+- Fórmulas especiais (temperatura, moeda, combustível)
+- Totalmente offline e responsivo
+
+[📖 Ver documentação completa](./27-fp-universal-unit-converter/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
