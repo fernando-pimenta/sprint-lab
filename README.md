@@ -662,6 +662,29 @@ Sistema completo de inventário com categorias e campos personalizáveis, upload
 
 ---
 
+### 29 - CD Catalog Offline
+**📁 Pasta:** `projetos/29-cd-catalog-offline/`
+
+Catalogador de CDs com busca automática via MusicBrainz + Cover Art Archive. Gerencie sua coleção de CDs físicos/digitais com preenchimento semiautomático de metadados, capas, tracklists e armazenamento local.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, MusicBrainz API, Cover Art Archive
+
+**Funcionalidades:**
+- Busca automática por artista ou álbum via MusicBrainz API
+- Capas oficiais em alta resolução via Cover Art Archive
+- Auto-preenchimento de metadados (álbum, artista, ano, tracklist, gravadora)
+- Campos personalizados (condição do CD/caixa, edição, valor pago, observações)
+- CRUD completo de CDs com LocalStorage
+- Listagem em cards com todas as informações
+- Exportar/Importar catálogo em JSON (mesclar ou substituir)
+- Contador total de CDs na coleção
+- Interface responsiva com tema claro Sprint-Lab
+- 100% offline após carregar as APIs
+
+[📖 Ver documentação completa](./projetos/29-cd-catalog-offline/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
