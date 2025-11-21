@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CD Catalog Offline</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📀 CD Catalog Offline</h1>
+            <p class="subtitle">Catalogador de CDs com busca automática</p>
+            <div class="header-stats">
+                <span id="totalCDs">Total de CDs: 0</span>
+            </div>
+        </header>
+
+        <!-- Seção de Busca -->
+        <section class="search-section">
+            <h2>Buscar CD</h2>
+            <div class="search-controls">
+                <input type="text" id="searchInput" placeholder="Digite artista ou álbum...">
+                <div class="search-buttons">
+                    <button onclick="searchByArtist()" class="btn btn-primary">Buscar por Artista</button>
+                    <button onclick="searchByAlbum()" class="btn btn-primary">Buscar por Álbum</button>
+                </div>
+            </div>
+            <div id="searchResults" class="search-results"></div>
+        </section>
+
+        <!-- Formulário de CD -->
+        <section class="form-section" id="formSection" style="display: none;">
+            <h2 id="formTitle">Adicionar CD</h2>
+            <form id="cdForm">
+                <input type="hidden" id="cdId">
+
+                <div class="form-grid">
+                    <div class="form-left">
+                        <div class="cover-preview">
+                            <img id="coverPreview" src="" alt="Capa do CD">
+                            <p id="coverPlaceholder">Capa será exibida aqui</p>
+                        </div>
+                        <input type="hidden" id="coverUrl">
+                    </div>
+
+                    <div class="form-right">
+                        <div class="form-group">
+                            <label for="albumName">Álbum *</label>
+                            <input type="text" id="albumName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="artistName">Artista *</label>
+                            <input type="text" id="artistName" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="year">Ano *</label>
+                                <input type="number" id="year" min="1900" max="2100" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="type">Tipo</label>
+                                <select id="type">
+                                    <option value="Album">Album</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Compilation">Compilation</option>
+                                    <option value="EP">EP</option>
+                                    <option value="Live">Live</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="label">Gravadora</label>
+                            <input type="text" id="label">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="genre">Gênero</label>
+                            <input type="text" id="genre">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="condition">Condição do CD *</label>
+                                <select id="condition" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="Novo">Novo</option>
+                                    <option value="Usado">Usado</option>
+                                    <option value="Lacrado">Lacrado</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="boxCondition">Condição da Caixa</label>
+                                <select id="boxCondition">
+                                    <option value="">Selecione...</option>
+                                    <option value="Perfeita">Perfeita</option>
+                                    <option value="Boa">Boa</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Danificada">Danificada</option>
+                                    <option value="Sem caixa">Sem caixa</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edition">Edição</label>
+                                <select id="edition">
+                                    <option value="Standard">Standard</option>
+                                    <option value="Remaster">Remaster</option>
+                                    <option value="Deluxe">Deluxe</option>
+                                    <option value="Limited">Limited</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="price">Valor Pago (R$)</label>
+                                <input type="number" id="price" step="0.01" min="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes">Observações Pessoais</label>
+                            <textarea id="notes" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tracklist-section">
+                    <h3>Tracklist</h3>
+                    <div id="tracklistContainer" class="tracklist-container">
+                        <p class="tracklist-empty">Nenhuma faixa adicionada</p>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success">Salvar CD</button>
+                    <button type="button" onclick="cancelForm()" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Catálogo de CDs -->
+        <section class="catalog-section">
+            <div class="catalog-header">
+                <h2>Meu Catálogo</h2>
+                <div class="catalog-actions">
+                    <button onclick="exportCatalog()" class="btn btn-outline">Exportar JSON</button>
+                    <button onclick="document.getElementById('importFile').click()" class="btn btn-outline">Importar JSON</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importCatalog(event)">
+                </div>
+            </div>
+            <div id="catalogContainer" class="catalog-grid">
+                <p class="empty-message">Nenhum CD cadastrado ainda. Use a busca acima para começar!</p>
+            </div>
+        </section>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Carregando...</p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Tracker Offline</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛒 Product Tracker Offline</h1>
+            <p class="subtitle">Rastreador pessoal de produtos e preços</p>
+            <div class="header-stats">
+                <div class="stat-card">
+                    <span class="stat-label">Total de Produtos</span>
+                    <span class="stat-value" id="totalProducts">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Bom Preço</span>
+                    <span class="stat-value good" id="goodPrice">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Próximo</span>
+                    <span class="stat-value near" id="nearPrice">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Caro</span>
+                    <span class="stat-value expensive" id="expensivePrice">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Controles e Filtros -->
+        <section class="controls-section">
+            <div class="controls-top">
+                <button onclick="openAddProductModal()" class="btn btn-primary">
+                    ➕ Adicionar Produto
+                </button>
+                <div class="export-controls">
+                    <button onclick="exportProducts()" class="btn btn-outline">📤 Exportar JSON</button>
+                    <button onclick="document.getElementById('importFile').click()" class="btn btn-outline">📥 Importar JSON</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importProducts(event)">
+                </div>
+            </div>
+
+            <div class="filters-section">
+                <input type="text" id="searchInput" placeholder="Buscar por nome do produto..." onkeyup="applyFilters()">
+
+                <div class="filter-group">
+                    <label for="filterCategory">Categoria:</label>
+                    <select id="filterCategory" onchange="applyFilters()">
+                        <option value="">Todas</option>
+                        <option value="Eletrônicos">Eletrônicos</option>
+                        <option value="Informática">Informática</option>
+                        <option value="Casa & Escritório">Casa & Escritório</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterStatus">Status:</label>
+                    <select id="filterStatus" onchange="applyFilters()">
+                        <option value="">Todos</option>
+                        <option value="good">👍 Bom Preço</option>
+                        <option value="near">🔥 Próximo</option>
+                        <option value="expensive">❌ Caro</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lista de Produtos -->
+        <section class="products-section">
+            <div id="productsContainer" class="products-grid">
+                <p class="empty-message">Nenhum produto cadastrado ainda. Clique em "Adicionar Produto" para começar!</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal Adicionar/Editar Produto -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Adicionar Produto</h2>
+                <span class="close" onclick="closeProductModal()">&times;</span>
+            </div>
+            <form id="productForm" onsubmit="saveProduct(event)">
+                <input type="hidden" id="productId">
+
+                <div class="form-grid">
+                    <div class="form-left">
+                        <div class="image-preview">
+                            <img id="imagePreview" src="" alt="Imagem do produto">
+                            <p id="imagePlaceholder">Imagem será exibida aqui</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="productImage">Upload de Imagem (opcional)</label>
+                            <input type="file" id="productImage" accept="image/*" onchange="handleImageUpload(event)">
+                            <input type="hidden" id="imageBase64">
+                        </div>
+                    </div>
+
+                    <div class="form-right">
+                        <div class="form-group">
+                            <label for="productName">Nome do Produto *</label>
+                            <input type="text" id="productName" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productCategory">Categoria *</label>
+                                <select id="productCategory" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="Eletrônicos">Eletrônicos</option>
+                                    <option value="Informática">Informática</option>
+                                    <option value="Casa & Escritório">Casa & Escritório</option>
+                                    <option value="Outros">Outros</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productLink">Link do Produto *</label>
+                                <input type="url" id="productLink" placeholder="https://..." required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="currentPrice">Preço Atual (R$) *</label>
+                                <input type="number" id="currentPrice" step="0.01" min="0" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="targetPrice">Preço Desejado (R$) *</label>
+                                <input type="number" id="targetPrice" step="0.01" min="0" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productNotes">Observações Pessoais</label>
+                            <textarea id="productNotes" rows="3" placeholder="Notas, características, motivo do interesse..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success">Salvar Produto</button>
+                    <button type="button" onclick="closeProductModal()" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Histórico de Preços -->
+    <div id="historyModal" class="modal">
+        <div class="modal-content modal-history">
+            <div class="modal-header">
+                <h2>📊 Histórico de Preços</h2>
+                <span class="close" onclick="closeHistoryModal()">&times;</span>
+            </div>
+            <div class="history-product-info">
+                <h3 id="historyProductName"></h3>
+                <p id="historyProductCategory"></p>
+            </div>
+            <div id="historyContainer" class="history-container">
+                <p class="empty-message">Nenhuma alteração de preço registrada ainda.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Processando...</p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

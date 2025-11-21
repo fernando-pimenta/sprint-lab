@@ -662,6 +662,54 @@ Sistema completo de inventário com categorias e campos personalizáveis, upload
 
 ---
 
+### 29 - CD Catalog Offline
+**📁 Pasta:** `projetos/29-cd-catalog-offline/`
+
+Catalogador de CDs com busca automática via MusicBrainz + Cover Art Archive. Gerencie sua coleção de CDs físicos/digitais com preenchimento semiautomático de metadados, capas, tracklists e armazenamento local.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, MusicBrainz API, Cover Art Archive
+
+**Funcionalidades:**
+- Busca automática por artista ou álbum via MusicBrainz API
+- Capas oficiais em alta resolução via Cover Art Archive
+- Auto-preenchimento de metadados (álbum, artista, ano, tracklist, gravadora)
+- Campos personalizados (condição do CD/caixa, edição, valor pago, observações)
+- CRUD completo de CDs com LocalStorage
+- Listagem em cards com todas as informações
+- Exportar/Importar catálogo em JSON (mesclar ou substituir)
+- Contador total de CDs na coleção
+- Interface responsiva com tema claro Sprint-Lab
+- 100% offline após carregar as APIs
+
+[📖 Ver documentação completa](./projetos/29-cd-catalog-offline/README.md)
+
+---
+
+### 30 - Product Tracker Offline
+**📁 Pasta:** `projetos/30-product-tracker-offline/`
+
+Aplicativo offline para monitoramento manual de produtos e histórico de preços via LocalStorage. Rastreie produtos de marketplaces (Shopee, Amazon, Mercado Livre) com atualização manual de preços, histórico automático e alertas visuais.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, FileReader API
+
+**Funcionalidades:**
+- Cadastro completo de produtos (nome, categoria, link, preços, imagem, observações)
+- Histórico automático de alterações de preço
+- Status visual inteligente (👍 Bom / 🔥 Próximo / ❌ Caro)
+- Cálculo automático de diferença entre preço atual e desejado
+- Filtros avançados (busca, categoria, status)
+- CRUD completo com LocalStorage
+- Upload de imagens em Base64 (até 5MB)
+- Dashboard com estatísticas em tempo real
+- Exportar/Importar JSON (mesclar ou substituir)
+- Timeline de histórico de preços por produto
+- Interface responsiva com tema claro Sprint-Lab
+- 100% offline e privado
+
+[📖 Ver documentação completa](./projetos/30-product-tracker-offline/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
