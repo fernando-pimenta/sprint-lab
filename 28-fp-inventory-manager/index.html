@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📦 FP Inventory Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>📦 FP Inventory Manager</h1>
+        <p>Sistema completo de inventário com categorias e campos personalizáveis</p>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab-btn active" data-tab="inventory">Inventário</button>
+        <button class="tab-btn" data-tab="categories">Categorias</button>
+        <button class="tab-btn" data-tab="locations">Localizações</button>
+        <button class="tab-btn" data-tab="dashboard">Dashboard</button>
+    </nav>
+
+    <main>
+        <!-- TAB: INVENTÁRIO -->
+        <section id="tab-inventory" class="tab-content active">
+            <div class="inventory-header">
+                <h2>Meu Inventário</h2>
+                <button id="btnNewItem" class="btn btn-primary">+ Novo Item</button>
+            </div>
+
+            <div class="filters">
+                <input type="text" id="searchItems" placeholder="🔍 Buscar itens...">
+                <select id="filterCategory">
+                    <option value="">Todas as Categorias</option>
+                </select>
+                <select id="filterLocation">
+                    <option value="">Todas as Localizações</option>
+                </select>
+                <select id="filterStatus">
+                    <option value="">Todos os Status</option>
+                    <option value="available">Disponível</option>
+                    <option value="in-use">Em Uso</option>
+                    <option value="maintenance">Em Manutenção</option>
+                    <option value="reserved">Reservado</option>
+                    <option value="broken">Quebrado</option>
+                </select>
+                <select id="sortItems">
+                    <option value="name-asc">Nome (A-Z)</option>
+                    <option value="name-desc">Nome (Z-A)</option>
+                    <option value="date-desc">Mais Recente</option>
+                    <option value="date-asc">Mais Antigo</option>
+                    <option value="quantity-desc">Maior Quantidade</option>
+                    <option value="quantity-asc">Menor Quantidade</option>
+                </select>
+            </div>
+
+            <div id="inventoryGrid" class="inventory-grid"></div>
+        </section>
+
+        <!-- TAB: CATEGORIAS -->
+        <section id="tab-categories" class="tab-content">
+            <div class="categories-header">
+                <h2>Gerenciar Categorias</h2>
+                <button id="btnNewCategory" class="btn btn-primary">+ Nova Categoria</button>
+            </div>
+
+            <div id="categoriesList" class="categories-list"></div>
+        </section>
+
+        <!-- TAB: LOCALIZAÇÕES -->
+        <section id="tab-locations" class="tab-content">
+            <div class="locations-header">
+                <h2>Gerenciar Localizações</h2>
+                <button id="btnNewLocation" class="btn btn-primary">+ Nova Localização</button>
+            </div>
+
+            <div id="locationsList" class="locations-list"></div>
+        </section>
+
+        <!-- TAB: DASHBOARD -->
+        <section id="tab-dashboard" class="tab-content">
+            <h2>Dashboard</h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statTotalItems">0</div>
+                        <div class="stat-label">Total de Itens</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📂</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statCategories">0</div>
+                        <div class="stat-label">Categorias</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📍</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statLocations">0</div>
+                        <div class="stat-label">Localizações</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statTotalValue">R$ 0</div>
+                        <div class="stat-label">Valor Total</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-charts">
+                <div class="chart-card">
+                    <h3>Itens por Categoria</h3>
+                    <div id="chartByCategory"></div>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Itens por Localização</h3>
+                    <div id="chartByLocation"></div>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Itens por Status</h3>
+                    <div id="chartByStatus"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL: ITEM -->
+    <div id="itemModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="itemModalTitle">Novo Item</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="itemForm">
+                <input type="hidden" id="itemId">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="itemCategory">Categoria *</label>
+                        <select id="itemCategory" required></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemName">Nome *</label>
+                        <input type="text" id="itemName" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="itemQuantity">Quantidade *</label>
+                        <input type="number" id="itemQuantity" min="0" value="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemLocation">Localização</label>
+                        <select id="itemLocation"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemStatus">Status *</label>
+                        <select id="itemStatus" required>
+                            <option value="available">Disponível</option>
+                            <option value="in-use">Em Uso</option>
+                            <option value="maintenance">Em Manutenção</option>
+                            <option value="reserved">Reservado</option>
+                            <option value="broken">Quebrado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="itemPhoto">Foto</label>
+                    <input type="file" id="itemPhoto" accept="image/*">
+                    <div id="itemPhotoPreview" class="photo-preview"></div>
+                </div>
+
+                <div id="customFieldsContainer"></div>
+
+                <div class="form-group">
+                    <label for="itemNotes">Observações</label>
+                    <textarea id="itemNotes" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="itemTags">Tags (separadas por vírgula)</label>
+                    <input type="text" id="itemTags" placeholder="ex: eletrônicos, novo, importado">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-close">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: CATEGORIA -->
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="categoryModalTitle">Nova Categoria</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="categoryForm">
+                <input type="hidden" id="categoryId">
+
+                <div class="form-group">
+                    <label for="categoryName">Nome da Categoria *</label>
+                    <input type="text" id="categoryName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoryIcon">Ícone (emoji)</label>
+                    <input type="text" id="categoryIcon" placeholder="🔧" maxlength="2">
+                </div>
+
+                <div class="form-group">
+                    <label for="categoryColor">Cor</label>
+                    <input type="color" id="categoryColor" value="#283593">
+                </div>
+
+                <div class="form-group">
+                    <label>Campos Personalizados</label>
+                    <div id="customFieldsList"></div>
+                    <button type="button" id="btnAddField" class="btn btn-secondary btn-small">+ Adicionar Campo</button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-close">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: LOCALIZAÇÃO -->
+    <div id="locationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="locationModalTitle">Nova Localização</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="locationForm">
+                <input type="hidden" id="locationId">
+
+                <div class="form-group">
+                    <label for="locationName">Nome *</label>
+                    <input type="text" id="locationName" placeholder="ex: Caixa 1, Gaveta A, Prateleira Superior" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="locationDescription">Descrição</label>
+                    <textarea id="locationDescription" rows="3"></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-close">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: VISUALIZAR ITEM -->
+    <div id="viewItemModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="viewItemTitle"></h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="viewItemContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btnEditItem">✏️ Editar</button>
+                <button type="button" class="btn btn-secondary" id="btnDuplicateItem">📋 Duplicar</button>
+                <button type="button" class="btn btn-secondary" id="btnPrintQR">🏷️ Imprimir QR</button>
+                <button type="button" class="btn btn-accent" id="btnDeleteItem">🗑️ Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Fernando Pimenta | Sprint Lab #28</p>
+        <div class="footer-actions">
+            <button id="btnExportJSON" class="btn btn-secondary">📥 Export JSON</button>
+            <button id="btnExportCSV" class="btn btn-secondary">📥 Export CSV</button>
+            <button id="btnImportJSON" class="btn btn-secondary">📤 Import JSON</button>
+            <input type="file" id="importFileInput" accept=".json" style="display: none;">
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

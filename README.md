@@ -632,6 +632,36 @@ Conversor universal com 20+ categorias incluindo moedas (taxas atualizáveis), m
 
 ---
 
+### 28 - FP Inventory Manager
+**📁 Pasta:** `28-fp-inventory-manager/`
+
+Sistema completo de inventário com categorias e campos personalizáveis, upload de fotos, localizações, filtros avançados e dashboard com estatísticas. Perfeito para organizar ferramentas, peças, componentes e equipamentos.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, FileReader API
+
+**Funcionalidades:**
+- Categorias 100% personalizáveis (nome, ícone, cor)
+- Campos customizáveis por categoria (6 tipos: texto, número, data, lista suspensa, URL, textarea)
+- 4 categorias padrão (Ferramentas, Componentes Eletrônicos, Peças de Computador, Equipamentos)
+- CRUD completo de itens (adicionar, editar, duplicar, visualizar, excluir)
+- Upload de fotos (até 5MB, preview, Base64)
+- Sistema de localizações (organize por caixas, gavetas, prateleiras)
+- 5 status com cores (Disponível, Em Uso, Em Manutenção, Reservado, Quebrado)
+- Tags personalizadas por item
+- Filtros avançados combinados (busca textual, categoria, localização, status)
+- Ordenação múltipla (nome A-Z/Z-A, data, quantidade)
+- Dashboard com 4 cards de estatísticas + 3 gráficos
+- Cálculo automático de valor total do inventário
+- Export JSON (backup completo com fotos) e CSV
+- Import JSON (restaurar backup)
+- Grid responsivo de cards com fotos
+- Modal de visualização completa
+- Totalmente offline
+
+[📖 Ver documentação completa](./28-fp-inventory-manager/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
