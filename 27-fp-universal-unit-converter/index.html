@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔄 FP Universal Unit Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>🔄 FP Universal Unit Converter</h1>
+        <p>Conversor universal com 20+ categorias</p>
+        <div class="header-controls">
+            <select id="themeSelector">
+                <option value="light">☀️ Light</option>
+                <option value="dark">🌙 Dark</option>
+                <option value="high-contrast">⚫ High Contrast</option>
+            </select>
+        </div>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab-btn active" data-tab="converter">Converter</button>
+        <button class="tab-btn" data-tab="view-all">Ver Todas</button>
+        <button class="tab-btn" data-tab="history">Histórico</button>
+        <button class="tab-btn" data-tab="rates">Taxas Moeda</button>
+        <button class="tab-btn" data-tab="favorites">Favoritos</button>
+    </nav>
+
+    <main>
+        <!-- TAB: CONVERTER -->
+        <section id="tab-converter" class="tab-content active">
+            <div class="converter-layout">
+                <div class="converter-main">
+                    <div class="category-selector">
+                        <label for="categorySelect">Categoria:</label>
+                        <select id="categorySelect"></select>
+                    </div>
+
+                    <div class="conversion-box">
+                        <div class="conversion-from">
+                            <label for="fromUnit">De:</label>
+                            <select id="fromUnit"></select>
+                            <input type="text" id="fromValue" placeholder="Digite o valor ou expressão (ex: 100 + 50)">
+                            <small class="calc-hint">💡 Aceita expressões: 10 + 5 * 2</small>
+                        </div>
+
+                        <div class="conversion-swap">
+                            <button id="btnSwap" class="btn-icon" title="Inverter">🔄</button>
+                        </div>
+
+                        <div class="conversion-to">
+                            <label for="toUnit">Para:</label>
+                            <select id="toUnit"></select>
+                            <div class="result-display">
+                                <input type="text" id="toValue" readonly placeholder="Resultado">
+                                <button id="btnCopy" class="btn-icon-small" title="Copiar">📋</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="conversion-actions">
+                        <button id="btnClear" class="btn btn-secondary">🗑️ Limpar</button>
+                        <button id="btnFavorite" class="btn btn-accent">⭐ Favoritar</button>
+                    </div>
+
+                    <div class="conversion-info">
+                        <p id="conversionFormula"></p>
+                    </div>
+                </div>
+
+                <aside class="favorites-sidebar">
+                    <h3>⚡ Acesso Rápido</h3>
+                    <div id="quickFavorites"></div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- TAB: VER TODAS -->
+        <section id="tab-view-all" class="tab-content">
+            <div class="view-all-header">
+                <h2>Conversão Múltipla</h2>
+                <p>Converta um valor para todas as unidades da categoria selecionada</p>
+            </div>
+
+            <div class="view-all-controls">
+                <div class="form-group">
+                    <label>Categoria:</label>
+                    <select id="viewAllCategory"></select>
+                </div>
+                <div class="form-group">
+                    <label>Unidade de Origem:</label>
+                    <select id="viewAllFromUnit"></select>
+                </div>
+                <div class="form-group">
+                    <label>Valor:</label>
+                    <input type="text" id="viewAllValue" placeholder="Digite o valor">
+                </div>
+                <button id="btnConvertAll" class="btn btn-primary">🔄 Converter Tudo</button>
+            </div>
+
+            <div id="viewAllResults" class="view-all-results"></div>
+        </section>
+
+        <!-- TAB: HISTÓRICO -->
+        <section id="tab-history" class="tab-content">
+            <div class="history-header">
+                <h2>Histórico de Conversões</h2>
+                <div class="history-actions">
+                    <select id="filterHistoryCategory">
+                        <option value="">Todas as categorias</option>
+                    </select>
+                    <button id="btnClearHistory" class="btn btn-secondary">🗑️ Limpar Histórico</button>
+                    <button id="btnExportHistoryCSV" class="btn btn-accent">📥 Export CSV</button>
+                </div>
+            </div>
+
+            <div id="historyList" class="history-list"></div>
+        </section>
+
+        <!-- TAB: TAXAS MOEDA -->
+        <section id="tab-rates" class="tab-content">
+            <div class="rates-header">
+                <h2>Gerenciar Taxas de Câmbio</h2>
+                <p class="rates-info">
+                    <strong>Base:</strong> BRL = 1.00 |
+                    <strong>Última atualização:</strong> <span id="ratesLastUpdate">Nunca</span>
+                </p>
+                <div class="rates-actions">
+                    <button id="btnSaveRates" class="btn btn-primary">💾 Salvar Taxas</button>
+                    <button id="btnResetRates" class="btn btn-secondary">🔄 Restaurar Padrão</button>
+                </div>
+            </div>
+
+            <div class="rates-sources">
+                <p>📊 <strong>Fontes sugeridas:</strong>
+                    <a href="https://www.bcb.gov.br/conversao" target="_blank">Banco Central</a> |
+                    <a href="https://www.google.com/search?q=cotação+dolar" target="_blank">Google</a> |
+                    <a href="https://www.xe.com" target="_blank">XE.com</a>
+                </p>
+            </div>
+
+            <div id="ratesTable" class="rates-table"></div>
+        </section>
+
+        <!-- TAB: FAVORITOS -->
+        <section id="tab-favorites" class="tab-content">
+            <div class="favorites-header">
+                <h2>Conversões Favoritas</h2>
+                <button id="btnAddFavorite" class="btn btn-primary">+ Adicionar Favorito</button>
+            </div>
+
+            <div id="favoritesList" class="favorites-list"></div>
+        </section>
+    </main>
+
+    <!-- MODAL: ADICIONAR FAVORITO -->
+    <div id="favoriteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Adicionar Conversão Favorita</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="favoriteForm">
+                <div class="form-group">
+                    <label>Nome:</label>
+                    <input type="text" id="favoriteName" placeholder="Ex: Minha altura em pés" required>
+                </div>
+                <div class="form-group">
+                    <label>Categoria:</label>
+                    <select id="favoriteCategory" required></select>
+                </div>
+                <div class="form-group">
+                    <label>De:</label>
+                    <select id="favoriteFrom" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Para:</label>
+                    <select id="favoriteTo" required></select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-close">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Fernando Pimenta | Sprint Lab #27 | <span id="totalCategories"></span> categorias disponíveis</p>
+        <div class="footer-actions">
+            <button id="btnExportJSON" class="btn btn-secondary">📥 Export JSON</button>
+            <button id="btnImportJSON" class="btn btn-secondary">📤 Import JSON</button>
+            <input type="file" id="importFileInput" accept=".json" style="display: none;">
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
