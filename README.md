@@ -685,6 +685,31 @@ Catalogador de CDs com busca automática via MusicBrainz + Cover Art Archive. Ge
 
 ---
 
+### 30 - Product Tracker Offline
+**📁 Pasta:** `projetos/30-product-tracker-offline/`
+
+Aplicativo offline para monitoramento manual de produtos e histórico de preços via LocalStorage. Rastreie produtos de marketplaces (Shopee, Amazon, Mercado Livre) com atualização manual de preços, histórico automático e alertas visuais.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage, FileReader API
+
+**Funcionalidades:**
+- Cadastro completo de produtos (nome, categoria, link, preços, imagem, observações)
+- Histórico automático de alterações de preço
+- Status visual inteligente (👍 Bom / 🔥 Próximo / ❌ Caro)
+- Cálculo automático de diferença entre preço atual e desejado
+- Filtros avançados (busca, categoria, status)
+- CRUD completo com LocalStorage
+- Upload de imagens em Base64 (até 5MB)
+- Dashboard com estatísticas em tempo real
+- Exportar/Importar JSON (mesclar ou substituir)
+- Timeline de histórico de preços por produto
+- Interface responsiva com tema claro Sprint-Lab
+- 100% offline e privado
+
+[📖 Ver documentação completa](./projetos/30-product-tracker-offline/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1
