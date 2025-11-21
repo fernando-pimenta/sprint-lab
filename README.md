@@ -575,6 +575,33 @@ Timer Pomodoro com gestão de tarefas, estatísticas de foco e relatórios de pr
 
 ---
 
+### 26 - FP Legal Document Generator
+**📁 Pasta:** `26-fp-legal-document-generator/`
+
+Gerador de contratos e documentos legais com 6 templates profissionais, editor com preview em tempo real, biblioteca de cláusulas reutilizáveis, auto-preenchimento de dados e export para HTML/impressão. CRUD de clientes integrado.
+
+**Tecnologias:** HTML, CSS, JavaScript Puro, localStorage
+
+**Funcionalidades:**
+- 6 templates profissionais inclusos (Contrato Freelance, Proposta Comercial, NDA, Termos de Serviço, Manutenção Técnica, Termo de Aceite)
+- Editor split-screen (formulário 40% + preview 60%)
+- Preview em tempo real com substituição de variáveis {{nome}}
+- Sistema de variáveis automáticas (data_hoje, valor_por_extenso)
+- Biblioteca de 12 cláusulas pré-definidas por categoria
+- CRUD completo de clientes com auto-preenchimento
+- Biblioteca de documentos salvos com status (Rascunho, Finalizado, Enviado, Assinado)
+- Validação automática de CPF/CNPJ com máscaras
+- Filtros avançados (template, status, cliente, data, busca textual)
+- Export HTML (documento standalone), Imprimir (CSS otimizado), Backup JSON
+- Import/Export completo (documentos + clientes + cláusulas)
+- Watermark "RASCUNHO" removível
+- Modo apresentação fullscreen
+- AVISO LEGAL: Ferramenta auxiliar, sempre consulte um advogado
+
+[📖 Ver documentação completa](./26-fp-legal-document-generator/README.md)
+
+---
+
 ## 📦 FP BOX (Projeto Base)
 
 ### FP BOX – Sistema Modular v0.1

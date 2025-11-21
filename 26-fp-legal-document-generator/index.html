@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📄 FP Legal Document Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>📄 FP Legal Document Generator</h1>
+        <p>Gerador de contratos e documentos legais profissionais</p>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab-btn active" data-tab="templates">Templates</button>
+        <button class="tab-btn" data-tab="create">Criar Documento</button>
+        <button class="tab-btn" data-tab="library">Biblioteca</button>
+        <button class="tab-btn" data-tab="clients">Clientes</button>
+        <button class="tab-btn" data-tab="clauses">Cláusulas</button>
+    </nav>
+
+    <main>
+        <!-- TAB: TEMPLATES -->
+        <section id="tab-templates" class="tab-content active">
+            <h2>Templates Disponíveis</h2>
+            <div class="templates-grid" id="templatesGrid"></div>
+        </section>
+
+        <!-- TAB: CRIAR DOCUMENTO -->
+        <section id="tab-create" class="tab-content">
+            <div class="create-header">
+                <h2>Criar Novo Documento</h2>
+                <div class="create-actions">
+                    <button id="btnSaveDraft" class="btn btn-secondary">💾 Salvar Rascunho</button>
+                    <button id="btnFinalize" class="btn btn-primary">✓ Finalizar Documento</button>
+                    <button id="btnExportHTML" class="btn btn-accent">📥 Export HTML</button>
+                    <button id="btnPrint" class="btn btn-accent">🖨️ Imprimir</button>
+                </div>
+            </div>
+
+            <div class="split-screen">
+                <div class="form-panel">
+                    <div class="form-header">
+                        <label for="templateSelect">Selecione o Template:</label>
+                        <select id="templateSelect">
+                            <option value="">-- Escolha um template --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-header" id="clientSelectContainer" style="display: none;">
+                        <label for="clientSelect">Cliente (opcional):</label>
+                        <select id="clientSelect">
+                            <option value="">-- Auto-preencher com cliente --</option>
+                        </select>
+                    </div>
+
+                    <form id="documentForm"></form>
+
+                    <div id="clausesSection" style="display: none;">
+                        <h3>Adicionar Cláusulas</h3>
+                        <select id="clauseCategorySelect">
+                            <option value="">-- Escolha uma categoria --</option>
+                        </select>
+                        <div id="clausesList"></div>
+                    </div>
+                </div>
+
+                <div class="preview-panel">
+                    <div class="preview-header">
+                        <h3>Preview do Documento</h3>
+                        <div class="preview-actions">
+                            <label>
+                                <input type="checkbox" id="watermarkToggle">
+                                Watermark "RASCUNHO"
+                            </label>
+                            <button id="btnFullscreen" class="btn-icon" title="Modo Apresentação">⛶</button>
+                        </div>
+                    </div>
+                    <div class="preview-document" id="previewDocument">
+                        <div class="watermark" id="watermark">RASCUNHO</div>
+                        <div id="previewContent">
+                            <p class="preview-placeholder">Selecione um template e preencha os campos para visualizar o documento.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: BIBLIOTECA -->
+        <section id="tab-library" class="tab-content">
+            <div class="library-header">
+                <h2>Biblioteca de Documentos</h2>
+                <div class="library-actions">
+                    <button id="btnExportAll" class="btn btn-secondary">📦 Export Todos (JSON)</button>
+                    <button id="btnImportDocs" class="btn btn-secondary">📤 Import JSON</button>
+                    <input type="file" id="importFileInput" accept=".json" style="display: none;">
+                </div>
+            </div>
+
+            <div class="filters">
+                <input type="text" id="searchDocs" placeholder="🔍 Buscar documentos...">
+                <select id="filterTemplate">
+                    <option value="">Todos os Templates</option>
+                </select>
+                <select id="filterStatus">
+                    <option value="">Todos os Status</option>
+                    <option value="draft">Rascunho</option>
+                    <option value="finalized">Finalizado</option>
+                    <option value="sent">Enviado</option>
+                    <option value="signed">Assinado</option>
+                </select>
+                <select id="filterClient">
+                    <option value="">Todos os Clientes</option>
+                </select>
+                <input type="date" id="filterDateFrom" placeholder="Data início">
+                <input type="date" id="filterDateTo" placeholder="Data fim">
+            </div>
+
+            <div class="documents-list" id="documentsList"></div>
+        </section>
+
+        <!-- TAB: CLIENTES -->
+        <section id="tab-clients" class="tab-content">
+            <div class="clients-header">
+                <h2>Cadastro de Clientes</h2>
+                <button id="btnNewClient" class="btn btn-primary">+ Novo Cliente</button>
+            </div>
+            <div class="clients-list" id="clientsList"></div>
+        </section>
+
+        <!-- TAB: CLÁUSULAS -->
+        <section id="tab-clauses" class="tab-content">
+            <div class="clauses-header">
+                <h2>Biblioteca de Cláusulas</h2>
+                <button id="btnNewClause" class="btn btn-primary">+ Nova Cláusula</button>
+            </div>
+            <div class="clauses-categories" id="clausesCategories"></div>
+        </section>
+    </main>
+
+    <!-- MODAL: CLIENTE -->
+    <div id="clientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="clientModalTitle">Novo Cliente</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="clientForm">
+                <input type="hidden" id="clientId">
+                <div class="form-group">
+                    <label for="clientName">Nome/Razão Social *</label>
+                    <input type="text" id="clientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientDoc">CPF/CNPJ *</label>
+                    <input type="text" id="clientDoc" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientAddress">Endereço Completo</label>
+                    <textarea id="clientAddress" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="clientEmail">Email</label>
+                    <input type="email" id="clientEmail">
+                </div>
+                <div class="form-group">
+                    <label for="clientPhone">Telefone</label>
+                    <input type="tel" id="clientPhone">
+                </div>
+                <div class="form-group">
+                    <label for="clientNotes">Notas</label>
+                    <textarea id="clientNotes" rows="3"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-close">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: CLÁUSULA -->
+    <div id="clauseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="clauseModalTitle">Nova Cláusula</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="clauseForm">
+                <input type="hidden" id="clauseId">
+                <div class="form-group">
+                    <label for="clauseName">Nome da Cláusula *</label>
+                    <input type="text" id="clauseName" required>
+                </div>
+                <div class="form-group">
+                    <label for="clauseCategory">Categoria *</label>
+                    <select id="clauseCategory" required>
+                        <option value="pagamento">Pagamento</option>
+                        <option value="rescisao">Rescisão</option>
+                        <option value="confidencialidade">Confidencialidade</option>
+                        <option value="propriedade">Propriedade Intelectual</option>
+                        <option value="responsabilidades">Responsabilidades</option>
+                        <option value="foro">Foro e Legislação</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="clauseText">Texto da Cláusula *</label>
+                    <textarea id="clauseText" rows="6" required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-close">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: VISUALIZAR DOCUMENTO -->
+    <div id="viewDocModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="viewDocTitle"></h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="doc-meta">
+                    <div><strong>Template:</strong> <span id="viewDocTemplate"></span></div>
+                    <div><strong>Data:</strong> <span id="viewDocDate"></span></div>
+                    <div><strong>Status:</strong> <span id="viewDocStatus"></span></div>
+                </div>
+                <div class="doc-content" id="viewDocContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btnEditDoc">✏️ Editar</button>
+                <button type="button" class="btn btn-secondary" id="btnDuplicateDoc">📋 Duplicar</button>
+                <button type="button" class="btn btn-accent" id="btnPrintDoc">🖨️ Imprimir</button>
+                <button type="button" class="btn btn-primary modal-close">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Fernando Pimenta | Sprint Lab #26 | <strong>AVISO:</strong> Consulte um advogado antes de usar documentos legais</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
