@@ -334,7 +334,7 @@ Gerenciador completo de links de afiliados com tracking detalhado. Organize múl
 ---
 
 ### 16 - FP Email Template Builder
-**📁 Pasta:** `16-fp-email-template-builder/`
+**📁 Pasta:** `projetos/16-fp-email-template-builder/`
 
 Construtor visual de templates de email marketing offline com preview em tempo real. Editor HTML/CSS completo, biblioteca de blocos, variáveis dinâmicas e validação de compatibilidade.
 
@@ -355,12 +355,12 @@ Construtor visual de templates de email marketing offline com preview em tempo r
 - Interface split-screen (editor 40% + preview 60%)
 - Totalmente offline e privado
 
-[📖 Ver documentação completa](./16-fp-email-template-builder/README.md)
+[📖 Ver documentação completa](./projetos/16-fp-email-template-builder/README.md)
 
 ---
 
 ### 17 - FP Keyword Research Organizer
-**📁 Pasta:** `17-fp-keyword-research-organizer/`
+**📁 Pasta:** `projetos/17-fp-keyword-research-organizer/`
 
 Organizador completo de keywords para SEO offline com análise de oportunidades, agrupamento por clusters e calculadora de tráfego potencial. Ferramenta profissional para pesquisa e gestão de palavras-chave.
 
@@ -381,12 +381,12 @@ Organizador completo de keywords para SEO offline com análise de oportunidades,
 - Design responsivo (tabela desktop → cards mobile)
 - Totalmente offline e privado
 
-[📖 Ver documentação completa](./17-fp-keyword-research-organizer/README.md)
+[📖 Ver documentação completa](./projetos/17-fp-keyword-research-organizer/README.md)
 
 ---
 
 ### 18 - FP Social Media Scheduler
-**📁 Pasta:** `18-fp-social-media-scheduler/`
+**📁 Pasta:** `projetos/18-fp-social-media-scheduler/`
 
 Calendário visual para planejamento de posts em múltiplas plataformas sociais. Organize, agende e gerencie posts para Instagram, LinkedIn, Twitter, TikTok, YouTube, Facebook e Threads com visualizações avançadas, templates e recursos de produtividade.
 
@@ -408,12 +408,12 @@ Calendário visual para planejamento de posts em múltiplas plataformas sociais.
 - Design responsivo (desktop: calendário, mobile: lista)
 - Totalmente offline e privado
 
-[📖 Ver documentação completa](./18-fp-social-media-scheduler/README.md)
+[📖 Ver documentação completa](./projetos/18-fp-social-media-scheduler/README.md)
 
 ---
 
 ### 19 - FP Analytics Dashboard
-**📁 Pasta:** `19-fp-analytics-dashboard/`
+**📁 Pasta:** `projetos/19-fp-analytics-dashboard/`
 
 Dashboard offline de métricas dos 3 sites do Ecossistema FP (Blog do FP, Brechó Tech, CetusNet) com widgets configuráveis e gráficos interativos. Rastreie tráfego, conversões, receita e mais com visualizações avançadas.
 
@@ -433,12 +433,12 @@ Dashboard offline de métricas dos 3 sites do Ecossistema FP (Blog do FP, Brech�
 - Grid responsivo (desktop: 3 colunas, tablet: 2, mobile: 1)
 - Totalmente offline e privado
 
-[📖 Ver documentação completa](./19-fp-analytics-dashboard/README.md)
+[📖 Ver documentação completa](./projetos/19-fp-analytics-dashboard/README.md)
 
 ---
 
 ### 20 - FP Product Comparator
-**📁 Pasta:** `20-fp-product-comparator/`
+**📁 Pasta:** `projetos/20-fp-product-comparator/`
 
 Comparador lado a lado de até 4 produtos/ferramentas com análise automática de melhor preço, rating, features e custo-benefício. Ideal para decisões de compra e reviews comparativos.
 
@@ -462,12 +462,12 @@ Comparador lado a lado de até 4 produtos/ferramentas com análise automática d
 - Grid responsivo (desktop: 4 cols, tablet: 3, mobile: cards empilhados)
 - Totalmente offline e privado
 
-[📖 Ver documentação completa](./20-fp-product-comparator/README.md)
+[📖 Ver documentação completa](./projetos/20-fp-product-comparator/README.md)
 
 ---
 
 ### 22 - FP Micro CRM
-**📁 Pasta:** `22-fp-micro-crm/`
+**📁 Pasta:** `projetos/22-fp-micro-crm/`
 
 CRM simplificado para freelancers com pipeline Kanban, projetos vinculados, histórico de interações, alertas de próximas ações e export/import JSON/CSV. Gerencie clientes do Lead ao fechamento com interface visual intuitiva.
 
@@ -487,12 +487,12 @@ CRM simplificado para freelancers com pipeline Kanban, projetos vinculados, hist
 - Validações completas (email, valor, datas)
 - Totalmente offline e privado
 
-[📖 Ver documentação completa](./22-fp-micro-crm/README.md)
+[📖 Ver documentação completa](./projetos/22-fp-micro-crm/README.md)
 
 ---
 
 ### 23 - FP Workflow Checklist Manager
-**📁 Pasta:** `23-fp-workflow-checklist-manager/`
+**📁 Pasta:** `projetos/23-fp-workflow-checklist-manager/`
 
 Gerenciador de checklists para processos recorrentes com templates, progresso visual e análise de produtividade. Crie templates de workflows com etapas, tempo estimado e notas. Execute checklists com progresso visual, timer por etapa, histórico de execuções e análise de produtividade. 5 templates pré-configurados inclusos.
 
@@ -515,12 +515,12 @@ Gerenciador de checklists para processos recorrentes com templates, progresso vi
 - Painel lateral de execução com progresso visual e checklist interativo
 - Totalmente offline e privado
 
-[📖 Ver documentação completa](./23-fp-workflow-checklist-manager/README.md)
+[📖 Ver documentação completa](./projetos/23-fp-workflow-checklist-manager/README.md)
 
 ---
 
 ### 24 - FP A/B Testing Tracker
-**📁 Pasta:** `24-fp-ab-testing-tracker/`
+**📁 Pasta:** `projetos/24-fp-ab-testing-tracker/`
 
 Rastreador de testes A/B com análise comparativa, cálculo automático de taxas de conversão, identificação de vencedor, insights gerados automaticamente e biblioteca de variações. Gerencie até 3 variantes por teste (A, B, C) com visualização em tabela e gráfico de barras Chart.js.
 
@@ -543,12 +543,12 @@ Rastreador de testes A/B com análise comparativa, cálculo automático de taxas
 - Validações (datas, valores mínimos, campos obrigatórios)
 - Totalmente offline (exceto Chart.js CDN na primeira carga)
 
-[📖 Ver documentação completa](./24-fp-ab-testing-tracker/README.md)
+[📖 Ver documentação completa](./projetos/24-fp-ab-testing-tracker/README.md)
 
 ---
 
 ### 25 - FP Pomodoro Productivity Tracker
-**📁 Pasta:** `25-fp-pomodoro-productivity-tracker/`
+**📁 Pasta:** `projetos/25-fp-pomodoro-productivity-tracker/`
 
 Timer Pomodoro com gestão de tarefas, estatísticas de foco e relatórios de produtividade. Timer configurável com fases (foco 25min, pausa curta 5min, pausa longa 15min), CRUD de tarefas integrado, contador automático de pomodoros por tarefa, histórico de sessões, dashboard com gráficos Chart.js e metas diárias.
 
@@ -571,12 +571,12 @@ Timer Pomodoro com gestão de tarefas, estatísticas de foco e relatórios de pr
 - Export JSON (tarefas + histórico), Import JSON (mesclar)
 - Responsivo (desktop: timer + tarefas lado a lado, mobile: fullscreen)
 
-[📖 Ver documentação completa](./25-fp-pomodoro-productivity-tracker/README.md)
+[📖 Ver documentação completa](./projetos/25-fp-pomodoro-productivity-tracker/README.md)
 
 ---
 
 ### 26 - FP Legal Document Generator
-**📁 Pasta:** `26-fp-legal-document-generator/`
+**📁 Pasta:** `projetos/26-fp-legal-document-generator/`
 
 Gerador de contratos e documentos legais com 6 templates profissionais, editor com preview em tempo real, biblioteca de cláusulas reutilizáveis, auto-preenchimento de dados e export para HTML/impressão. CRUD de clientes integrado.
 
@@ -598,12 +598,12 @@ Gerador de contratos e documentos legais com 6 templates profissionais, editor c
 - Modo apresentação fullscreen
 - AVISO LEGAL: Ferramenta auxiliar, sempre consulte um advogado
 
-[📖 Ver documentação completa](./26-fp-legal-document-generator/README.md)
+[📖 Ver documentação completa](./projetos/26-fp-legal-document-generator/README.md)
 
 ---
 
 ### 27 - FP Universal Unit Converter
-**📁 Pasta:** `27-fp-universal-unit-converter/`
+**📁 Pasta:** `projetos/27-fp-universal-unit-converter/`
 
 Conversor universal com 20+ categorias incluindo moedas (taxas atualizáveis), medidas, temperatura, armazenamento, velocidade e mais. Conversão em tempo real, modo "ver todas", histórico, favoritos e calculadora integrada. Export/import JSON.
 
@@ -628,12 +628,12 @@ Conversor universal com 20+ categorias incluindo moedas (taxas atualizáveis), m
 - Fórmulas especiais (temperatura, moeda, combustível)
 - Totalmente offline e responsivo
 
-[📖 Ver documentação completa](./27-fp-universal-unit-converter/README.md)
+[📖 Ver documentação completa](./projetos/27-fp-universal-unit-converter/README.md)
 
 ---
 
 ### 28 - FP Inventory Manager
-**📁 Pasta:** `28-fp-inventory-manager/`
+**📁 Pasta:** `projetos/28-fp-inventory-manager/`
 
 Sistema completo de inventário com categorias e campos personalizáveis, upload de fotos, localizações, filtros avançados e dashboard com estatísticas. Perfeito para organizar ferramentas, peças, componentes e equipamentos.
 
@@ -658,7 +658,7 @@ Sistema completo de inventário com categorias e campos personalizáveis, upload
 - Modal de visualização completa
 - Totalmente offline
 
-[📖 Ver documentação completa](./28-fp-inventory-manager/README.md)
+[📖 Ver documentação completa](./projetos/28-fp-inventory-manager/README.md)
 
 ---
 
